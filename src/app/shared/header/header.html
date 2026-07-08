@@ -1,0 +1,21 @@
+<mat-toolbar class="!shadow-xl sticky z-3 top-0">
+    <div class="flex flex-row items-center justify-between align-center flex-auto">
+        <a class="hover:text-slate-500" routerLink="/">
+            <div class="flex flex-row items-center space-x-2">
+                <mat-icon class="scale-150">calculate</mat-icon>
+                <span class="hidden sm:block font-semibold">Kunal Actuarial Software</span>
+            </div>
+        </a>
+        <div>
+            <button matIconButton [matMenuTriggerFor]="menu" class="cursor-pointer">
+                <mat-icon class="scale-150">apps</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item routerLink="/loan">
+                    <mat-icon>account_balance</mat-icon>
+                    <span>Loan Amortization</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+</mat-toolbar>
