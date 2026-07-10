@@ -13,8 +13,11 @@ import { Router } from '@angular/router';
   styleUrl: './header.css',
 })
 export class Header {
-  private router = inject(Router);
+  private router: Router = inject(Router);
 
+  /**
+   * Get name of current route accessed by user.
+   */
   get currentRoute(): string {
     let path = "";
     switch (this.router.url) {

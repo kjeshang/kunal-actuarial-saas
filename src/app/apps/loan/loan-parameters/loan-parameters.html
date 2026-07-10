@@ -1,1 +1,44 @@
-<p>loan-parameters works!</p>
+<form [formGroup]="loanParametersForm">
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Loan Amortization Parameters</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="grid grid-cols-1 sm:grid-cols-4 sm:gap-4">
+                <div>
+                    <mat-form-field class="w-full">
+                        <mat-label>Loan Amount</mat-label>
+                        <input matInput placeholder="Loan Amount" formControlName="loanAmount" />
+                        <mat-icon matSuffix>paid</mat-icon>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="w-full">
+                        <mat-label>Annual Effective Interest Rate</mat-label>
+                        <input matInput placeholder="Annual Effective Interest Rate" formControlName="interestRate" />
+                        <mat-icon matSuffix>percent</mat-icon>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="w-full">
+                        <mat-label>Term of Loan (in years)</mat-label>
+                        <input matInput placeholder="Term of Loan (in years)" formControlName="termOfLoan" />
+                        <mat-icon matSuffix>hourglass_bottom</mat-icon>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="w-full">
+                        <mat-label>Payment Frequency (per year)</mat-label>
+                        <mat-select placeholder="Payment Frequency (per year)" formControlName="paymentFrequency">
+                            <mat-option value="1">Annual</mat-option>
+                            <mat-option value="2">Semiannual</mat-option>
+                            <mat-option value="4">Quarterly</mat-option>
+                            <mat-option value="12">Monthly</mat-option>
+                        </mat-select>
+                        <mat-icon matSuffix>calendar_month</mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</form>
