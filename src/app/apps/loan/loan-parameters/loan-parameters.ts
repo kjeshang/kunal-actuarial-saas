@@ -8,10 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { CurrencyFormat } from '../../../shared/currency-format/currency-format';
 import { CommonModule } from '@angular/common';
+import { InterestRateFormat } from '../../../shared/interest-rate-format/interest-rate-format';
 
 @Component({
   selector: 'app-loan-parameters',
-  imports: [MatExpansionModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatSelectModule, CurrencyFormat, CommonModule],
+  imports: [MatExpansionModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatSelectModule, CurrencyFormat, InterestRateFormat, CommonModule],
   templateUrl: './loan-parameters.html',
   styleUrl: './loan-parameters.css',
 })
@@ -30,10 +31,9 @@ export class LoanParameters {
     paymentFrequency: ['', Validators.required]
   });
 
-  onLoanAmountInput(): void {
-    const loanAmount: string = this.loanParametersForm.get('loanAmount')!.value;
-    if(typeof loanAmount !== "string") {
-      this.loanParametersForm.get('loanAmount')?.setValue('0');
-    }
+  formatLoanParameterInputs(): void {
+    // Annual Effective Interest Rate
+    // const interestRate = this.loanParametersForm.get("interestRate")?.value;
+    // this.loanParametersForm.patchValue({interestRate: parseFloat(interestRate).toFixed(4)});
   }
 }

@@ -16,14 +16,14 @@
                 <div>
                     <mat-form-field class="w-full">
                         <mat-label>Annual Effective Interest Rate</mat-label>
-                        <input matInput placeholder="Annual Effective Interest Rate" formControlName="interestRate" />
+                        <input matInput placeholder="Annual Effective Interest Rate" formControlName="interestRate" appInterestRateFormat />
                         <mat-icon matSuffix>percent</mat-icon>
                     </mat-form-field>
                 </div>
                 <div>
                     <mat-form-field class="w-full">
                         <mat-label>Term of Loan (in years)</mat-label>
-                        <input matInput placeholder="Term of Loan (in years)" formControlName="termOfLoan" />
+                        <input matInput placeholder="Term of Loan (in years)" formControlName="termOfLoan" type="number" />
                         <mat-icon matSuffix>hourglass_bottom</mat-icon>
                     </mat-form-field>
                 </div>
