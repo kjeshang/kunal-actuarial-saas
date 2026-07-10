@@ -1,0 +1,66 @@
+import { computed, inject } from "@angular/core";
+import {
+    patchState,
+    signalStore,
+    withComputed,
+    withMethods,
+    withState,
+} from '@ngrx/signals';
+
+type LoanState = {
+    loanAmount: number;
+    interestRate: number;
+    termOfLoan: number;
+    paymentFrequency: number;
+}
+
+const initialLoanState: LoanState = {
+    loanAmount: 0,
+    interestRate: 0,
+    termOfLoan: 0,
+    paymentFrequency: 1
+}
+
+export const LoanStore = signalStore(
+    { providedIn: 'root' },
+    withState(initialLoanState),
+    withMethods((store) => ({
+        /**
+         * Method used to set loan amount.
+         * @param loanAmount Numerical amount of loan
+         */
+        async setLoanAmount(loanAmount: number): Promise<void> {
+            patchState(store, (state: LoanState) => ({
+                loanAmount: loanAmount
+            }));
+        },
+        /**
+         * Method used to set interest rate.
+         * @param interestRate Annual effective interest rate
+         */
+        async setInterestRate(interestRate: number): Promise<void> {
+            patchState(store, (state: LoanState) => ({
+                interestRate: interestRate
+            }));
+        },
+        /**
+         * Method used to set term of loan.
+         * @param termOfLoan Lifetime of loan in years
+         */
+        async setTermOfLoan(termOfLoan: number): Promise<void> {
+            patchState(store, (state: LoanState) => ({
+                termOfLoan: termOfLoan
+            }));
+        },
+        /**
+         * Method used to set payment frequency.
+         * @param paymentFrequency Periodicity of loan payments.
+         */
+        async setPaymentFrequency(paymentFrequency: number): Promise<void> {
+            patchState(store, (state: LoanState) => ({
+                paymentFrequency: paymentFrequency
+            }));
+        }
+    })),
+    withComputed(() => ({}))
+)

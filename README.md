@@ -23,7 +23,7 @@ npm install currency.js
 Loan Amortization Parameters:
 * Loan Amount ($)
 * Annual Effective Interest Rate (%)
-* Term of Loan (in years)
+* Term of Loan (in years) <-- Will change this to a calendar range in a future version
 * Payment Frequency (per year): "Annual", "Semiannual", "Quarterly", "Monthly"
 
 Summary Metrics:
