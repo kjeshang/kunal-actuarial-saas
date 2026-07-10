@@ -4,12 +4,13 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>Loan Amortization Parameters</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="grid grid-cols-1 sm:grid-cols-4 sm:gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
                 <div>
                     <mat-form-field class="w-full">
                         <mat-label>Loan Amount</mat-label>
-                        <input matInput placeholder="Loan Amount" formControlName="loanAmount" />
+                        <input matInput placeholder="Loan Amount" formControlName="loanAmount" appCurrencyFormat />
                         <mat-icon matSuffix>paid</mat-icon>
+                        <mat-error>Please input a valid numerical loan amount</mat-error>
                     </mat-form-field>
                 </div>
                 <div>
@@ -42,3 +43,4 @@
         </mat-expansion-panel>
     </mat-accordion>
 </form>
+<p>{{ loanParametersForm.value | json }}</p>
