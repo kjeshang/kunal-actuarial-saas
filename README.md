@@ -18,6 +18,22 @@ npm install --save-dev @types/luxon
 npm install currency.js
 ```
 
+## Loan app
+
+Loan Amortization Parameters:
+* Loan Amount ($)
+* Annual Effective Interest Rate (%)
+* Term of Loan (in years)
+* Payment Frequency (per year): "Annual", "Semiannual", "Quarterly", "Monthly"
+
+Summary Metrics:
+> n = Payment Frequency (per year) = n-thly period
+* n-thly payment amount: "Annual Payment Amount", "Semiannual Payment Amount", "Quarterly Payment Amount", "Monthly Payment Amount"
+* n-thly effective interest rate: "Annual Effective Interest Rate", "Semiannual Effective Interest Rate", "Quarterly Effective Interest Rate", "Monthly Effective Interest Rate"
+* n-thly nominal interest rate: "Annual Nominal Interest Rate", "Semiannual Nominal Interest Rate", "Quarterly Nominal Interest Rate", "Monthly Nominal Interest Rate"
+* n-thly effective rate of discount: "Annual Effective Rate of Discount", "Semiannual Effective Rate of Discount", "Quarterly Effective Rate of Discount", "Monthly Effective Rate of Discount"
+
+
 ## Development server
 
 To start a local development server, run:
