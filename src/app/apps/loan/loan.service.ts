@@ -7,10 +7,24 @@ import { LoanSummaryMetric } from "./loan.models";
 })
 export class LoanService {
 
-  calculatePeriodicPaymentAmount(termOfLoan: number, paymentFrequency: number) {
+  calculatePeriodicPaymentAmount(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number): LoanSummaryMetric {
     // 1. Find the total number of payments
     const N: number = termOfLoan * paymentFrequency;
-
+    // 2. Calculate m-thly effecive interest rate
+    const j: number = this.calculatePeriodicEffectiveInterestRate(interestRate, paymentFrequency).value;
+    // 3. Calculate m-thly payment amount
+    const numerator: number = currency(loanAmount).multiply(j).value;
+    // Alternate => const numerator: number = loanAmount * j;
+    const denominator: number = 1 - Math.pow(1 + j, -N);
+    const R: number = currency(numerator).divide(denominator).value;
+    // Alternate => const R: number = numerator / denominator;
+    const label: string = this.determinePaymentFrequencyLabel(paymentFrequency);
+    const metric: LoanSummaryMetric = {
+      label: `${this.determinePaymentFrequencyLabel(paymentFrequency)} Payment Amount`,
+      value: R,
+      displayValue: currency(R).format()
+    };
+    return metric;
   }
 
   calculatePeriodicEffectiveInterestRate(interestRate: number, paymentFrequency: number): LoanSummaryMetric {

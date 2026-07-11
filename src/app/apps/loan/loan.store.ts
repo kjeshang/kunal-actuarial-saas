@@ -19,7 +19,7 @@ const initialLoanState: LoanState = {
     loanAmount: 0,
     interestRate: 0,
     termOfLoan: 0,
-    paymentFrequency: 1
+    paymentFrequency: 0
 }
 
 export const LoanStore = signalStore(
@@ -74,6 +74,9 @@ export const LoanStore = signalStore(
     ) => ({
         periodicEffectiveInterestRate: computed(() => {
             return loanService.calculatePeriodicEffectiveInterestRate(interestRate(), paymentFrequency());
-        })
+        }),
+        periodicPaymentAmount: computed(() => {
+            return loanService.calculatePeriodicPaymentAmount(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+        }),
     }))
 )
