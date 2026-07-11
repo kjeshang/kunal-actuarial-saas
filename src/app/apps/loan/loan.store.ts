@@ -6,6 +6,7 @@ import {
     withMethods,
     withState,
 } from '@ngrx/signals';
+import { LoanService } from "./loan.service";
 
 type LoanState = {
     loanAmount: number;
@@ -62,5 +63,17 @@ export const LoanStore = signalStore(
             }));
         }
     })),
-    withComputed(() => ({}))
+    withComputed((
+        {
+            loanAmount,
+            interestRate,
+            termOfLoan,
+            paymentFrequency,
+        },
+        loanService: LoanService = inject(LoanService)
+    ) => ({
+        periodicEffectiveInterestRate: computed(() => {
+            return loanService.calculatePeriodicEffectiveInterestRate(interestRate(), paymentFrequency());
+        })
+    }))
 )
