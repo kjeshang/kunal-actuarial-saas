@@ -41,6 +41,34 @@ export class LoanService {
     return metric;
   }
 
+  calculatePeriodicNominalInterestRate(interestRate: number, paymentFrequency: number): LoanSummaryMetric {
+    // 1. Calculate m-thly effecive interest rate
+    const rawJ: number = Math.pow(1 + interestRate, 1 / paymentFrequency) - 1;
+    // 2. Calculate m-thly nominal interest rate
+    const rawIM: number = paymentFrequency * rawJ;
+    // Rounding percentage to 4 decimal places
+    const iM: number = Math.round((rawIM * 100 + Number.EPSILON) * 10000) / 10000 / 100;
+    const metric: LoanSummaryMetric = {
+      metricType: "rate",
+      label: `${this.determinePaymentFrequencyLabel(paymentFrequency)} Nominal Effective Interest Rate`,
+      value: iM,
+      displayValue: `${(iM * 100).toFixed(4)}%`
+    };
+    return metric;
+  }
+
+  calculatePeriodicEffectiveDiscountRate(interestRate: number, paymentFrequency: number): LoanSummaryMetric {
+    const rawDPer: number = 1 - Math.pow(1 + interestRate, -(1 / paymentFrequency));
+    const dPer: number = Math.round((rawDPer * 100 + Number.EPSILON) * 10000) / 10000 / 100;
+    const metric: LoanSummaryMetric = {
+      metricType: "rate",
+      label: `${this.determinePaymentFrequencyLabel(paymentFrequency)} Effective Rate of Discount`,
+      value: dPer,
+      displayValue: `${(dPer * 100).toFixed(4)}%`
+    };
+    return metric;
+  }
+
   private determinePaymentFrequencyLabel(paymentFrequency: number): string {
     let label: string = "";
     switch (paymentFrequency.toString()) {
