@@ -20,6 +20,7 @@ export class LoanService {
     // Alternate => const R: number = numerator / denominator;
     const label: string = this.determinePaymentFrequencyLabel(paymentFrequency);
     const metric: LoanSummaryMetric = {
+      metricType: "amount",
       label: `${this.determinePaymentFrequencyLabel(paymentFrequency)} Payment Amount`,
       value: R,
       displayValue: currency(R).format()
@@ -32,9 +33,10 @@ export class LoanService {
     // Rounding percentage to 4 decimal places
     const j: number = Math.round((rawJ * 100 + Number.EPSILON) * 10000) / 10000 / 100;
     const metric: LoanSummaryMetric = {
-      label: this.determinePaymentFrequencyLabel(paymentFrequency),
+      metricType: "rate",
+      label: `${this.determinePaymentFrequencyLabel(paymentFrequency)} Effective Interest Rate`,
       value: j,
-      displayValue: (j * 100).toFixed(4)
+      displayValue: `${(j * 100).toFixed(4)}%`
     }
     return metric;
   }
