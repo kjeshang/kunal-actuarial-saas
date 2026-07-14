@@ -75,7 +75,7 @@ export class LoanService {
     const R: number = this.calculatePeriodicPaymentAmount(loanAmount, interestRate, termOfLoan, paymentFrequency).value;
     let outstandingBalance: number = loanAmount;
     let loanAmortizationSchedule: LoanAmortizationSchedule[] = [];
-    for (let t = 0; t <= N; t++) {
+    for (let t = 0; t <= N + 1; t++) {
       if (t == 0) {
         const result: LoanAmortizationSchedule = {
           period: 0,

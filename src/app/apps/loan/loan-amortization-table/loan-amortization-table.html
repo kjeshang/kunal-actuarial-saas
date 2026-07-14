@@ -1,0 +1,47 @@
+<div class="w-full overflow-x-auto rounded-xl border border-gray-300 shadow-sm bg-white">
+    <div class="p-2 m-2">
+        <table mat-table class="mat-shadow-2 min-w-[600px] w-full text-sm text-left"
+            [dataSource]="loanStore.loanAmortizationSchedule()">
+
+            <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Time Column -->
+            <ng-container matColumnDef="time">
+                <th mat-header-cell class="!text-center" *matHeaderCellDef> Time (in years) </th>
+                <td mat-cell class="!text-center" *matCellDef="let element"> {{ element.time }} </td>
+            </ng-container>
+
+            <!-- Loan Payment Column -->
+            <ng-container matColumnDef="loanPayment">
+                <th mat-header-cell class="!text-right" *matHeaderCellDef> Loan Payment </th>
+                <td mat-cell class="!text-right" *matCellDef="let element">{{ element.loanPayment.displayValue }} </td>
+            </ng-container>
+
+            <!-- Interest Paid Column -->
+            <ng-container matColumnDef="interestPaid">
+                <th mat-header-cell class="!text-right" *matHeaderCellDef> Interest Paid at Time t </th>
+                <td mat-cell class="!text-right" *matCellDef="let element"> {{ element.interestPaid.displayValue }}
+                </td>
+            </ng-container>
+
+            <!-- Principal Paid Column -->
+            <ng-container matColumnDef="principalRepaid">
+                <th mat-header-cell class="!text-right" *matHeaderCellDef> Principal Repaid at Time t </th>
+                <td mat-cell class="!text-right" *matCellDef="let element"> {{ element.principalRepaid.displayValue }}
+                </td>
+            </ng-container>
+
+            <!-- Outstanding Balance Column -->
+            <ng-container matColumnDef="outstandingBalance">
+                <th mat-header-cell class="!text-right" *matHeaderCellDef> Outstanding Balance at Time t </th>
+                <td mat-cell class="!text-right" *matCellDef="let element"> {{ element.outstandingBalance.displayValue
+                    }}
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

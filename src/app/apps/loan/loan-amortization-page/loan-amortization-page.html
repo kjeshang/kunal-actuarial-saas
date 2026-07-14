@@ -10,7 +10,7 @@
             <app-loan-summary-card class="h-full" [metric]="loanStore.periodicRateOfDiscount()" />
         </section>
         <section>
-            {{ loanStore.loanAmortizationSchedule() | json }}
+            <app-loan-amortization-table />
         </section>
     </div>
 </app-feature-container>
