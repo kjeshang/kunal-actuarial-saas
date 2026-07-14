@@ -11,5 +11,5 @@ import { LoanStore } from '../loan.store';
 export class LoanAmortizationTable {
   loanStore = inject(LoanStore);
   displayedColumns: string[] = ['time', 'loanPayment', 'interestPaid', 'principalRepaid', 'outstandingBalance'];
-
+  protected readonly Infinity = Infinity;
 }

@@ -9,7 +9,15 @@
             <!-- Time Column -->
             <ng-container matColumnDef="time">
                 <th mat-header-cell class="!text-center" *matHeaderCellDef> Time (in years) </th>
-                <td mat-cell class="!text-center" *matCellDef="let element"> {{ element.time }} </td>
+                <td mat-cell class="!text-center" *matCellDef="let element">
+                    <!-- @if(element.time === Infinity) {
+                        -
+                    } 
+                    @else {
+                        {{ element.time }} 
+                    } -->
+                    {{ element.time }} 
+                </td>
             </ng-container>
 
             <!-- Loan Payment Column -->
