@@ -3,10 +3,11 @@ import { FeatureContainer } from '../../../shared/feature-container/feature-cont
 import { LoanParameters } from '../loan-parameters/loan-parameters';
 import { LoanSummaryCard } from '../loan-summary-card/loan-summary-card';
 import { LoanStore } from '../loan.store';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-loan-amortization-page',
-  imports: [FeatureContainer, LoanParameters, LoanSummaryCard],
+  imports: [FeatureContainer, LoanParameters, LoanSummaryCard, CommonModule],
   templateUrl: './loan-amortization-page.html',
   styleUrl: './loan-amortization-page.css',
 })

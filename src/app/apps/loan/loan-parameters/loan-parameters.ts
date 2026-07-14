@@ -14,7 +14,7 @@ import { isNil } from 'lodash';
 
 @Component({
   selector: 'app-loan-parameters',
-  imports: [MatExpansionModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatSelectModule, CurrencyFormat, InterestRateFormat, CommonModule],
+  imports: [MatExpansionModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatSelectModule, CurrencyFormat, InterestRateFormat],
   templateUrl: './loan-parameters.html',
   styleUrl: './loan-parameters.css',
 })

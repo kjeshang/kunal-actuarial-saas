@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import currency from 'currency.js';
-import { LoanSummaryMetric } from "./loan.models";
+import { LoanAmortizationSchedule, LoanSummaryMetric } from "./loan.models";
 
 @Injectable({
   providedIn: 'root',
@@ -67,6 +67,55 @@ export class LoanService {
       displayValue: `${(dPer * 100).toFixed(4)}%`
     };
     return metric;
+  }
+
+  createLoanAmortizationSchedule(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number): LoanAmortizationSchedule[] {
+    const N: number = termOfLoan * paymentFrequency;
+    const j: number = this.calculatePeriodicEffectiveInterestRate(interestRate, paymentFrequency).value;
+    const R: number = this.calculatePeriodicPaymentAmount(loanAmount, interestRate, termOfLoan, paymentFrequency).value;
+    let outstandingBalance: number = loanAmount;
+    let loanAmortizationSchedule: LoanAmortizationSchedule[] = [];
+    for (let t = 0; t <= N; t++) {
+      if (t == 0) {
+        const result: LoanAmortizationSchedule = {
+          period: 0,
+          time: 0,
+          loanPayment: { value: 0, displayValue: "-" },
+          interestPaid: { value: 0, displayValue: "-" },
+          principalRepaid: { value: 0, displayValue: "-" },
+          outstandingBalance: { value: outstandingBalance, displayValue: currency(outstandingBalance).format() }
+        }
+        loanAmortizationSchedule.push(result);
+      }
+      else if(outstandingBalance === 0) {
+        const result: LoanAmortizationSchedule = {
+          period: t,
+          time: t / paymentFrequency,
+          loanPayment: { value: 0, displayValue: "-" },
+          interestPaid: { value: 0, displayValue: "-" },
+          principalRepaid: { value: 0, displayValue: "-" },
+          outstandingBalance: { value: outstandingBalance, displayValue: currency(outstandingBalance).format() }
+        }
+        loanAmortizationSchedule.push(result);
+      }
+      else {
+        const interestPaid: number = currency(outstandingBalance).multiply(j).value;
+        const loanPayment: number = Math.min(R, currency(interestPaid).add(outstandingBalance).value);
+        const principalRepaid: number = currency(loanPayment).subtract(interestPaid).value;
+        outstandingBalance = currency(outstandingBalance).subtract(principalRepaid).value;
+        // outstandingBalance = outstandingBalance <= 0.005 ? 0 : outstandingBalance;00
+        const result: LoanAmortizationSchedule = {
+          period: t,
+          time: t / paymentFrequency,
+          loanPayment: { value: loanPayment, displayValue: currency(loanPayment).format() },
+          interestPaid: { value: interestPaid, displayValue: currency(interestPaid).format() },
+          principalRepaid: { value: principalRepaid, displayValue: currency(principalRepaid).format() },
+          outstandingBalance: { value: outstandingBalance, displayValue: currency(outstandingBalance).format() }
+        }
+        loanAmortizationSchedule.push(result);
+      }
+    }
+    return loanAmortizationSchedule;
   }
 
   private determinePaymentFrequencyLabel(paymentFrequency: number): string {
