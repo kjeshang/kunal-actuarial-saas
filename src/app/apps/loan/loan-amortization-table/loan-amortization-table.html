@@ -10,12 +10,6 @@
             <ng-container matColumnDef="time">
                 <th mat-header-cell class="!text-center" *matHeaderCellDef> Time (in years) </th>
                 <td mat-cell class="!text-center" *matCellDef="let element">
-                    <!-- @if(element.time === Infinity) {
-                        -
-                    } 
-                    @else {
-                        {{ element.time }} 
-                    } -->
                     {{ element.time }} 
                 </td>
             </ng-container>
@@ -23,28 +17,32 @@
             <!-- Loan Payment Column -->
             <ng-container matColumnDef="loanPayment">
                 <th mat-header-cell class="!text-right" *matHeaderCellDef> Loan Payment </th>
-                <td mat-cell class="!text-right" *matCellDef="let element">{{ element.loanPayment.displayValue }} </td>
+                <td mat-cell class="!text-right" *matCellDef="let element">
+                    {{ showDisplayValue(element.loanPayment.displayValue) }}
+                </td>
             </ng-container>
 
             <!-- Interest Paid Column -->
             <ng-container matColumnDef="interestPaid">
                 <th mat-header-cell class="!text-right" *matHeaderCellDef> Interest Paid at Time t </th>
-                <td mat-cell class="!text-right" *matCellDef="let element"> {{ element.interestPaid.displayValue }}
+                <td mat-cell class="!text-right" *matCellDef="let element"> 
+                    {{ showDisplayValue(element.interestPaid.displayValue) }}
                 </td>
             </ng-container>
 
             <!-- Principal Paid Column -->
             <ng-container matColumnDef="principalRepaid">
                 <th mat-header-cell class="!text-right" *matHeaderCellDef> Principal Repaid at Time t </th>
-                <td mat-cell class="!text-right" *matCellDef="let element"> {{ element.principalRepaid.displayValue }}
+                <td mat-cell class="!text-right" *matCellDef="let element"> 
+                    {{ showDisplayValue(element.principalRepaid.displayValue) }}
                 </td>
             </ng-container>
 
             <!-- Outstanding Balance Column -->
             <ng-container matColumnDef="outstandingBalance">
                 <th mat-header-cell class="!text-right" *matHeaderCellDef> Outstanding Balance at Time t </th>
-                <td mat-cell class="!text-right" *matCellDef="let element"> {{ element.outstandingBalance.displayValue
-                    }}
+                <td mat-cell class="!text-right" *matCellDef="let element"> 
+                    {{ showDisplayValue(element.outstandingBalance.displayValue) }}
                 </td>
             </ng-container>
 
