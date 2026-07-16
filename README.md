@@ -16,6 +16,8 @@ npm install @types/lodash --save-dev
 npm install luxon
 npm install --save-dev @types/luxon
 npm install currency.js
+npm install angular-plotly.js plotly.js-dist-min --save
+npm install @types/plotly.js-dist-min --save-dev
 ```
 
 ## Loan app
