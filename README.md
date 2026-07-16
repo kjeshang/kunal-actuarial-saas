@@ -39,8 +39,20 @@ Loan Amortization Table
 
 Visualizations
 * Amortization Curve; Outstanding Balance over Time = Line Chart <= Done
-* The Interest vs. Principal Breakdown (Stacked Area or Bar Chart) <= Pending
+* The Interest vs. Principal Breakdown (Stacked Area or Bar Chart) <= Done
 * Total Cost of Borrowing (Donut / Pie Chart) <= Pending
+
+IDEAS:
+This is a simple static summary chart usually displayed in a sidebar or next to your primary KPI cards. It compares two numbers: Total Principal Paid (the original loan amount) vs. Total Interest Paid over the life of the loan.
+
+    Why it’s powerful: It provides an immediate "sticker shock" effect. For example, on a $300,000 home loan at 6% interest over 30 years, the total interest paid is roughly $347,000—meaning the interest actually costs more than the house itself. A donut chart makes this ratio instantly clear.
+
+    How to build it:
+
+        Slice A: Original loanAmount
+
+        Slice B: Sum of all interestPaid.value from your schedule
+
 * The "Race to Equity" (Cumulative Principal vs. Cumulative Interest)
 
 
