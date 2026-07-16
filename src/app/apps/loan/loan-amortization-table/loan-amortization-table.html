@@ -3,9 +3,6 @@
         <table mat-table class="mat-shadow-2 min-w-[600px] w-full text-sm text-left"
             [dataSource]="loanStore.loanAmortizationSchedule()">
 
-            <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
             <!-- Time Column -->
             <ng-container matColumnDef="time">
                 <th mat-header-cell class="!text-center" *matHeaderCellDef> Time (in years) </th>

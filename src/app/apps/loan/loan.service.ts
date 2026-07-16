@@ -6,7 +6,15 @@ import { LoanAmortizationSchedule, LoanSummaryMetric } from "./loan.models";
   providedIn: 'root',
 })
 export class LoanService {
-
+  
+  /**
+   * Method used to calculate m-thly payment amount, and show its calculated value & formatted value for display purposes.
+   * @param loanAmount 
+   * @param interestRate 
+   * @param termOfLoan 
+   * @param paymentFrequency 
+   * @returns Object containing metric type, label, value, and display value.
+   */
   calculatePeriodicPaymentAmount(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number): LoanSummaryMetric {
     // 1. Find the total number of payments
     const N: number = termOfLoan * paymentFrequency;
@@ -28,6 +36,12 @@ export class LoanService {
     return metric;
   }
 
+  /**
+   * Method used to calculate the m-thly effective interest rate, and show its calculated value & formatted value for display purposes.
+   * @param interestRate 
+   * @param paymentFrequency 
+   * @returns Object containing metric type, label, value, and display value.
+   */
   calculatePeriodicEffectiveInterestRate(interestRate: number, paymentFrequency: number): LoanSummaryMetric {
     const rawJ: number = Math.pow(1 + interestRate, 1 / paymentFrequency) - 1;
     // Rounding percentage to 4 decimal places
@@ -40,7 +54,13 @@ export class LoanService {
     }
     return metric;
   }
-
+  
+  /**
+   * Method used to calculate m-thly nominal interest rate, and show its calculated value & formatted value for display purposes.
+   * @param interestRate
+   * @param paymentFrequency
+   * @returns Object containing metric type, label, value, and display value.
+   */
   calculatePeriodicNominalInterestRate(interestRate: number, paymentFrequency: number): LoanSummaryMetric {
     // 1. Calculate m-thly effecive interest rate
     const rawJ: number = Math.pow(1 + interestRate, 1 / paymentFrequency) - 1;
@@ -57,6 +77,12 @@ export class LoanService {
     return metric;
   }
 
+  /**
+   * Method used to calculate m-thly effective rate of discount, and show its calculated value & formatted value for display purposes.
+   * @param interestRate 
+   * @param paymentFrequency 
+   * @returns Object containing metric type, label, value, and display value.
+   */
   calculatePeriodicEffectiveDiscountRate(interestRate: number, paymentFrequency: number): LoanSummaryMetric {
     const rawDPer: number = 1 - Math.pow(1 + interestRate, -(1 / paymentFrequency));
     const dPer: number = Math.round((rawDPer * 100 + Number.EPSILON) * 10000) / 10000 / 100;
@@ -69,6 +95,14 @@ export class LoanService {
     return metric;
   }
 
+  /**
+   * Method used to generate loan amortization schedule based on loan amount, interest rate, term of loan, and payment frequency.
+   * @param loanAmount 
+   * @param interestRate 
+   * @param termOfLoan 
+   * @param paymentFrequency 
+   * @returns Object array of containing period, time, loanPayment, interest paid, principal repaid, and outstanding balance
+   */
   createLoanAmortizationSchedule(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number): LoanAmortizationSchedule[] {
     const N: number = termOfLoan * paymentFrequency;
     const j: number = this.calculatePeriodicEffectiveInterestRate(interestRate, paymentFrequency).value;
@@ -118,6 +152,11 @@ export class LoanService {
     return loanAmortizationSchedule;
   }
 
+  /**
+   * Method used to determine label of payment frequency to use for display purposes.
+   * @param paymentFrequency 
+   * @returns Label used to describe payment frequency
+   */
   private determinePaymentFrequencyLabel(paymentFrequency: number): string {
     let label: string = "";
     switch (paymentFrequency.toString()) {
