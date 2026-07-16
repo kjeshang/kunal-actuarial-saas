@@ -35,6 +35,14 @@ Summary Metrics:
 * m-thly nominal interest rate: "Annual Nominal Interest Rate", "Semiannual Nominal Interest Rate", "Quarterly Nominal Interest Rate", "Monthly Nominal Interest Rate"
 * m-thly effective rate of discount: "Annual Effective Rate of Discount", "Semiannual Effective Rate of Discount", "Quarterly Effective Rate of Discount", "Monthly Effective Rate of Discount"
 
+Loan Amortization Table
+
+Visualizations
+* Amortization Curve; Outstanding Balance over Time = Line Chart <= Done
+* The Interest vs. Principal Breakdown (Stacked Area or Bar Chart) <= Pending
+* Total Cost of Borrowing (Donut / Pie Chart) <= Pending
+* The "Race to Equity" (Cumulative Principal vs. Cumulative Interest)
+
 
 ## Development server
 

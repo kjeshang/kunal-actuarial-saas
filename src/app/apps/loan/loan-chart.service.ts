@@ -16,7 +16,9 @@ export class LoanChartService {
         const chartData: LineChartData = {
             x: loanAmortizationSchedule.map((item: LoanAmortizationSchedule) => item.time),
             y: loanAmortizationSchedule.map((item: LoanAmortizationSchedule) => item.outstandingBalance.value),
-            title: "Outstanding Balance over Time"
+            title: "Outstanding Balance over Time",
+            xAxisTitle: "Time Period",
+            yAxisTitle: "Outstanding Balance ($)"
         }
         return chartData;
     }

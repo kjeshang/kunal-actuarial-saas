@@ -12,8 +12,9 @@
         <section>
             <mat-tab-group>
                 <mat-tab label="Visualization">
-                    <!-- <p>Loan Amortization Visualizations</p> -->
-                    <app-line-chart [chartData]="loanStore.amortizationCurveChart()" />
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <app-line-chart class="mt-2" [chartData]="loanStore.amortizationCurveChart()" />
+                    </div>
                 </mat-tab>
                 <mat-tab label="Table">
                     <ng-template matTabContent>
