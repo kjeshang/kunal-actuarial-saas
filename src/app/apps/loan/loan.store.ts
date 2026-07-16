@@ -7,6 +7,7 @@ import {
     withState,
 } from '@ngrx/signals';
 import { LoanService } from "./loan.service";
+import { LoanChartService } from "./loan-chart.service";
 
 type LoanState = {
     loanAmount: number;
@@ -70,7 +71,8 @@ export const LoanStore = signalStore(
             termOfLoan,
             paymentFrequency,
         },
-        loanService: LoanService = inject(LoanService)
+        loanService: LoanService = inject(LoanService),
+        loanChartService: LoanChartService = inject(LoanChartService)
     ) => ({
         periodicEffectiveInterestRate: computed(() => {
             return loanService.calculatePeriodicEffectiveInterestRate(interestRate(), paymentFrequency());
@@ -87,5 +89,9 @@ export const LoanStore = signalStore(
         loanAmortizationSchedule: computed(() => {
             return loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
         }),
+        amortizationCurveChart: computed(() => {
+            const loanAmortizationSchedule = loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+            return loanChartService.getAmortizationCurveData(loanAmortizationSchedule);
+        })
     }))
 )
