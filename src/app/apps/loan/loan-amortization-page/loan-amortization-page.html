@@ -11,15 +11,16 @@
         </section>
         <section>
             <mat-tab-group>
-                <mat-tab label="Visualization">
+                <mat-tab label="Visualizations">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <app-line-chart class="mt-2" [chartData]="loanStore.amortizationCurveChart()" />
+                        <app-stacked-area-chart class="mt-2" [chartData]="loanStore.interestVsPrincipalChart()" />
                     </div>
                 </mat-tab>
                 <mat-tab label="Table">
                     <ng-template matTabContent>
                         <app-loan-amortization-table />
-                    </ng-template >
+                    </ng-template>
                 </mat-tab>
             </mat-tab-group>
         </section>

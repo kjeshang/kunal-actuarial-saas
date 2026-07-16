@@ -92,6 +92,10 @@ export const LoanStore = signalStore(
         amortizationCurveChart: computed(() => {
             const loanAmortizationSchedule = loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
             return loanChartService.getAmortizationCurveData(loanAmortizationSchedule);
+        }),
+        interestVsPrincipalChart: computed(() => {
+            const loanAmortizationSchedule = loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+            return loanChartService.getInterestVsPrincipalData(loanAmortizationSchedule);
         })
     }))
 )

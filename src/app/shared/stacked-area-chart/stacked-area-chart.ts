@@ -1,15 +1,15 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { PlotlyModule } from 'angular-plotly.js';
-import { LineChartData } from '../models';
+import { StackedAreaChartData } from '../models';
 
 @Component({
-  selector: 'app-line-chart',
+  selector: 'app-stacked-area-chart',
   imports: [PlotlyModule],
-  templateUrl: './line-chart.html',
-  styleUrl: './line-chart.css',
+  templateUrl: './stacked-area-chart.html',
+  styleUrl: './stacked-area-chart.css',
 })
-export class LineChart implements OnChanges {
-  @Input() chartData!: LineChartData;
+export class StackedAreaChart implements OnChanges {
+  @Input() chartData!: StackedAreaChartData;
 
   public graph = {
     // Data
@@ -17,9 +17,19 @@ export class LineChart implements OnChanges {
       {
         x: [],
         y: [],
+        name: '',
+        fill: 'tozeroy',
         type: 'scatter',
-        mode: 'lines+markers',
+        mode:'markers',
       },
+      {
+        x: [],
+        y: [],
+        name: '',
+        fill: 'tonexty',
+        type: 'scatter',
+        mode:'markers',
+      }
     ],
     // Layout
     layout: {
@@ -30,7 +40,7 @@ export class LineChart implements OnChanges {
           text: ''
         }
       },
-      yaxis: { 
+      yaxis: {
         visible: true,
         title: {
           text: ''
@@ -49,10 +59,15 @@ export class LineChart implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.chartData) {
       this.graph.data[0].x = this.chartData.x as never[];
-      this.graph.data[0].y = this.chartData.y as never[];
+      this.graph.data[0].y = this.chartData.y1 as never[];
+      this.graph.data[0].name = this.chartData.y1Name;
+      this.graph.data[1].x = this.chartData.x as never[];
+      this.graph.data[1].y = this.chartData.y2 as never[];
+      this.graph.data[1].name = this.chartData.y2Name;
       this.graph.layout.title.text = this.chartData.title;
       this.graph.layout.xaxis.title.text = this.chartData.xAxisTitle;
       this.graph.layout.yaxis.title.text = this.chartData.yAxisTitle;
     }
   }
+
 }
