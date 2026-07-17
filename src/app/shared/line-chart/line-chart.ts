@@ -18,7 +18,7 @@ export class LineChart implements OnChanges {
         x: [],
         y: [],
         type: 'scatter',
-        mode: 'lines+markers',
+        mode: '',
       },
     ],
     // Layout
@@ -50,6 +50,7 @@ export class LineChart implements OnChanges {
     if (this.chartData) {
       this.graph.data[0].x = this.chartData.x as never[];
       this.graph.data[0].y = this.chartData.y as never[];
+      this.graph.data[0].mode = this.chartData.mode;
       this.graph.layout.title.text = this.chartData.title;
       this.graph.layout.xaxis.title.text = this.chartData.xAxisTitle;
       this.graph.layout.yaxis.title.text = this.chartData.yAxisTitle;

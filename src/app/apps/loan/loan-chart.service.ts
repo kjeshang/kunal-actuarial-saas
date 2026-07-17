@@ -18,6 +18,7 @@ export class LoanChartService {
             x: loanAmortizationSchedule.map((item: LoanAmortizationSchedule) => item.time),
             y: loanAmortizationSchedule.map((item: LoanAmortizationSchedule) => item.outstandingBalance.value),
             title: "Outstanding Balance over Time",
+            mode: "lines+markers",
             xAxisTitle: "Time Period",
             yAxisTitle: "Outstanding Balance ($)"
         }
@@ -35,10 +36,13 @@ export class LoanChartService {
             y1: loanAmortizationSchedule.map((item: LoanAmortizationSchedule) => item.interestPaid.value),
             y2: loanAmortizationSchedule.map((item: LoanAmortizationSchedule) => item.principalRepaid.value),
             title: "Interest Paid vs Principal Repaid",
+            mode: "markers",
             xAxisTitle: "Time Period",
             yAxisTitle: "Amount ($)",
             y1Name: "Interest Paid",
             y2Name: "Principal Repaid",
+            y1Fill: "tozeroy",
+            y2Fill: "tonexty",
         };
         return chartData;
     }
@@ -64,5 +68,9 @@ export class LoanChartService {
             hole: 0.5
         };
         return chartData;
+    }
+
+    getRaceToEquityData(loanAmortizationSchedule: LoanAmortizationSchedule[]) {
+        
     }
 }
