@@ -19,14 +19,14 @@ export class MultiLineChart implements OnChanges {
         y: [],
         name: '',
         type: 'scatter',
-        mode: 'lines+markers',
+        mode: '',
       },
       {
         x: [],
         y: [],
         name: '',
         type: 'scatter',
-        mode: 'lines+markers',
+        mode: '',
       }
     ],
     // Layout
@@ -59,9 +59,11 @@ export class MultiLineChart implements OnChanges {
       this.graph.data[0].x = this.chartData.x as never[];
       this.graph.data[0].y = this.chartData.y1 as never[];
       this.graph.data[0].name = this.chartData.y1Name;
+      this.graph.data[0].mode = this.chartData.mode;
       this.graph.data[1].x = this.chartData.x as never[];
       this.graph.data[1].y = this.chartData.y2 as never[];
       this.graph.data[1].name = this.chartData.y2Name;
+      this.graph.data[1].mode = this.chartData.mode;
       this.graph.layout.title.text = this.chartData.title;
       this.graph.layout.xaxis.title.text = this.chartData.xAxisTitle;
       this.graph.layout.yaxis.title.text = this.chartData.yAxisTitle;

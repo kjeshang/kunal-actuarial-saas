@@ -22,11 +22,14 @@ npm install @types/plotly.js-dist-min --save-dev
 
 ## Loan app
 
-Loan Amortization Parameters:
+### Loan Amortization Parameters
 * Loan Amount ($)
 * Annual Effective Interest Rate (%)
 * Term of Loan (in years)
 * Payment Frequency (per year): "Annual", "Semiannual", "Quarterly", "Monthly"
+* Start Date of Loan <= Will add later
+
+### Output
 
 Summary Metrics:
 > m = Payment Frequency (per year) = m-thly period
@@ -35,13 +38,20 @@ Summary Metrics:
 * m-thly nominal interest rate: "Annual Nominal Interest Rate", "Semiannual Nominal Interest Rate", "Quarterly Nominal Interest Rate", "Monthly Nominal Interest Rate"
 * m-thly effective rate of discount: "Annual Effective Rate of Discount", "Semiannual Effective Rate of Discount", "Quarterly Effective Rate of Discount", "Monthly Effective Rate of Discount"
 
-Loan Amortization Table
+Loan Amortization Table:
+* _Time (in years)_ column
+* _Payment Date_ column <= Will add later
+* _Loan Payment_ column
+* _Interest Paid at Time t_ column
+* _Principal Paid at Time t_ column
+* _Outstanding Balance at Time t_ column
 
-Visualizations
+Visualizations:
 * Amortization Curve; Outstanding Balance over Time = Line Chart <= Done
 * The Interest vs. Principal Breakdown (Stacked Area or Bar Chart) <= Done
 * Total Cost of Borrowing (Donut / Pie Chart) <= Done
 * The "Race to Equity" (Cumulative Principal vs. Cumulative Interest) <= Pending
+
 
 
 ## Development server

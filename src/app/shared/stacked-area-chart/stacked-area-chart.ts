@@ -21,6 +21,7 @@ export class StackedAreaChart implements OnChanges {
         type: 'scatter',
         mode:'',
         fill: '',
+        stackgroup: 'one'
       },
       {
         x: [],
@@ -29,6 +30,7 @@ export class StackedAreaChart implements OnChanges {
         type: 'scatter',
         mode:'',
         fill: '',
+        stackgroup: 'one'
       }
     ],
     // Layout
@@ -48,6 +50,7 @@ export class StackedAreaChart implements OnChanges {
       },
       autosize: true,
       automargin: true,
+      hovermode: 'x unified'
     },
     // Config
     config: {

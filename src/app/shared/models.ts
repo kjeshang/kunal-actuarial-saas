@@ -26,6 +26,7 @@ export interface MultiLineChartData {
     y1: (string | number)[];
     y2: (string | number)[];
     title: string;
+    mode: string;
     xAxisTitle: string;
     yAxisTitle: string;
     y1Name: string;

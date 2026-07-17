@@ -16,6 +16,7 @@
                         <app-line-chart class="mt-2" [chartData]="loanStore.amortizationCurveChart()" />
                         <app-stacked-area-chart class="mt-2" [chartData]="loanStore.interestVsPrincipalChart()" />
                         <app-pie-chart class="mt-2" [chartData]="loanStore.costOfBorrowingChart()" />
+                        <app-multi-line-chart class="mt-2" [chartData]="loanStore.raceToEquityChart()" />
                     </div>
                 </mat-tab>
                 <mat-tab label="Table">
