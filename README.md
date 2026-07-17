@@ -41,7 +41,7 @@ Visualizations
 * Amortization Curve; Outstanding Balance over Time = Line Chart <= Done
 * The Interest vs. Principal Breakdown (Stacked Area or Bar Chart) <= Done
 * Total Cost of Borrowing (Donut / Pie Chart) <= Done
-* The "Race to Equity" (Cumulative Principal vs. Cumulative Interest) <= Done
+* The "Race to Equity" (Cumulative Principal vs. Cumulative Interest) <= Pending
 
 
 ## Development server
