@@ -15,6 +15,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <app-line-chart class="mt-2" [chartData]="loanStore.amortizationCurveChart()" />
                         <app-stacked-area-chart class="mt-2" [chartData]="loanStore.interestVsPrincipalChart()" />
+                        <app-pie-chart class="mt-2" [chartData]="loanStore.costOfBorrowingChart()" />
                     </div>
                 </mat-tab>
                 <mat-tab label="Table">

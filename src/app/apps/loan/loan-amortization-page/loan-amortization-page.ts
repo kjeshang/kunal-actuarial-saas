@@ -7,10 +7,11 @@ import { LoanAmortizationTable } from '../loan-amortization-table/loan-amortizat
 import { MatTabsModule } from '@angular/material/tabs';
 import { LineChart } from '../../../shared/line-chart/line-chart';
 import { StackedAreaChart } from "../../../shared/stacked-area-chart/stacked-area-chart";
+import { PieChart } from '../../../shared/pie-chart/pie-chart';
 
 @Component({
   selector: 'app-loan-amortization-page',
-  imports: [FeatureContainer, LoanParameters, LoanSummaryCard, LoanAmortizationTable, MatTabsModule, LineChart, StackedAreaChart],
+  imports: [FeatureContainer, LoanParameters, LoanSummaryCard, LoanAmortizationTable, MatTabsModule, LineChart, StackedAreaChart, PieChart],
   templateUrl: './loan-amortization-page.html',
   styleUrl: './loan-amortization-page.css',
 })

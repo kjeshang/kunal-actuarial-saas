@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { LoanAmortizationSchedule } from "./loan.models";
-import { LineChartData, StackedAreaChartData } from "../../shared/models";
+import { LineChartData, PieChartData, StackedAreaChartData } from "../../shared/models";
+import currency from "currency.js";
 
 @Injectable({
     providedIn: 'root',
@@ -38,6 +39,29 @@ export class LoanChartService {
             yAxisTitle: "Amount ($)",
             y1Name: "Interest Paid",
             y2Name: "Principal Repaid",
+        };
+        return chartData;
+    }
+
+    /**
+     * Method used to create pie/doughnut chart to determine cost of borrowing (i.e., compare interest paid against total principal paid).
+     * @param loanAmortizationSchedule 
+     * @returns labels, values, title, and hole
+     */
+    getCostOfBorrowingData(loanAmortizationSchedule: LoanAmortizationSchedule[]) {
+        const totalPrincipalPaid: number = loanAmortizationSchedule.reduce((acc: number, val: LoanAmortizationSchedule) => {
+            return currency(acc).add(val.principalRepaid.value).value;
+        }, 0);
+
+        const totalInterestPaid: number = loanAmortizationSchedule.reduce((acc: number, val: LoanAmortizationSchedule) => {
+            return currency(acc).add(val.interestPaid.value).value;
+        }, 0);
+        
+        const chartData: PieChartData = {
+            labels: ["Total Principal Paid (i.e., Loan Amount)", "Total Interest Paid"],
+            values: [totalPrincipalPaid, totalInterestPaid],
+            title: "Total Cost of Borrowing",
+            hole: 0.5
         };
         return chartData;
     }

@@ -16,3 +16,10 @@ export interface StackedAreaChartData {
     y1Name: string;
     y2Name: string;
 }
+
+export interface PieChartData {
+    labels: string[];
+    values: number[];
+    title: string;
+    hole: number;
+}
