@@ -38,4 +38,5 @@ export interface PieChartData {
     values: number[];
     title: string;
     hole: number;
+    textinfo: string;
 }

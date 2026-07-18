@@ -65,7 +65,8 @@ export class LoanChartService {
             labels: ["Total Principal Paid (i.e., Loan Amount)", "Total Interest Paid"],
             values: [totalPrincipalPaid, totalInterestPaid],
             title: "Total Cost of Borrowing",
-            hole: 0.5
+            hole: 0.5,
+            textinfo: "value+percent"
         };
         return chartData;
     }

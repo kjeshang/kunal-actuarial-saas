@@ -19,6 +19,7 @@ export class PieChart implements OnChanges {
         labels: [],
         type: 'pie',
         hole: 1,
+        textinfo: '',
       }
     ],
     // Layout
@@ -32,7 +33,7 @@ export class PieChart implements OnChanges {
         y: '-0.1',
         x: '0.5',
         xanchor: 'center',
-      }
+      },
     },
     // Config
     config: {
@@ -47,6 +48,7 @@ export class PieChart implements OnChanges {
       this.graph.data[0].labels = this.chartData.labels as never[];
       this.graph.layout.title.text = this.chartData.title;
       this.graph.data[0].hole = this.chartData.hole;
+      this.graph.data[0].textinfo = this.chartData.textinfo;
     }
   }
 
