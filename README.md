@@ -28,6 +28,7 @@ npm install @types/plotly.js-dist-min --save-dev
 * Term of Loan (in years)
 * Payment Frequency (per year): "Annual", "Semiannual", "Quarterly", "Monthly"
 * Start Date of Loan <= Will add later
+* Toggle between payment made at end of period and beginning of period (i.e., Annuity Immediate vs Annuity Due) <= Will figure out how to add later
 
 ### Output
 
