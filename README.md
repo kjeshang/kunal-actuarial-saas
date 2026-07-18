@@ -55,8 +55,9 @@ Loan Amortization Table:
 * _Interest Paid at Time t_ column
 * _Principal Paid at Time t_ column
 * _Outstanding Balance at Time t_ column
-> _Export to CSV_ <= Pending
-> _Generate PDF Report_ <= Will add later
+> _Export to CSV_ <= Done
+> _Export to Excel Spreadsheet_ <= Maybe will add later
+> _Generate PDF Report_ <= Maybe Will add later
 
 
 ## Development server
