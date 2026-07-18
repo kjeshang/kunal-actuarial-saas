@@ -41,6 +41,12 @@ Summary Metrics:
 * m-thly nominal interest rate: "Annual Nominal Interest Rate", "Semiannual Nominal Interest Rate", "Quarterly Nominal Interest Rate", "Monthly Nominal Interest Rate"
 * m-thly effective rate of discount: "Annual Effective Rate of Discount", "Semiannual Effective Rate of Discount", "Quarterly Effective Rate of Discount", "Monthly Effective Rate of Discount"
 
+Visualizations:
+* Amortization Curve; Outstanding Balance over Time = Line Chart <= Done
+* The Interest vs. Principal Breakdown (Stacked Area or Bar Chart) <= Done
+* Total Cost of Borrowing (Donut / Pie Chart) <= Done
+* The "Race to Equity" (Cumulative Principal vs. Cumulative Interest) <= Done
+
 Loan Amortization Table:
 * _Time (in years)_ column
 * _Payment Date_ column <= Will add later
@@ -48,13 +54,8 @@ Loan Amortization Table:
 * _Interest Paid at Time t_ column
 * _Principal Paid at Time t_ column
 * _Outstanding Balance at Time t_ column
-
-Visualizations:
-* Amortization Curve; Outstanding Balance over Time = Line Chart <= Done
-* The Interest vs. Principal Breakdown (Stacked Area or Bar Chart) <= Done
-* Total Cost of Borrowing (Donut / Pie Chart) <= Done
-* The "Race to Equity" (Cumulative Principal vs. Cumulative Interest) <= Pending
-
+> _Export to CSV_ <= Pending
+> _Generate PDF Report_ <= Will add later
 
 
 ## Development server
