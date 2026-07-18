@@ -1,5 +1,5 @@
 export interface LoanSummaryMetric {
-    metricType: 'rate' | 'amount';
+    metricType: 'rate' | 'amount' | 'value';
     label: string;
     value: number;
     displayValue: string;

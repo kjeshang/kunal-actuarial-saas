@@ -6,7 +6,7 @@ import { LoanAmortizationSchedule, LoanSummaryMetric } from "./loan.models";
   providedIn: 'root',
 })
 export class LoanService {
-  
+
   /**
    * Method used to calculate m-thly payment amount, and show its calculated value & formatted value for display purposes.
    * @param loanAmount 
@@ -54,7 +54,7 @@ export class LoanService {
     }
     return metric;
   }
-  
+
   /**
    * Method used to calculate m-thly nominal interest rate, and show its calculated value & formatted value for display purposes.
    * @param interestRate
@@ -96,6 +96,45 @@ export class LoanService {
   }
 
   /**
+   * Calculate total number of payment periods required to pay-off the loan.
+   * @param termOfLoan 
+   * @param paymentFrequency 
+   * @returns Object containing metric type, label, value, and display value.
+   */
+  calculateTotalNumberOfPeriods(termOfLoan: number, paymentFrequency: number): LoanSummaryMetric {
+    const numberOfPeriods: number = termOfLoan * paymentFrequency;
+    const metric: LoanSummaryMetric = {
+      metricType: "value",
+      label: "Total Number of Periods",
+      value: numberOfPeriods,
+      displayValue: numberOfPeriods.toString()
+    };
+    return metric;
+  }
+
+  /**
+   * Method used to calculate total interest paid during loan amortization schedule, and show its calculated value & formatted value for display purposes. 
+   * @param loanAmount 
+   * @param interestRate 
+   * @param termOfLoan 
+   * @param paymentFrequency 
+   * @returns Object containing metric type, label, value, and display value.
+   */
+  calculateTotalInterestPaid(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number): LoanSummaryMetric {
+    const loanAmortizationSchedule: LoanAmortizationSchedule[] = this.createLoanAmortizationSchedule(loanAmount, interestRate, termOfLoan, paymentFrequency);
+    const totalInterestPaid: number = loanAmortizationSchedule.reduce((acc: number, val: LoanAmortizationSchedule) => {
+      return currency(acc).add(val.interestPaid.value).value;
+    }, 0);
+    const metric: LoanSummaryMetric = {
+      metricType: "amount",
+      label: "Total Interest Paid",
+      value: totalInterestPaid,
+      displayValue: currency(totalInterestPaid).format()
+    };
+    return metric;
+  }
+
+  /**
    * Method used to generate loan amortization schedule based on loan amount, interest rate, term of loan, and payment frequency.
    * @param loanAmount 
    * @param interestRate 
@@ -121,7 +160,7 @@ export class LoanService {
         }
         loanAmortizationSchedule.push(result);
       }
-      else if(outstandingBalance === 0) {
+      else if (outstandingBalance === 0) {
         const result: LoanAmortizationSchedule = {
           period: t,
           time: t / paymentFrequency,

@@ -86,6 +86,12 @@ export const LoanStore = signalStore(
         periodicRateOfDiscount: computed(() => {
             return loanService.calculatePeriodicEffectiveDiscountRate(interestRate(), paymentFrequency());
         }),
+        totalNumberOfPeriods: computed(() => {
+            return loanService.calculateTotalNumberOfPeriods(termOfLoan(), paymentFrequency());
+        }),
+        totalInterestPaid: computed(() => {
+            return loanService.calculateTotalInterestPaid(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+        }),
         loanAmortizationSchedule: computed(() => {
             return loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
         }),

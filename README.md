@@ -34,6 +34,8 @@ npm install @types/plotly.js-dist-min --save-dev
 Summary Metrics:
 > m = Payment Frequency (per year) = m-thly period
 * m-thly payment amount: "Annual Payment Amount", "Semiannual Payment Amount", "Quarterly Payment Amount", "Monthly Payment Amount"
+* Total number of periods
+* Total interest paid
 * m-thly effective interest rate: "Annual Effective Interest Rate", "Semiannual Effective Interest Rate", "Quarterly Effective Interest Rate", "Monthly Effective Interest Rate"
 * m-thly nominal interest rate: "Annual Nominal Interest Rate", "Semiannual Nominal Interest Rate", "Quarterly Nominal Interest Rate", "Monthly Nominal Interest Rate"
 * m-thly effective rate of discount: "Annual Effective Rate of Discount", "Semiannual Effective Rate of Discount", "Quarterly Effective Rate of Discount", "Monthly Effective Rate of Discount"
