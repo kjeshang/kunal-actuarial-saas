@@ -48,6 +48,7 @@ Visualizations:
 * The "Race to Equity" (Cumulative Principal vs. Cumulative Interest) <= Done
 
 Loan Amortization Table:
+* _Period_ column <= Maybe will add later
 * _Time (in years)_ column
 * _Payment Date_ column <= Will add later
 * _Loan Payment_ column

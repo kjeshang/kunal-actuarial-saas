@@ -12,9 +12,12 @@
                 </button>
             </mat-menu>
         </div>
-        <div class="hidden">
+        <div [class]="showProgressBar ? 'block' : 'hidden'">
             <mat-progress-bar mode="indeterminate" />
         </div>
+        <!-- @if(showProgressBar) {
+            <mat-progress-bar mode="indeterminate" />
+        } -->
         <div class="overflow-x-auto">
             <table mat-table class="mat-shadow-2 min-w-[600px] w-full text-sm text-left"
                 [dataSource]="loanStore.loanAmortizationSchedule()">
