@@ -195,7 +195,7 @@ export class LoanService {
     const R: number = this.calculatePeriodicPaymentAmount(loanAmount, interestRate, termOfLoan, paymentFrequency).value;
     let outstandingBalance: number = loanAmount;
     let loanAmortizationSchedule: LoanAmortizationSchedule[] = [];
-    for (let t = 0; t <= N + 1; t++) {
+    for (let t = 0; t <= N + 2; t++) {
       if (t == 0) {
         const result: LoanAmortizationSchedule = {
           period: 0,
@@ -210,7 +210,7 @@ export class LoanService {
       else if (outstandingBalance === 0) {
         const result: LoanAmortizationSchedule = {
           period: t,
-          time: t / paymentFrequency,
+          time: parseFloat((t / paymentFrequency).toFixed(3)),
           loanPayment: { value: 0, displayValue: "-" },
           interestPaid: { value: 0, displayValue: "-" },
           principalRepaid: { value: 0, displayValue: "-" },
@@ -226,7 +226,7 @@ export class LoanService {
         // outstandingBalance = outstandingBalance <= 0.005 ? 0 : outstandingBalance;00
         const result: LoanAmortizationSchedule = {
           period: t,
-          time: t / paymentFrequency,
+          time: parseFloat((t / paymentFrequency).toFixed(3)),
           loanPayment: { value: loanPayment, displayValue: currency(loanPayment).format() },
           interestPaid: { value: interestPaid, displayValue: currency(interestPaid).format() },
           principalRepaid: { value: principalRepaid, displayValue: currency(principalRepaid).format() },
