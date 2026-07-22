@@ -61,7 +61,7 @@ export class LoanAmortizationTable {
       // Show Progress Bar
       this.showProgressBar = true;
       // Loan Parameters
-      const loanParameters = this.loanStore.loanParameters();
+      const loanParameters: LoanSummaryMetric[] = this.loanStore.loanParameters();
       // Loan Summary Metrics
       const loanSummaryMetrics: LoanSummaryMetric[] = [
         this.loanStore.periodicPaymentAmount(),
