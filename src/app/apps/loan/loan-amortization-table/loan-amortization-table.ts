@@ -95,14 +95,15 @@ export class LoanAmortizationTable {
    */
   async triggerGeneratePDF(): Promise<void> {
     try {
+      // Show Progress Bar
       this.showProgressBar = true;
-
+      // Call Report Service Function to Generate Loan Amortization Data to PDF
       await this.loanReportService.generatePDF(
         this.loanParameters,
         this.loanTableConfiguration,
         this.loanAmortizationSchedule
       );
-      
+      // Hide Progress Bar
       this.showProgressBar = false;
     }
     catch (error: unknown) {
