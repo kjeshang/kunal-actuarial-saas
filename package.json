@@ -22,6 +22,8 @@
     "@ngrx/signals": "^21.1.1",
     "angular-plotly.js": "^20.0.0",
     "currency.js": "^2.0.4",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.8",
     "lodash": "^4.18.1",
     "luxon": "^3.7.2",
     "plotly.js-dist-min": "^3.7.0",

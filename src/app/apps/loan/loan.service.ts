@@ -8,6 +8,53 @@ import { LoanAmortizationSchedule, LoanSummaryMetric } from "./loan.models";
 export class LoanService {
 
   /**
+   * Method used to take loan parameters and format them for display/reporting purposes.
+   * @param loanAmount 
+   * @param interestRate 
+   * @param termOfLoan 
+   * @param paymentFrequency 
+   * @returns Array of loan summary metrics that reference the loan parameters.
+   */
+  formatLoanParameters(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number): LoanSummaryMetric[] {
+    // Loan Amount
+    const formattedLoanAmount: LoanSummaryMetric = {
+      metricType: "amount",
+      label: "Loan Amount",
+      value: loanAmount,
+      displayValue: currency(loanAmount).format()
+    };
+    // 2. Interest Rate
+    const formattedInterestRate: LoanSummaryMetric = {
+      metricType: "rate",
+      label: "Annual Effective Interest Rate",
+      value: Math.round((interestRate * 100 + Number.EPSILON) * 10000) / 10000 / 100,
+      displayValue: `${(interestRate * 100).toFixed(4)}%`,
+    }
+    // 3. Term of Loan
+    const formattedTermOfLoan: LoanSummaryMetric = {
+      metricType: "value",
+      label: "Term of Loan (in years)",
+      value: termOfLoan,
+      displayValue: `${termOfLoan} years`
+    };
+    // 4. Payment Frequency
+    const formattedPaymentFrequency: LoanSummaryMetric = {
+      metricType: "value",
+      label: "Payment Frequency (per year)",
+      value: paymentFrequency,
+      displayValue: this.determinePaymentFrequencyLabel(paymentFrequency)
+    };
+    // 5. Create array of formatted loan parameters.
+    const loanParameters: LoanSummaryMetric[] = [
+      formattedLoanAmount,
+      formattedInterestRate,
+      formattedTermOfLoan,
+      formattedPaymentFrequency
+    ];
+    return loanParameters;
+  }
+
+  /**
    * Method used to calculate m-thly payment amount, and show its calculated value & formatted value for display purposes.
    * @param loanAmount 
    * @param interestRate 

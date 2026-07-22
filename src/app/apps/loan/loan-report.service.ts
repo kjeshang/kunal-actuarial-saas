@@ -2,13 +2,17 @@ import { Injectable } from "@angular/core";
 import { LoanAmortizationSchedule, LoanSummaryMetric } from "./loan.models";
 import { isNil } from "lodash";
 import { DateTime } from 'luxon';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Injectable({
     providedIn: 'root',
 })
 export class LoanReportService {
-
-    async exportToCSV(loanParameters: { label: string, value: number }[], loanSummaryMetrics: LoanSummaryMetric[], loanAmortizationScheduleColumnHeadings: string[], loanAmortizationSchedule: LoanAmortizationSchedule[]): Promise<void> {
+    /**
+     * Method used to take loan parameters, loan summary metrics, loan amortization table's column headings, and the loan amortization schedule iteself, and export the data into a CSV.
+     */
+    async exportToCSV(loanParameters: LoanSummaryMetric[], loanSummaryMetrics: LoanSummaryMetric[], loanAmortizationScheduleColumnHeadings: string[], loanAmortizationSchedule: LoanAmortizationSchedule[]): Promise<void> {
         for (const item of loanParameters) {
             if (isNil(item.value) || item.value === 0) {
                 throw new Error("Loan Parameters must be provided to create the loan amortization schedule and export CSV!")
@@ -45,7 +49,7 @@ export class LoanReportService {
 
         // 5. Add Column Headings of Loan Amortization Schedule
         csvRows.push(`${loanAmortizationScheduleColumnHeadings.join(",")}`);
-        for(const item of loanAmortizationSchedule) {
+        for (const item of loanAmortizationSchedule) {
             csvRows.push(`${item.time},${item.loanPayment.value},${item.interestPaid.value},${item.principalRepaid.value},${item.outstandingBalance.value}`);
         }
 
@@ -64,5 +68,27 @@ export class LoanReportService {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+
+    async generatePDF(): Promise<void> {
+        // Testing out JSPDF and JSPDFAutoTable in Angular using practice data
+        const doc = new jsPDF();
+
+        const tableColumns = [['ID', 'Name', 'Email', 'Role']];
+        const tableData = [
+            [1, 'Alice Smith', 'alice@example.com', 'Admin'],
+            [2, 'Bob Jones', 'bob@example.com', 'User'],
+            [3, 'Charlie Brown', 'charlie@example.com', 'Moderator']
+        ];
+
+        autoTable(doc, {
+            head: tableColumns,
+            body: tableData,
+            startY: 20, // Margin from the top
+            theme: 'striped', // Available themes: 'striped', 'grid', 'plain'
+            headStyles: { fillColor: [41, 128, 185] } // Custom header color
+        });
+
+        doc.save('angular-table-export.pdf');
     }
 }

@@ -74,6 +74,9 @@ export const LoanStore = signalStore(
         loanService: LoanService = inject(LoanService),
         loanChartService: LoanChartService = inject(LoanChartService)
     ) => ({
+        loanParameters: computed(() => {
+            return loanService.formatLoanParameters(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+        }),
         periodicEffectiveInterestRate: computed(() => {
             return loanService.calculatePeriodicEffectiveInterestRate(interestRate(), paymentFrequency());
         }),

@@ -10,6 +10,10 @@
                     <mat-icon>table_view</mat-icon>
                     <span>Export to CSV</span>
                 </button>
+                <button mat-menu-item (click)="triggerGeneratePDF()">
+                    <mat-icon>article</mat-icon>
+                    <span>Generate PDF</span>
+                </button>
             </mat-menu>
         </div>
         <div [class]="showProgressBar ? 'block' : 'hidden'">

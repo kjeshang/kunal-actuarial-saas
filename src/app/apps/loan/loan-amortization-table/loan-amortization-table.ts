@@ -21,8 +21,37 @@ export class LoanAmortizationTable {
   private loanReportService = inject(LoanReportService);
   private _snackBar: MatSnackBar = inject(MatSnackBar);
 
-  displayedColumns: string[] = ['time', 'loanPayment', 'interestPaid', 'principalRepaid', 'outstandingBalance'];
   showProgressBar: boolean = false;
+  columns: { name: string, heading: string }[] = [
+    {
+      name: "time",
+      heading: "Time (in years)"
+    },
+    {
+      name: "loanPayment",
+      heading: "Loan Payment"
+    },
+    {
+      name: "interestPaid",
+      heading: "Interest Paid at Time t"
+    },
+    {
+      name: "principalRepaid",
+      heading: "Principal Repaid at Time t"
+    },
+    {
+      name: "outstandingBalance",
+      heading: "Outstanding Balance at Time t"
+    }
+  ];
+
+  get displayedColumns(): string[] {
+    const list: string[] = [];
+    for(const item of this.columns) {
+      list.push(item.name);
+    }
+    return list;
+  }
 
   /**
    * Method used to check whether loan payment, interest paid, principal repaid, or outstanding balance values are valid; if not, "$0.00".
@@ -40,27 +69,16 @@ export class LoanAmortizationTable {
     return displayValue;
   }
 
+  /**
+   * On button click, asynchronously call function to export loan amortization schedule data into CSV.
+   */
   async triggerExportToCSV(): Promise<void> {
-    this.showProgressBar = true;
     try {
-      const loanParameters: { label: string, value: number }[] = [
-        {
-          label: "Loan Amount",
-          value: this.loanStore.loanAmount(),
-        },
-        {
-          label: "Annual Effective Interest Rate",
-          value: this.loanStore.interestRate(),
-        },
-        {
-          label: "Term of Loan (in years)",
-          value: this.loanStore.termOfLoan(),
-        },
-        {
-          label: "Payment Frequency (per year)",
-          value: this.loanStore.paymentFrequency()
-        }
-      ];
+      // Show Progress Bar
+      this.showProgressBar = true;
+      // Loan Parameters
+      const loanParameters = this.loanStore.loanParameters();
+      // Loan Summary Metrics
       const loanSummaryMetrics: LoanSummaryMetric[] = [
         this.loanStore.periodicPaymentAmount(),
         this.loanStore.totalInterestPaid(),
@@ -69,26 +87,38 @@ export class LoanAmortizationTable {
         this.loanStore.periodicNominalInterestRate(),
         this.loanStore.periodicRateOfDiscount(),
       ];
-      const loanAmortizationScheduleColumnHeadings: string[] = ["Time (in years)", "Loan Payment	Interest Paid at Time t", "Principal Repaid at Time t", "Outstanding Balance at Time t"];
+      // Loan Amortization Table's Column Headings
+      const loanAmortizationScheduleColumnHeadings: string[] = [];
+      for(const item of this.columns) {
+        loanAmortizationScheduleColumnHeadings.push(item.heading);
+      }
+      // Loan Amortization Schedule
       const loanAmortizationSchedule: LoanAmortizationSchedule[] = this.loanStore.loanAmortizationSchedule();
-
+      // Call Report Service Function to Export Loan Amortization Data to CSV
       await this.loanReportService.exportToCSV(loanParameters, loanSummaryMetrics, loanAmortizationScheduleColumnHeadings, loanAmortizationSchedule);
+      // Show notification that CSV has been exported
       this._snackBar.open("Loan Amortization Exported to CSV!", "Dismiss", {
         duration: 3000,
         verticalPosition: "top"
       });
-
+      // Hide Progress Bar
       this.showProgressBar = false;
     }
     catch (error: unknown) {
+      // In the event an error was thrown by the report service function, show a notification indicating the error message.
       if (error instanceof Error) {
         this._snackBar.open(`${error.message}`, "Dismiss", {
           duration: 5000,
           verticalPosition: "top"
         });
+        // Hide Progress Bar
         this.showProgressBar = false;
       }
     }
+  }
+
+  async triggerGeneratePDF(): Promise<void> {
+    // this.loanReportService.generatePDF();
   }
 
 }

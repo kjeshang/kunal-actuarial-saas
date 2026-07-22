@@ -18,6 +18,7 @@ npm install --save-dev @types/luxon
 npm install currency.js
 npm install angular-plotly.js plotly.js-dist-min --save
 npm install @types/plotly.js-dist-min --save-dev
+npm install jspdf jspdf-autotable
 ```
 
 ## Loan app
