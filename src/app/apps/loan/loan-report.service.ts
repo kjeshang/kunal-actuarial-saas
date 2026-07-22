@@ -74,23 +74,47 @@ export class LoanReportService {
         document.body.removeChild(link);
     }
 
-    async generatePDF(): Promise<void> {
-        // Testing out JSPDF and JSPDFAutoTable in Angular using practice data
-        const doc = new jsPDF();
-
-        const tableColumns = [['ID', 'Name', 'Email', 'Role']];
-        const tableData = [
-            [1, 'Alice Smith', 'alice@example.com', 'Admin'],
-            [2, 'Bob Jones', 'bob@example.com', 'User'],
-            [3, 'Charlie Brown', 'charlie@example.com', 'Moderator']
+    /**
+     * Method used to take loan parameters, loan summary metrics, loan amortization table's column headings, and the loan amortization schedule iteself, and generate the data into a PDF.
+     */
+    async generatePDF(loanParameters: LoanSummaryMetric[], loanTableConfiguration: LoanTableConfiguration[], loanAmortizationSchedule: LoanAmortizationSchedule[]): Promise<void> {
+        for (const item of loanParameters) {
+            if (isNil(item.value) || item.value === 0) {
+                throw new Error("Loan Parameters must be provided to create the loan amortization schedule and generate PDF!")
+            }
+        }
+        const doc: jsPDF = new jsPDF();
+        // Loan Amortization Schedule's Column Headings
+        const tableColumns: string[][] = [
+            loanTableConfiguration.map((item: LoanTableConfiguration) => item.heading)
         ];
-
+        // Loan Amortization Schedule's Data
+        const tableData: (string | number)[][] = loanAmortizationSchedule.map((item: LoanAmortizationSchedule) => {
+            const result: (string | number)[] = [
+                item.period,
+                item.time,
+                item.loanPayment.displayValue,
+                item.interestPaid.displayValue,
+                item.principalRepaid.displayValue,
+                item.outstandingBalance.displayValue
+            ];
+            return result;
+        });
+        
         autoTable(doc, {
             head: tableColumns,
             body: tableData,
             startY: 20, // Margin from the top
             theme: 'striped', // Available themes: 'striped', 'grid', 'plain'
-            headStyles: { fillColor: [41, 128, 185] } // Custom header color
+            headStyles: { fillColor: [41, 128, 185] }, // Custom header color
+            columnStyles: {
+                0: {halign: 'left'},
+                1: {halign: 'left'},
+                2: {halign: 'right'},
+                3: {halign: 'right'},
+                4: {halign: 'right'},
+                5: {halign: 'right'}
+            }
         });
 
         doc.save('angular-table-export.pdf');

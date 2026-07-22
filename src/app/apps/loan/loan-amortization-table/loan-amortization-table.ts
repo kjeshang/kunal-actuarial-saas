@@ -90,8 +90,32 @@ export class LoanAmortizationTable {
     }
   }
 
+  /**
+   * On button click, asynchronously call function to generate loan amortization schedule data into PDF.
+   */
   async triggerGeneratePDF(): Promise<void> {
-    // this.loanReportService.generatePDF();
+    try {
+      this.showProgressBar = true;
+
+      await this.loanReportService.generatePDF(
+        this.loanParameters,
+        this.loanTableConfiguration,
+        this.loanAmortizationSchedule
+      );
+      
+      this.showProgressBar = false;
+    }
+    catch (error: unknown) {
+      // In the event an error was thrown by the report service function, show a notification indicating the error message.
+      if (error instanceof Error) {
+        this._snackBar.open(`${error.message}`, "Dismiss", {
+          duration: 5000,
+          verticalPosition: "top"
+        });
+        // Hide Progress Bar
+        this.showProgressBar = false;
+      }
+    }
   }
 
 }
