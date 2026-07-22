@@ -41,7 +41,7 @@ export class LoanAmortizationTable {
 
   /**
    * Method used to check whether loan payment, interest paid, principal repaid, or outstanding balance values are valid; if not, "$0.00".
-   * @param value Loan Payment, Interest Paid, Principal Repaid, Outstanding Balance
+   * @param value Period, Loan Payment, Interest Paid, Principal Repaid, Outstanding Balance
    * @returns Display value or "$0.00"
    */
   showDisplayValue(value: string): string {
@@ -62,13 +62,10 @@ export class LoanAmortizationTable {
     try {
       // Show Progress Bar
       this.showProgressBar = true;
-      // Loan Amortization Table's Column Headings
-      const loanAmortizationScheduleColumnHeadings: string[] = this.loanTableConfiguration.map((item: LoanTableConfiguration) => item.heading);
       // Call Report Service Function to Export Loan Amortization Data to CSV
       await this.loanReportService.exportToCSV(
         this.loanParameters,
         this.loanSummaryMetrics,
-        loanAmortizationScheduleColumnHeadings,
         this.loanTableConfiguration,
         this.loanAmortizationSchedule
       );
