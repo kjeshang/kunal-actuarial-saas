@@ -18,4 +18,37 @@ import { MultiLineChart } from '../../../shared/multi-line-chart/multi-line-char
 })
 export class LoanAmortizationPage {
   loanStore = inject(LoanStore);
+
+  loanTableConfiguration: { name: string, heading: string, textPosition: string }[] = [
+    {
+      name: "period",
+      heading: "Period",
+      textPosition: "!text-center"
+    },
+    {
+      name: "time",
+      heading: "Time (in years)",
+      textPosition: "!text-center"
+    },
+    {
+      name: "loanPayment",
+      heading: "Loan Payment",
+      textPosition: "!text-right"
+    },
+    {
+      name: "interestPaid",
+      heading: "Interest Paid at Time t",
+      textPosition: "!text-right"
+    },
+    {
+      name: "principalRepaid",
+      heading: "Principal Repaid at Time t",
+      textPosition: "!text-right"
+    },
+    {
+      name: "outstandingBalance",
+      heading: "Outstanding Balance at Time t",
+      textPosition: "!text-right"
+    }
+  ];
 }

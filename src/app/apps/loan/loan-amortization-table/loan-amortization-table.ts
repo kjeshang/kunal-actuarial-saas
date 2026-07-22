@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input, input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { LoanStore } from '../loan.store';
 import { isNil } from 'lodash';
@@ -17,37 +17,21 @@ import { LoanReportService } from '../loan-report.service';
   styleUrl: './loan-amortization-table.css',
 })
 export class LoanAmortizationTable {
+  @Input() loanTableConfiguration!: { name: string, heading: string, textPosition: string }[];
+  @Input() loanAmortizationSchedule!: LoanAmortizationSchedule[];
+  
   loanStore = inject(LoanStore);
   private loanReportService = inject(LoanReportService);
   private _snackBar: MatSnackBar = inject(MatSnackBar);
 
   showProgressBar: boolean = false;
-  columns: { name: string, heading: string }[] = [
-    {
-      name: "time",
-      heading: "Time (in years)"
-    },
-    {
-      name: "loanPayment",
-      heading: "Loan Payment"
-    },
-    {
-      name: "interestPaid",
-      heading: "Interest Paid at Time t"
-    },
-    {
-      name: "principalRepaid",
-      heading: "Principal Repaid at Time t"
-    },
-    {
-      name: "outstandingBalance",
-      heading: "Outstanding Balance at Time t"
-    }
-  ];
 
+  /**
+   * Get name of column to be populated in table.
+   */
   get displayedColumns(): string[] {
     const list: string[] = [];
-    for(const item of this.columns) {
+    for(const item of this.loanTableConfiguration) {
       list.push(item.name);
     }
     return list;
@@ -89,7 +73,7 @@ export class LoanAmortizationTable {
       ];
       // Loan Amortization Table's Column Headings
       const loanAmortizationScheduleColumnHeadings: string[] = [];
-      for(const item of this.columns) {
+      for(const item of this.loanTableConfiguration) {
         loanAmortizationScheduleColumnHeadings.push(item.heading);
       }
       // Loan Amortization Schedule

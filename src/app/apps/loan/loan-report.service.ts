@@ -50,7 +50,7 @@ export class LoanReportService {
         // 5. Add Column Headings of Loan Amortization Schedule
         csvRows.push(`${loanAmortizationScheduleColumnHeadings.join(",")}`);
         for (const item of loanAmortizationSchedule) {
-            csvRows.push(`${item.time},${item.loanPayment.value},${item.interestPaid.value},${item.principalRepaid.value},${item.outstandingBalance.value}`);
+            csvRows.push(`${item.period},${item.time},${item.loanPayment.value},${item.interestPaid.value},${item.principalRepaid.value},${item.outstandingBalance.value}`);
         }
 
         // 7. Create filename of CSV
