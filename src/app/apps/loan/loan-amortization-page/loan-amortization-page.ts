@@ -9,7 +9,7 @@ import { LineChart } from '../../../shared/line-chart/line-chart';
 import { StackedAreaChart } from "../../../shared/stacked-area-chart/stacked-area-chart";
 import { PieChart } from '../../../shared/pie-chart/pie-chart';
 import { MultiLineChart } from '../../../shared/multi-line-chart/multi-line-chart';
-import { LoanSummaryMetric, LoanTableConfiguration } from '../loan.models';
+import { LoanTableConfiguration } from '../loan.models';
 
 @Component({
   selector: 'app-loan-amortization-page',
