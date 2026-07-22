@@ -100,23 +100,28 @@ export class LoanReportService {
             ];
             return result;
         });
-        
-        autoTable(doc, {
-            head: tableColumns,
-            body: tableData,
-            startY: 20, // Margin from the top
-            theme: 'striped', // Available themes: 'striped', 'grid', 'plain'
-            headStyles: { fillColor: [41, 128, 185] }, // Custom header color
-            columnStyles: {
-                0: {halign: 'left'},
-                1: {halign: 'left'},
-                2: {halign: 'right'},
-                3: {halign: 'right'},
-                4: {halign: 'right'},
-                5: {halign: 'right'}
+        // Place Loan Amortization Schedule Table in Report
+        autoTable(doc, 
+            {
+                head: tableColumns,
+                body: tableData,
+                startY: 20, // Margin from the top
+                theme: 'striped', // Available themes: 'striped', 'grid', 'plain'
+                headStyles: { fillColor: [41, 128, 185] }, // Custom header color
+                columnStyles: {
+                    0: {halign: 'left'},
+                    1: {halign: 'left'},
+                    2: {halign: 'right'},
+                    3: {halign: 'right'},
+                    4: {halign: 'right'},
+                    5: {halign: 'right'}
+                },
             }
-        });
-
-        doc.save('angular-table-export.pdf');
+        );
+        // Create filename
+        const pdfGenerationDatetime: string = DateTime.now().toISO();
+        const filename: string = `LoanAmortizationSchedule-${pdfGenerationDatetime}.pdf`;
+        // Save PDF
+        doc.save(filename);
     }
 }
