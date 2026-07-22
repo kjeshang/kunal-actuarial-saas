@@ -9,6 +9,7 @@ import { LineChart } from '../../../shared/line-chart/line-chart';
 import { StackedAreaChart } from "../../../shared/stacked-area-chart/stacked-area-chart";
 import { PieChart } from '../../../shared/pie-chart/pie-chart';
 import { MultiLineChart } from '../../../shared/multi-line-chart/multi-line-chart';
+import { LoanTableConfiguration } from '../loan.models';
 
 @Component({
   selector: 'app-loan-amortization-page',
@@ -19,7 +20,7 @@ import { MultiLineChart } from '../../../shared/multi-line-chart/multi-line-char
 export class LoanAmortizationPage {
   loanStore = inject(LoanStore);
 
-  loanTableConfiguration: { name: string, heading: string, textPosition: string }[] = [
+  loanTableConfiguration: LoanTableConfiguration[] = [
     {
       name: "period",
       heading: "Period",

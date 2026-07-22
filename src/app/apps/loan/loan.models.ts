@@ -24,3 +24,9 @@ export interface LoanAmortizationSchedule {
     // Outstanding Balance at Time t
     outstandingBalance: LoanAmortizationValue;
 }
+
+export interface LoanTableConfiguration {
+    name: string;
+    heading: string;
+    textPosition: string;
+}

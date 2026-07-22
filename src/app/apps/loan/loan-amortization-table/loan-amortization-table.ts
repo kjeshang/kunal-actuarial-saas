@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { LoanAmortizationSchedule, LoanSummaryMetric } from '../loan.models';
+import { LoanAmortizationSchedule, LoanSummaryMetric, LoanTableConfiguration } from '../loan.models';
 import { LoanReportService } from '../loan-report.service';
 
 @Component({
@@ -17,7 +17,7 @@ import { LoanReportService } from '../loan-report.service';
   styleUrl: './loan-amortization-table.css',
 })
 export class LoanAmortizationTable {
-  @Input() loanTableConfiguration!: { name: string, heading: string, textPosition: string }[];
+  @Input() loanTableConfiguration!: LoanTableConfiguration[];
   @Input() loanAmortizationSchedule!: LoanAmortizationSchedule[];
 
   loanStore = inject(LoanStore);
@@ -72,7 +72,7 @@ export class LoanAmortizationTable {
         this.loanStore.periodicRateOfDiscount(),
       ];
       // Loan Amortization Table's Column Headings
-      const loanAmortizationScheduleColumnHeadings: string[] = this.loanTableConfiguration.map((item: { name: string, heading: string, textPosition: string }) => item.heading);
+      const loanAmortizationScheduleColumnHeadings: string[] = this.loanTableConfiguration.map((item: LoanTableConfiguration) => item.heading);
       // Loan Amortization Schedule
       const loanAmortizationSchedule: LoanAmortizationSchedule[] = this.loanStore.loanAmortizationSchedule();
       // Call Report Service Function to Export Loan Amortization Data to CSV
