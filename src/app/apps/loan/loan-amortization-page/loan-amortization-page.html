@@ -23,7 +23,18 @@
                 </mat-tab>
                 <mat-tab label="Table">
                     <ng-template matTabContent>
-                        <app-loan-amortization-table [loanTableConfiguration]="loanTableConfiguration" [loanAmortizationSchedule]="loanStore.loanAmortizationSchedule()" />
+                        <app-loan-amortization-table 
+                            [loanTableConfiguration]="loanTableConfiguration"
+                            [loanParameters]="loanStore.loanParameters()" 
+                            [loanSummaryMetrics]="[
+                                    loanStore.periodicPaymentAmount(),
+                                    loanStore.totalInterestPaid(),
+                                    loanStore.totalNumberOfPeriods(),
+                                    loanStore.periodicEffectiveInterestRate(),
+                                    loanStore.periodicNominalInterestRate(),
+                                    loanStore.periodicRateOfDiscount(),
+                                ]" 
+                            [loanAmortizationSchedule]="loanStore.loanAmortizationSchedule()" />
                     </ng-template>
                 </mat-tab>
             </mat-tab-group>

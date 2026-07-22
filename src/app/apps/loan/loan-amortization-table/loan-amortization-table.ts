@@ -18,9 +18,11 @@ import { LoanReportService } from '../loan-report.service';
 })
 export class LoanAmortizationTable {
   @Input() loanTableConfiguration!: LoanTableConfiguration[];
+  @Input() loanParameters!: LoanSummaryMetric[];
+  @Input() loanSummaryMetrics!: LoanSummaryMetric[];
   @Input() loanAmortizationSchedule!: LoanAmortizationSchedule[];
 
-  loanStore = inject(LoanStore);
+  // loanStore = inject(LoanStore);
   private loanReportService = inject(LoanReportService);
   private _snackBar: MatSnackBar = inject(MatSnackBar);
 
@@ -60,23 +62,16 @@ export class LoanAmortizationTable {
     try {
       // Show Progress Bar
       this.showProgressBar = true;
-      // Loan Parameters
-      const loanParameters: LoanSummaryMetric[] = this.loanStore.loanParameters();
-      // Loan Summary Metrics
-      const loanSummaryMetrics: LoanSummaryMetric[] = [
-        this.loanStore.periodicPaymentAmount(),
-        this.loanStore.totalInterestPaid(),
-        this.loanStore.totalNumberOfPeriods(),
-        this.loanStore.periodicEffectiveInterestRate(),
-        this.loanStore.periodicNominalInterestRate(),
-        this.loanStore.periodicRateOfDiscount(),
-      ];
       // Loan Amortization Table's Column Headings
       const loanAmortizationScheduleColumnHeadings: string[] = this.loanTableConfiguration.map((item: LoanTableConfiguration) => item.heading);
-      // Loan Amortization Schedule
-      const loanAmortizationSchedule: LoanAmortizationSchedule[] = this.loanStore.loanAmortizationSchedule();
       // Call Report Service Function to Export Loan Amortization Data to CSV
-      await this.loanReportService.exportToCSV(loanParameters, loanSummaryMetrics, loanAmortizationScheduleColumnHeadings, loanAmortizationSchedule);
+      await this.loanReportService.exportToCSV(
+        this.loanParameters,
+        this.loanSummaryMetrics,
+        loanAmortizationScheduleColumnHeadings,
+        this.loanTableConfiguration,
+        this.loanAmortizationSchedule
+      );
       // Show notification that CSV has been exported
       this._snackBar.open("Loan Amortization Exported to CSV!", "Dismiss", {
         duration: 3000,

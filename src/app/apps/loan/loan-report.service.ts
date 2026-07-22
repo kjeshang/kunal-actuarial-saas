@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { LoanAmortizationSchedule, LoanSummaryMetric } from "./loan.models";
+import { LoanAmortizationSchedule, LoanSummaryMetric, LoanTableConfiguration } from "./loan.models";
 import { isNil } from "lodash";
 import { DateTime } from 'luxon';
 import jsPDF from 'jspdf';
@@ -12,12 +12,13 @@ export class LoanReportService {
     /**
      * Method used to take loan parameters, loan summary metrics, loan amortization table's column headings, and the loan amortization schedule iteself, and export the data into a CSV.
      */
-    async exportToCSV(loanParameters: LoanSummaryMetric[], loanSummaryMetrics: LoanSummaryMetric[], loanAmortizationScheduleColumnHeadings: string[], loanAmortizationSchedule: LoanAmortizationSchedule[]): Promise<void> {
+    async exportToCSV(loanParameters: LoanSummaryMetric[], loanSummaryMetrics: LoanSummaryMetric[], loanAmortizationScheduleColumnHeadings: string[], loanTableConfiguration: LoanTableConfiguration[], loanAmortizationSchedule: LoanAmortizationSchedule[]): Promise<void> {
         for (const item of loanParameters) {
             if (isNil(item.value) || item.value === 0) {
                 throw new Error("Loan Parameters must be provided to create the loan amortization schedule and export CSV!")
             }
         }
+        console.log(loanSummaryMetrics);
         const csvRows: string[] = [];
 
         const exportDate: string = DateTime.now().toLocaleString(DateTime.DATE_FULL);
@@ -48,7 +49,12 @@ export class LoanReportService {
         csvRows.push("");
 
         // 5. Add Column Headings of Loan Amortization Schedule
-        csvRows.push(`${loanAmortizationScheduleColumnHeadings.join(",")}`);
+        // csvRows.push(`${loanAmortizationScheduleColumnHeadings.join(",")}`);
+        const columnHeadings: string[] = loanTableConfiguration.map((item: LoanTableConfiguration) => item.heading);
+        csvRows.push(`${columnHeadings.join(",")}`);
+
+        // 6. Add Row Values to Loan Amortization Schedule
+        // const columnNames: string[] = loanTableConfiguration.map((item: LoanTableConfiguration) => item.name);
         for (const item of loanAmortizationSchedule) {
             csvRows.push(`${item.period},${item.time},${item.loanPayment.value},${item.interestPaid.value},${item.principalRepaid.value},${item.outstandingBalance.value}`);
         }
