@@ -19,7 +19,7 @@ import { LoanReportService } from '../loan-report.service';
 export class LoanAmortizationTable {
   @Input() loanTableConfiguration!: { name: string, heading: string, textPosition: string }[];
   @Input() loanAmortizationSchedule!: LoanAmortizationSchedule[];
-  
+
   loanStore = inject(LoanStore);
   private loanReportService = inject(LoanReportService);
   private _snackBar: MatSnackBar = inject(MatSnackBar);
@@ -31,7 +31,7 @@ export class LoanAmortizationTable {
    */
   get displayedColumns(): string[] {
     const list: string[] = [];
-    for(const item of this.loanTableConfiguration) {
+    for (const item of this.loanTableConfiguration) {
       list.push(item.name);
     }
     return list;
@@ -72,10 +72,7 @@ export class LoanAmortizationTable {
         this.loanStore.periodicRateOfDiscount(),
       ];
       // Loan Amortization Table's Column Headings
-      const loanAmortizationScheduleColumnHeadings: string[] = [];
-      for(const item of this.loanTableConfiguration) {
-        loanAmortizationScheduleColumnHeadings.push(item.heading);
-      }
+      const loanAmortizationScheduleColumnHeadings: string[] = this.loanTableConfiguration.map((item: { name: string, heading: string, textPosition: string }) => item.heading);
       // Loan Amortization Schedule
       const loanAmortizationSchedule: LoanAmortizationSchedule[] = this.loanStore.loanAmortizationSchedule();
       // Call Report Service Function to Export Loan Amortization Data to CSV

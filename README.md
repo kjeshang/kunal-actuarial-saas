@@ -36,20 +36,20 @@ npm install jspdf jspdf-autotable
 Summary Metrics:
 > m = Payment Frequency (per year) = m-thly period
 * m-thly payment amount: "Annual Payment Amount", "Semiannual Payment Amount", "Quarterly Payment Amount", "Monthly Payment Amount"
-* Total number of periods
 * Total interest paid
+* Total number of periods
 * m-thly effective interest rate: "Annual Effective Interest Rate", "Semiannual Effective Interest Rate", "Quarterly Effective Interest Rate", "Monthly Effective Interest Rate"
 * m-thly nominal interest rate: "Annual Nominal Interest Rate", "Semiannual Nominal Interest Rate", "Quarterly Nominal Interest Rate", "Monthly Nominal Interest Rate"
 * m-thly effective rate of discount: "Annual Effective Rate of Discount", "Semiannual Effective Rate of Discount", "Quarterly Effective Rate of Discount", "Monthly Effective Rate of Discount"
 
 Visualizations:
-* Amortization Curve; Outstanding Balance over Time = Line Chart <= Done
-* The Interest vs. Principal Breakdown (Stacked Area or Bar Chart) <= Done
-* Total Cost of Borrowing (Donut / Pie Chart) <= Done
-* The "Race to Equity" (Cumulative Principal vs. Cumulative Interest) <= Done
+* Amortization Curve; Outstanding Balance over Time = Line Chart
+* The Interest vs. Principal Breakdown (Stacked Area or Bar Chart)
+* Total Cost of Borrowing (Donut / Pie Chart)
+* The "Race to Equity" (Cumulative Principal vs. Cumulative Interest)
 
 Loan Amortization Table:
-* _Period_ column <= Maybe will add later
+* _Period_ column
 * _Time (in years)_ column
 * _Payment Date_ column <= Will add later
 * _Loan Payment_ column
@@ -57,8 +57,8 @@ Loan Amortization Table:
 * _Principal Paid at Time t_ column
 * _Outstanding Balance at Time t_ column
 > _Export to CSV_ <= Done
+> _Generate PDF Report_ <= Pending
 > _Export to Excel Spreadsheet_ <= Maybe will add later
-> _Generate PDF Report_ <= Maybe Will add later
 
 
 ## Development server
