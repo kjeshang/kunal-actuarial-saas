@@ -83,16 +83,10 @@ export class LoanReportService {
                 throw new Error("Loan Parameters must be provided to create the loan amortization schedule and generate PDF!")
             }
         }
-        // Instantiate JS Report and necessary parameters
+        // Instantiate JS Report and necessary parameters ---------------------------------------
         const doc: jsPDF = new jsPDF();
-        // const pageCount: number = (doc as any).internal.getNumberOfPages();
-        // const pageWidth = doc.internal.pageSize.getWidth();
-        // const pageHeight = doc.internal.pageSize.getHeight();
-        // for (let i = 1; i <= pageCount; i++) {
-        //     doc.setPage(i);
-        //     doc.text(`Page ${i} of ${pageCount}`, 100, 280, { align: "center" });
-        // }
         let y = 20;
+        // Set Report Title and Subtitle
         doc.setFontSize(18);
         doc.text("Loan Amortization Report", 10, y);
         y += 5;
@@ -205,6 +199,17 @@ export class LoanReportService {
                 },
             }
         );
+        // Finalize Report --------------------------------------------------------------------
+        // Add page numbers
+        const pageCount: number = (doc as any).internal.getNumberOfPages();
+        const pageWidth: number = doc.internal.pageSize.getWidth();
+        const pageHeight: number = doc.internal.pageSize.getHeight();
+        for (let i = 1; i <= pageCount; i++) {
+            doc.setPage(i);
+            doc.setFontSize(9);
+            const pageText: string = `Page ${i} of ${pageCount}`;
+            doc.text(pageText, pageWidth / 2, pageHeight - 10, { align: "center" });
+        }
         // Create filename
         const pdfGenerationDatetime: string = DateTime.now().toISO();
         const filename: string = `LoanAmortizationSchedule-${pdfGenerationDatetime}.pdf`;
