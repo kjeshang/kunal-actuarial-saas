@@ -100,6 +100,7 @@ export class LoanAmortizationTable {
       // Call Report Service Function to Generate Loan Amortization Data to PDF
       await this.loanReportService.generatePDF(
         this.loanParameters,
+        this.loanSummaryMetrics,
         this.loanTableConfiguration,
         this.loanAmortizationSchedule
       );

@@ -3,7 +3,7 @@ import { LoanAmortizationSchedule, LoanSummaryMetric, LoanTableConfiguration } f
 import { isNil } from "lodash";
 import { DateTime } from 'luxon';
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import autoTable, { HookData } from 'jspdf-autotable';
 
 @Injectable({
     providedIn: 'root',
@@ -22,7 +22,7 @@ export class LoanReportService {
         const csvRows: string[] = [];
 
         const exportDate: string = DateTime.now().toLocaleString(DateTime.DATE_FULL);
-        const exportTime: string = DateTime.now().toLocaleString(DateTime.TIME_SIMPLE);
+        const exportTime: string = DateTime.now().toLocaleString(DateTime.TIME_WITH_SECONDS);
 
         // 1. Add Report Title & Timestamp
         csvRows.push("Loan Summary Report");
@@ -77,13 +77,97 @@ export class LoanReportService {
     /**
      * Method used to take loan parameters, loan summary metrics, loan amortization table's column headings, and the loan amortization schedule iteself, and generate the data into a PDF.
      */
-    async generatePDF(loanParameters: LoanSummaryMetric[], loanTableConfiguration: LoanTableConfiguration[], loanAmortizationSchedule: LoanAmortizationSchedule[]): Promise<void> {
+    async generatePDF(loanParameters: LoanSummaryMetric[], loanSummaryMetrics: LoanSummaryMetric[], loanTableConfiguration: LoanTableConfiguration[], loanAmortizationSchedule: LoanAmortizationSchedule[]): Promise<void> {
         for (const item of loanParameters) {
             if (isNil(item.value) || item.value === 0) {
                 throw new Error("Loan Parameters must be provided to create the loan amortization schedule and generate PDF!")
             }
         }
+        // Instantiate JS Report and necessary parameters
         const doc: jsPDF = new jsPDF();
+        // const pageCount: number = (doc as any).internal.getNumberOfPages();
+        // const pageWidth = doc.internal.pageSize.getWidth();
+        // const pageHeight = doc.internal.pageSize.getHeight();
+        // for (let i = 1; i <= pageCount; i++) {
+        //     doc.setPage(i);
+        //     doc.text(`Page ${i} of ${pageCount}`, 100, 280, { align: "center" });
+        // }
+        let y = 20;
+        doc.setFontSize(18);
+        doc.text("Loan Amortization Report", 10, y);
+        y += 5;
+        doc.setFontSize(9);
+        const exportDate: string = DateTime.now().toLocaleString(DateTime.DATE_FULL);
+        const exportTime: string = DateTime.now().toLocaleString(DateTime.TIME_WITH_SECONDS);
+        doc.text(`Export Time: ${exportDate} ${exportTime}`, 10, y);
+        y += 10;
+        // LOAN PARAMETERS -----------------------------------------------------------------------
+        const loanParameterColumns: string[][] = [["Loan Parameter", "Value"]];
+        const loanParameterData: (string | number)[][] = loanParameters.map((item: LoanSummaryMetric) => {
+            const result: (string | number)[] = [item.label, item.displayValue];
+            return result;
+        });
+        doc.setFontSize(14);
+        doc.text("Loan Parameters", 10, y);
+        y += 5
+        autoTable(doc,
+            {
+                head: loanParameterColumns,
+                body: loanParameterData,
+                startY: y, // Margin from the top
+                theme: 'grid', // Available themes: 'striped', 'grid', 'plain'
+                headStyles: { fillColor: [41, 128, 185] }, // Custom header color
+                columnStyles: {
+                    0: {
+                        fontStyle: "bold",         // Makes text bold
+                        fillColor: [240, 240, 240], // Light gray background for the row headers
+                        textColor: [50, 50, 50]     // Darker text color
+                    }
+                },
+                styles: {
+                    cellPadding: 2,
+                    // fontSize: 10
+                },
+                didDrawPage: (data: HookData) => {
+                    y = data.cursor?.y!;
+                }
+            }
+        );
+        y += 10;
+        // LOAN SUMMARY METRICS ------------------------------------------------------------------
+        const loanSummaryMetricColumns: string[][] = [["Loan Summary Metric", "Value"]];
+        const loanSummaryMetricData: (string | number)[][] = loanSummaryMetrics.map((item: LoanSummaryMetric) => {
+            const result: (string | number)[] = [item.label, item.displayValue];
+            return result;
+        });
+        doc.setFontSize(14);
+        doc.text("Loan Summary Metrics", 10, y);
+        y += 5
+        autoTable(doc,
+            {
+                head: loanSummaryMetricColumns,
+                body: loanSummaryMetricData,
+                startY: y, // Margin from the top
+                theme: 'grid', // Available themes: 'striped', 'grid', 'plain'
+                headStyles: { fillColor: [41, 128, 185] }, // Custom header color
+                columnStyles: {
+                    0: {
+                        fontStyle: "bold",         // Makes text bold
+                        fillColor: [240, 240, 240], // Light gray background for the row headers
+                        textColor: [50, 50, 50]     // Darker text color
+                    }
+                },
+                styles: {
+                    cellPadding: 2,
+                    // fontSize: 10
+                },
+                didDrawPage: (data: HookData) => {
+                    y = data.cursor?.y!;
+                }
+            }
+        );
+        y += 10;
+        // LOAN AMORTIZATION SCHEDULE TABLE ------------------------------------------------------
         // Loan Amortization Schedule's Column Headings
         const tableColumns: string[][] = [
             loanTableConfiguration.map((item: LoanTableConfiguration) => item.heading)
@@ -101,20 +185,23 @@ export class LoanReportService {
             return result;
         });
         // Place Loan Amortization Schedule Table in Report
-        autoTable(doc, 
+        doc.setFontSize(14);
+        doc.text("Loan Amortization Schedule", 10, y);
+        y += 5
+        autoTable(doc,
             {
                 head: tableColumns,
                 body: tableData,
-                startY: 20, // Margin from the top
+                startY: y, // Margin from the top
                 theme: 'striped', // Available themes: 'striped', 'grid', 'plain'
                 headStyles: { fillColor: [41, 128, 185] }, // Custom header color
                 columnStyles: {
-                    0: {halign: 'left'},
-                    1: {halign: 'left'},
-                    2: {halign: 'right'},
-                    3: {halign: 'right'},
-                    4: {halign: 'right'},
-                    5: {halign: 'right'}
+                    0: { halign: 'left' },
+                    1: { halign: 'left' },
+                    2: { halign: 'right' },
+                    3: { halign: 'right' },
+                    4: { halign: 'right' },
+                    5: { halign: 'right' }
                 },
             }
         );
