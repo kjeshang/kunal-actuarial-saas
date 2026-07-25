@@ -8,5 +8,6 @@ export const LoanResolver = async () => {
     await loanStore.setInterestRate(0);
     await loanStore.setTermOfLoan(0);
     await loanStore.setPaymentFrequency(0);
+    await loanStore.setTimeOfPayment("immediate");
     return of(undefined);
 }

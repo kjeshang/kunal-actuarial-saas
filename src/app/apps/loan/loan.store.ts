@@ -14,13 +14,15 @@ type LoanState = {
     interestRate: number;
     termOfLoan: number;
     paymentFrequency: number;
+    timeOfPayment: string;
 }
 
 const initialLoanState: LoanState = {
     loanAmount: 0,
     interestRate: 0,
     termOfLoan: 0,
-    paymentFrequency: 0
+    paymentFrequency: 0,
+    timeOfPayment: "immediate"
 }
 
 export const LoanStore = signalStore(
@@ -61,6 +63,15 @@ export const LoanStore = signalStore(
         async setPaymentFrequency(paymentFrequency: number): Promise<void> {
             patchState(store, (state: LoanState) => ({
                 paymentFrequency: paymentFrequency
+            }));
+        },
+        /**
+         * Method used to set time of payment.
+         * @param timeOfPayment The time when payment of loan is made; i.e., end of period (annuity immediate) or start of period (annuity due)
+         */
+        async setTimeOfPayment(timeOfPayment: string): Promise<void> {
+            patchState(store, (state: LoanState) => ({
+                timeOfPayment: timeOfPayment
             }));
         }
     })),

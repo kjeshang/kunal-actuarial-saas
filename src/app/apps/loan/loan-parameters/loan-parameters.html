@@ -4,11 +4,12 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>Loan Amortization Parameters</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-5 gap-4">
                 <div>
                     <mat-form-field class="w-full">
                         <mat-label>Loan Amount</mat-label>
-                        <input matInput placeholder="Loan Amount" formControlName="loanAmount" appCurrencyFormat (input)="saveLoanAmount()" />
+                        <input matInput placeholder="Loan Amount" formControlName="loanAmount" appCurrencyFormat
+                            (input)="saveLoanAmount()" />
                         <mat-icon matSuffix>paid</mat-icon>
                         <mat-error>Please input a valid numerical loan amount</mat-error>
                     </mat-form-field>
@@ -16,7 +17,8 @@
                 <div>
                     <mat-form-field class="w-full">
                         <mat-label>Annual Effective Interest Rate</mat-label>
-                        <input matInput placeholder="Annual Effective Interest Rate" formControlName="interestRate" appInterestRateFormat (input)="saveInterestRateInput()" />
+                        <input matInput placeholder="Annual Effective Interest Rate" formControlName="interestRate"
+                            appInterestRateFormat (input)="saveInterestRateInput()" />
                         <mat-icon matSuffix>percent</mat-icon>
                         <mat-error>Please input a valid interest rate</mat-error>
                     </mat-form-field>
@@ -24,7 +26,8 @@
                 <div>
                     <mat-form-field class="w-full">
                         <mat-label>Term of Loan (in years)</mat-label>
-                        <input matInput placeholder="Term of Loan (in years)" formControlName="termOfLoan" type="number" (input)="saveTermOfLoan()" />
+                        <input matInput placeholder="Term of Loan (in years)" formControlName="termOfLoan" type="number"
+                            (input)="saveTermOfLoan()" />
                         <mat-icon matSuffix>hourglass_bottom</mat-icon>
                         <mat-error>Please input a valid term of loan (in years)</mat-error>
                     </mat-form-field>
@@ -32,7 +35,8 @@
                 <div>
                     <mat-form-field class="w-full">
                         <mat-label>Payment Frequency (per year)</mat-label>
-                        <mat-select placeholder="Payment Frequency (per year)" formControlName="paymentFrequency" (selectionChange)="savePaymentFrequency()">
+                        <mat-select placeholder="Payment Frequency (per year)" formControlName="paymentFrequency"
+                            (selectionChange)="savePaymentFrequency()">
                             <mat-option value="1">Annual</mat-option>
                             <mat-option value="2">Semiannual</mat-option>
                             <mat-option value="4">Quarterly</mat-option>
@@ -40,6 +44,16 @@
                         </mat-select>
                         <mat-icon matSuffix>calendar_month</mat-icon>
                         <mat-error>Please select a payment frequency (per year)</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="w-full">
+                        <mat-label>Time of Payment</mat-label>
+                        <mat-select placeholder="Payment Timing" formControlName="timeOfPayment">
+                            <mat-option value="immediate">End of Period (Annuity Immediate)</mat-option>
+                            <mat-option value="due">Beginning of Period (Annuity Due)</mat-option>
+                        </mat-select>
+                        <mat-error>Please select a time of payment</mat-error>
                     </mat-form-field>
                 </div>
             </div>

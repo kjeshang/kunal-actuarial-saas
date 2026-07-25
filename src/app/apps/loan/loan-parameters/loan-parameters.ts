@@ -7,7 +7,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { CurrencyFormat } from '../../../shared/currency-format/currency-format';
-import { CommonModule } from '@angular/common';
 import { InterestRateFormat } from '../../../shared/interest-rate-format/interest-rate-format';
 import { LoanStore } from '../loan.store';
 import { isNil } from 'lodash';
@@ -31,7 +30,9 @@ export class LoanParameters {
     // Term of Loan (in years)
     termOfLoan: ['', [Validators.required, Validators.min(1), Validators.pattern('^[0-9]+$')]],
     // Payment Frequency (per year)
-    paymentFrequency: ['', Validators.required]
+    paymentFrequency: ['', Validators.required],
+    // Payment Timing
+    timeOfPayment: ['immediate', Validators.required]
   });
 
   /**
@@ -80,6 +81,17 @@ export class LoanParameters {
     const parsedPaymentFrequency: number = typeof paymentFrequency === 'number' ? paymentFrequency : parseInt(paymentFrequency);
     if (!isNil(parsedPaymentFrequency)) {
       this.loanStore.setPaymentFrequency(parsedPaymentFrequency);
+    }
+  }
+
+  /**
+   * Save time of payment in signal store.
+   */
+  saveTimeOfPayment(): void {
+    // Time of Payment
+    const timeOfPayment: string = this.loanParametersForm.get("timeOfPayment")?.value;
+    if(!isNil(timeOfPayment)) {
+      this.loanStore.setTimeOfPayment(timeOfPayment);
     }
   }
 }
