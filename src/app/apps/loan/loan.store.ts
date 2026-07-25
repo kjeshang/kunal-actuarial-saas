@@ -21,7 +21,7 @@ const initialLoanState: LoanState = {
     loanAmount: 0,
     interestRate: 0,
     termOfLoan: 0,
-    paymentFrequency: 0,
+    paymentFrequency: 1,
     timeOfPayment: "immediate"
 }
 

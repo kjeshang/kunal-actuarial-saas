@@ -30,7 +30,7 @@ export class LoanParameters {
     // Term of Loan (in years)
     termOfLoan: ['', [Validators.required, Validators.min(1), Validators.pattern('^[0-9]+$')]],
     // Payment Frequency (per year)
-    paymentFrequency: ['', Validators.required],
+    paymentFrequency: ['1', Validators.required],
     // Payment Timing
     timeOfPayment: ['immediate', Validators.required]
   });
