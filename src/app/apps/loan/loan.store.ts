@@ -81,18 +81,19 @@ export const LoanStore = signalStore(
             interestRate,
             termOfLoan,
             paymentFrequency,
+            timeOfPayment,
         },
         loanService: LoanService = inject(LoanService),
         loanChartService: LoanChartService = inject(LoanChartService)
     ) => ({
         loanParameters: computed(() => {
-            return loanService.formatLoanParameters(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+            return loanService.formatLoanParameters(loanAmount(), interestRate(), termOfLoan(), paymentFrequency(), timeOfPayment());
         }),
         periodicEffectiveInterestRate: computed(() => {
             return loanService.calculatePeriodicEffectiveInterestRate(interestRate(), paymentFrequency());
         }),
         periodicPaymentAmount: computed(() => {
-            return loanService.calculatePeriodicPaymentAmount(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+            return loanService.calculatePeriodicPaymentAmount(loanAmount(), interestRate(), termOfLoan(), paymentFrequency(), timeOfPayment());
         }),
         periodicNominalInterestRate: computed(() => {
             return loanService.calculatePeriodicNominalInterestRate(interestRate(), paymentFrequency());
@@ -104,25 +105,25 @@ export const LoanStore = signalStore(
             return loanService.calculateTotalNumberOfPeriods(termOfLoan(), paymentFrequency());
         }),
         totalInterestPaid: computed(() => {
-            return loanService.calculateTotalInterestPaid(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+            return loanService.calculateTotalInterestPaid(loanAmount(), interestRate(), termOfLoan(), paymentFrequency(), timeOfPayment());
         }),
         loanAmortizationSchedule: computed(() => {
-            return loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+            return loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency(), timeOfPayment());
         }),
         amortizationCurveChart: computed(() => {
-            const loanAmortizationSchedule = loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+            const loanAmortizationSchedule = loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency(), timeOfPayment());
             return loanChartService.getAmortizationCurveData(loanAmortizationSchedule);
         }),
         interestVsPrincipalChart: computed(() => {
-            const loanAmortizationSchedule = loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+            const loanAmortizationSchedule = loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency(), timeOfPayment());
             return loanChartService.getInterestVsPrincipalData(loanAmortizationSchedule);
         }),
         costOfBorrowingChart: computed(() => {
-            const loanAmortizationSchedule = loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+            const loanAmortizationSchedule = loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency(), timeOfPayment());
             return loanChartService.getCostOfBorrowingData(loanAmortizationSchedule);
         }),
         raceToEquityChart: computed(() => {
-            const loanAmortizationSchedule = loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency());
+            const loanAmortizationSchedule = loanService.createLoanAmortizationSchedule(loanAmount(), interestRate(), termOfLoan(), paymentFrequency(), timeOfPayment());
             return loanChartService.getRaceToEquityData(loanAmortizationSchedule);
         })
     }))

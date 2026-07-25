@@ -28,8 +28,8 @@ npm install jspdf jspdf-autotable
 * Annual Effective Interest Rate (%)
 * Term of Loan (in years)
 * Payment Frequency (per year): "Annual", "Semiannual", "Quarterly", "Monthly"
+* Toggle between payment made at end of period and beginning of period (i.e., Annuity Immediate vs Annuity Due)
 * Start Date of Loan <= Will add later
-* Toggle between payment made at end of period and beginning of period (i.e., Annuity Immediate vs Annuity Due) <= Will figure out how to add later
 
 ### Output
 
@@ -56,8 +56,8 @@ Loan Amortization Table:
 * _Interest Paid at Time t_ column
 * _Principal Paid at Time t_ column
 * _Outstanding Balance at Time t_ column
-> _Export to CSV_ <= Done
-> _Generate PDF Report_ <= Done
+> _Export to CSV_
+> _Generate PDF Report_
 > _Export to Excel Spreadsheet_ <= Maybe will add later
 
 

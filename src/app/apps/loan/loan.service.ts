@@ -15,7 +15,7 @@ export class LoanService {
    * @param paymentFrequency 
    * @returns Array of loan summary metrics that reference the loan parameters.
    */
-  formatLoanParameters(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number): LoanSummaryMetric[] {
+  formatLoanParameters(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number, timeOfPayment: string): LoanSummaryMetric[] {
     // Loan Amount
     const formattedLoanAmount: LoanSummaryMetric = {
       metricType: "amount",
@@ -44,7 +44,14 @@ export class LoanService {
       value: paymentFrequency,
       displayValue: this.determinePaymentFrequencyLabel(paymentFrequency)
     };
-    // 5. Create array of formatted loan parameters.
+    // 5. Time of Payment
+    // const formattedTimeOfPayment: LoanSummaryMetric = {
+    //   metricType: "value",
+    //   label: "Time of Payment",
+    //   value: timeOfPayment === "immediate" ? 1 : 0,
+    //   displayValue: timeOfPayment === "immediate" ? "" : ""
+    // }
+    // 6. Create array of formatted loan parameters.
     const loanParameters: LoanSummaryMetric[] = [
       formattedLoanAmount,
       formattedInterestRate,
@@ -62,7 +69,7 @@ export class LoanService {
    * @param paymentFrequency 
    * @returns Object containing metric type, label, value, and display value.
    */
-  calculatePeriodicPaymentAmount(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number): LoanSummaryMetric {
+  calculatePeriodicPaymentAmount(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number, timeOfPayment: string): LoanSummaryMetric {
     // 1. Find the total number of payments
     const N: number = termOfLoan * paymentFrequency;
     // 2. Calculate m-thly effecive interest rate
@@ -70,7 +77,11 @@ export class LoanService {
     // 3. Calculate m-thly payment amount
     const numerator: number = currency(loanAmount).multiply(j).value;
     // Alternate => const numerator: number = loanAmount * j;
-    const denominator: number = 1 - Math.pow(1 + j, -N);
+    let denominator: number = 1 - Math.pow(1 + j, -N);
+    // Adjust loan payment for annuity due
+    if (timeOfPayment === "due") {
+      denominator = denominator * (1 + j);
+    }
     const R: number = currency(numerator).divide(denominator).value;
     // Alternate => const R: number = numerator / denominator;
     const label: string = this.determinePaymentFrequencyLabel(paymentFrequency);
@@ -167,8 +178,8 @@ export class LoanService {
    * @param paymentFrequency 
    * @returns Object containing metric type, label, value, and display value.
    */
-  calculateTotalInterestPaid(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number): LoanSummaryMetric {
-    const loanAmortizationSchedule: LoanAmortizationSchedule[] = this.createLoanAmortizationSchedule(loanAmount, interestRate, termOfLoan, paymentFrequency);
+  calculateTotalInterestPaid(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number, timeOfPayment: string): LoanSummaryMetric {
+    const loanAmortizationSchedule: LoanAmortizationSchedule[] = this.createLoanAmortizationSchedule(loanAmount, interestRate, termOfLoan, paymentFrequency, timeOfPayment);
     const totalInterestPaid: number = loanAmortizationSchedule.reduce((acc: number, val: LoanAmortizationSchedule) => {
       return currency(acc).add(val.interestPaid.value).value;
     }, 0);
@@ -186,13 +197,103 @@ export class LoanService {
    * @param loanAmount 
    * @param interestRate 
    * @param termOfLoan 
-   * @param paymentFrequency 
+   * @param paymentFrequency
+   * @param timeOfPayment 
    * @returns Object array of containing period, time, loanPayment, interest paid, principal repaid, and outstanding balance
    */
-  createLoanAmortizationSchedule(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number): LoanAmortizationSchedule[] {
+  createLoanAmortizationSchedule(loanAmount: number, interestRate: number, termOfLoan: number, paymentFrequency: number, timeOfPayment: string): LoanAmortizationSchedule[] {
     const N: number = termOfLoan * paymentFrequency;
     const j: number = this.calculatePeriodicEffectiveInterestRate(interestRate, paymentFrequency).value;
-    const R: number = this.calculatePeriodicPaymentAmount(loanAmount, interestRate, termOfLoan, paymentFrequency).value;
+    const R: number = this.calculatePeriodicPaymentAmount(loanAmount, interestRate, termOfLoan, paymentFrequency, timeOfPayment).value;
+    // let outstandingBalance: number = loanAmount;
+    let loanAmortizationSchedule: LoanAmortizationSchedule[] = [];
+    if (timeOfPayment === "due") {
+      // Loan Amortization Schedule (Annuity Due)
+      loanAmortizationSchedule = this.calculateLoanAmortizationScheduleAnnuityDue(N, j, R, loanAmount, paymentFrequency);
+    }
+    else {
+      // Loan Amortization Schedule (Annuity Immediate)
+      loanAmortizationSchedule = this.calculateLoanAmortizationScheduleAnnuityImmediate(N, j, R, loanAmount, paymentFrequency);
+    }
+    // for (let t = 0; t <= N + 2; t++) {
+    //   if (t == 0) {
+    //     const result: LoanAmortizationSchedule = {
+    //       period: 0,
+    //       time: 0,
+    //       loanPayment: { value: 0, displayValue: "-" },
+    //       interestPaid: { value: 0, displayValue: "-" },
+    //       principalRepaid: { value: 0, displayValue: "-" },
+    //       outstandingBalance: { value: outstandingBalance, displayValue: currency(outstandingBalance).format() }
+    //     }
+    //     loanAmortizationSchedule.push(result);
+    //   }
+    //   else if (outstandingBalance === 0) {
+    //     const result: LoanAmortizationSchedule = {
+    //       period: t,
+    //       time: parseFloat((t / paymentFrequency).toFixed(3)),
+    //       loanPayment: { value: 0, displayValue: "-" },
+    //       interestPaid: { value: 0, displayValue: "-" },
+    //       principalRepaid: { value: 0, displayValue: "-" },
+    //       outstandingBalance: { value: outstandingBalance, displayValue: currency(outstandingBalance).format() }
+    //     }
+    //     loanAmortizationSchedule.push(result);
+    //   }
+    //   else {
+    //     const interestPaid: number = currency(outstandingBalance).multiply(j).value;
+    //     const loanPayment: number = Math.min(R, currency(interestPaid).add(outstandingBalance).value);
+    //     const principalRepaid: number = currency(loanPayment).subtract(interestPaid).value;
+    //     outstandingBalance = currency(outstandingBalance).subtract(principalRepaid).value;
+    //     // outstandingBalance = outstandingBalance <= 0.005 ? 0 : outstandingBalance;00
+    //     const result: LoanAmortizationSchedule = {
+    //       period: t,
+    //       time: parseFloat((t / paymentFrequency).toFixed(3)),
+    //       loanPayment: { value: loanPayment, displayValue: currency(loanPayment).format() },
+    //       interestPaid: { value: interestPaid, displayValue: currency(interestPaid).format() },
+    //       principalRepaid: { value: principalRepaid, displayValue: currency(principalRepaid).format() },
+    //       outstandingBalance: { value: outstandingBalance, displayValue: currency(outstandingBalance).format() }
+    //     }
+    //     loanAmortizationSchedule.push(result);
+    //   }
+    // }
+    return loanAmortizationSchedule;
+  }
+
+  /**
+   * Method used to determine label of payment frequency to use for display purposes.
+   * @param paymentFrequency 
+   * @returns Label used to describe payment frequency
+   */
+  private determinePaymentFrequencyLabel(paymentFrequency: number): string {
+    let label: string = "";
+    switch (paymentFrequency.toString()) {
+      case "1":
+        label = "Annual";
+        break;
+      case "2":
+        label = "Semiannual";
+        break;
+      case "4":
+        label = "Quarterly";
+        break;
+      case "12":
+        label = "Monthly";
+        break;
+      default:
+        label = "";
+    }
+    return label;
+  }
+
+  /**
+   * Method used to generate loan amortization schedule (ANNUITY IMMEDIATE) based on loan amount, interest rate, term of loan, and payment frequency.
+   * @param N 
+   * @param j 
+   * @param R 
+   * @param loanAmount 
+   * @param paymentFrequency 
+   * @returns Object array of Loan Amortization Schedule
+   */
+  private calculateLoanAmortizationScheduleAnnuityImmediate(N: number, j: number, R: number, loanAmount: number, paymentFrequency: number): LoanAmortizationSchedule[] {
     let outstandingBalance: number = loanAmount;
     let loanAmortizationSchedule: LoanAmortizationSchedule[] = [];
     for (let t = 0; t <= N + 2; t++) {
@@ -239,28 +340,62 @@ export class LoanService {
   }
 
   /**
-   * Method used to determine label of payment frequency to use for display purposes.
+   * Method used to generate loan amortization schedule (ANNUITY DUE) based on loan amount, interest rate, term of loan, and payment frequency.
+   * @param N 
+   * @param j 
+   * @param R 
+   * @param loanAmount 
    * @param paymentFrequency 
-   * @returns Label used to describe payment frequency
+   * @returns Object array of Loan Amortization Schedule
    */
-  private determinePaymentFrequencyLabel(paymentFrequency: number): string {
-    let label: string = "";
-    switch (paymentFrequency.toString()) {
-      case "1":
-        label = "Annual";
-        break;
-      case "2":
-        label = "Semiannual";
-        break;
-      case "4":
-        label = "Quarterly";
-        break;
-      case "12":
-        label = "Monthly";
-        break;
-      default:
-        label = "";
+  private calculateLoanAmortizationScheduleAnnuityDue(N: number, j: number, R: number, loanAmount: number, paymentFrequency: number) {
+    let outstandingBalance: number = loanAmount;
+    let loanAmortizationSchedule: LoanAmortizationSchedule[] = [];
+    for (let t = 0; t <= N + 1; t++) {
+      if (t == 0) {
+        const interestPaid: number = 0;
+        const loanPayment: number = Math.min(R, outstandingBalance);
+        const principalRepaid: number = loanPayment;
+        outstandingBalance = currency(outstandingBalance).subtract(principalRepaid).value;
+
+        const result: LoanAmortizationSchedule = {
+          period: 0,
+          time: 0,
+          loanPayment: { value: loanPayment, displayValue: currency(loanPayment).format() },
+          interestPaid: { value: interestPaid, displayValue: currency(interestPaid).format() },
+          principalRepaid: { value: principalRepaid, displayValue: currency(principalRepaid).format() },
+          outstandingBalance: { value: outstandingBalance, displayValue: currency(outstandingBalance).format() }
+        }
+        loanAmortizationSchedule.push(result);
+      }
+      else if (outstandingBalance === 0) {
+        const result: LoanAmortizationSchedule = {
+          period: t,
+          time: parseFloat((t / paymentFrequency).toFixed(3)),
+          loanPayment: { value: 0, displayValue: "-" },
+          interestPaid: { value: 0, displayValue: "-" },
+          principalRepaid: { value: 0, displayValue: "-" },
+          outstandingBalance: { value: outstandingBalance, displayValue: currency(outstandingBalance).format() }
+        }
+        loanAmortizationSchedule.push(result);
+      }
+      else {
+        const interestPaid: number = currency(outstandingBalance).multiply(j).value;
+        const loanPayment: number = Math.min(R, currency(interestPaid).add(outstandingBalance).value);
+        const principalRepaid: number = currency(loanPayment).subtract(interestPaid).value;
+        outstandingBalance = currency(outstandingBalance).subtract(principalRepaid).value;
+        // outstandingBalance = outstandingBalance <= 0.005 ? 0 : outstandingBalance;00
+        const result: LoanAmortizationSchedule = {
+          period: t,
+          time: parseFloat((t / paymentFrequency).toFixed(3)),
+          loanPayment: { value: loanPayment, displayValue: currency(loanPayment).format() },
+          interestPaid: { value: interestPaid, displayValue: currency(interestPaid).format() },
+          principalRepaid: { value: principalRepaid, displayValue: currency(principalRepaid).format() },
+          outstandingBalance: { value: outstandingBalance, displayValue: currency(outstandingBalance).format() }
+        }
+        loanAmortizationSchedule.push(result);
+      }
     }
-    return label;
+    return loanAmortizationSchedule;
   }
 }
