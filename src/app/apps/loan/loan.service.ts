@@ -45,18 +45,19 @@ export class LoanService {
       displayValue: this.determinePaymentFrequencyLabel(paymentFrequency)
     };
     // 5. Time of Payment
-    // const formattedTimeOfPayment: LoanSummaryMetric = {
-    //   metricType: "value",
-    //   label: "Time of Payment",
-    //   value: timeOfPayment === "immediate" ? 1 : 0,
-    //   displayValue: timeOfPayment === "immediate" ? "" : ""
-    // }
+    const formattedTimeOfPayment: LoanSummaryMetric = {
+      metricType: "value",
+      label: "Time of Payment",
+      value: timeOfPayment === "immediate" ? 1 : 2,
+      displayValue: timeOfPayment === "immediate" ? "End of Period (Annuity Immediate)" : "Beginning of Period (Annuity Due)"
+    }
     // 6. Create array of formatted loan parameters.
     const loanParameters: LoanSummaryMetric[] = [
       formattedLoanAmount,
       formattedInterestRate,
       formattedTermOfLoan,
-      formattedPaymentFrequency
+      formattedPaymentFrequency,
+      formattedTimeOfPayment
     ];
     return loanParameters;
   }

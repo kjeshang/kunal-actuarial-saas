@@ -33,7 +33,12 @@ export class LoanReportService {
         // 2. Add Loan Parameters
         csvRows.push("---LOAN PARAMETERS---");
         for (const item of loanParameters) {
-            csvRows.push(`${item.label},${item.value}`)
+            if(item.label === "Time of Payment") {
+                csvRows.push(`${item.label},${item.displayValue}`);
+            }
+            else {
+                csvRows.push(`${item.label},${item.value}`);
+            }
         }
         csvRows.push("");
 
