@@ -1,14 +1,21 @@
 <app-feature-container>
     <div class="p-4 m-4">
         @for(category of saasAppCategories; track $index) {
-            <p class="text-xl font-medium mb-6">{{ category }}</p>
-            <div class="grid-cols-1 sm:grid grid-cols-4 gap-4">
+        <div class="py-4">
+            <div class="mb-6 flex items-center space-x-3">
+                <p class="text-lg font-medium">{{ category }}</p>
+                <div class="flex-1">
+                    <mat-divider class="!my-0"></mat-divider>
+                </div>
+            </div>
+            <div class="grid-cols-1 sm:grid grid-cols-4 gap-4 sm:gap-12">
                 @for(item of saasApps; track $index) {
                     @if(category === item.category) {
-                    <app-dashboard-card [app]="item" />
+                        <app-dashboard-card [app]="item" />
                     }
                 }
             </div>
+        </div>
         }
         <!-- <div class="grid-cols-1 sm:grid grid-cols-4 gap-4">
             @for(item of saasApps; track $index) {

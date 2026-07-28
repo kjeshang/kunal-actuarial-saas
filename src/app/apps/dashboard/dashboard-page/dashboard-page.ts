@@ -3,10 +3,12 @@ import { FeatureContainer } from '../../../shared/feature-container/feature-cont
 import { SaaSApp } from '../../../shared/models';
 import { DashboardCard } from '../dashboard-card/dashboard-card';
 import { saasApps } from '../../../shared/saas-app.configuration';
+import { MatDividerModule } from '@angular/material/divider';
+import { uniq } from 'lodash';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [FeatureContainer, DashboardCard],
+  imports: [FeatureContainer, DashboardCard, MatDividerModule],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css',
 })
@@ -14,7 +16,7 @@ export class DashboardPage {
   saasApps: SaaSApp[] = saasApps;
 
   get saasAppCategories(): string[] {
-    let categories: string[] = saasApps.map((item: SaaSApp) => item.category);
+    let categories: string[] = uniq(saasApps.map((item: SaaSApp) => item.category));
     return categories;
   }
 }
