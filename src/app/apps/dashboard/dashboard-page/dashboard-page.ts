@@ -15,6 +15,9 @@ import { uniq } from 'lodash';
 export class DashboardPage {
   saasApps: SaaSApp[] = saasApps;
 
+  /**
+   * Getter used to retrieve unique SaaS App categories.
+   */
   get saasAppCategories(): string[] {
     let categories: string[] = uniq(saasApps.map((item: SaaSApp) => item.category));
     return categories;
