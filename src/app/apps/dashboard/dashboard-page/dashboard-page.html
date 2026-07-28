@@ -1,4 +1,19 @@
 <app-feature-container>
-<p>dashboard-page works!</p>
+    <div class="p-4 m-4">
+        @for(category of saasAppCategories; track $index) {
+            <p class="text-xl font-medium mb-6">{{ category }}</p>
+            <div class="grid-cols-1 sm:grid grid-cols-4 gap-4">
+                @for(item of saasApps; track $index) {
+                    @if(category === item.category) {
+                    <app-dashboard-card [app]="item" />
+                    }
+                }
+            </div>
+        }
+        <!-- <div class="grid-cols-1 sm:grid grid-cols-4 gap-4">
+            @for(item of saasApps; track $index) {
+                <app-dashboard-card [app]="item" />
+            }
+        </div> -->
+    </div>
 </app-feature-container>
-
