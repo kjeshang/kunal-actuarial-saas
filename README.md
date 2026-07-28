@@ -22,7 +22,7 @@ npm install jspdf jspdf-autotable
 ```
 
 ## Applications
-> **Note** - Could change 
+> **Note** - Subject to changes
 
 ### Financial Mathematics & Cash Flows
 |App Name|Full Name|Description|Status|
