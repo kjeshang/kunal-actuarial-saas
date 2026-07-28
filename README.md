@@ -21,6 +21,53 @@ npm install @types/plotly.js-dist-min --save-dev
 npm install jspdf jspdf-autotable
 ```
 
+## Applications
+> **Note** - Could change 
+
+### Financial Mathematics & Cash Flows
+|App Name|Full Name|Description|Status|
+|--|--|--|--|
+|Loan|Loan Amortization & Cash Flow Engine||Built|
+
+### Rough Ideas
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                       CONSOLIDATED ACTUARIAL PLATFORM                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+ 1. 🏦 FINANCIAL MATHEMATICS & CASH FLOWS
+    ├── 1. Loan Amortization & Cash Flow Engine (Built)
+    ├── 2. Fixed Income & Bond Valuation Tool
+    ├── 3. Asset-Liability Matching & Immunization Visualizer
+    └── 4. Deterministic Capital Budgeting (NPV / IRR)
+
+ 2. 🛡️ LIFE CONTINGENCIES & MORTALITY MODELS
+    ├── 5. Select & Ultimate Mortality Table Visualizer
+    ├── 6. Life Insurance Actuarial Present Value (APV) Engine
+    ├── 7. Life Annuity & Premium Calculator
+    └── 8. Policy Reserving Tool (Net & Gross Premium)
+
+ 3. 📊 PROBABILITY & RISK MODELING
+    ├── 9. Continuous Probability Distributions Visualizer
+    ├── 10. Discrete Distributions & Claim Frequency Model
+    ├── 11. Aggregate Loss & Panjer Recursion Engine
+    └── 12. Risk Measure & Extreme Value Calculator (VaR / TVaR)
+
+ 4. 📉 SHORT-TERM RATEMAKING & RESERVING
+    ├── 13. Loss Development Triangles & Reserving Tool
+    ├── 14. Pure Premium & Indicated Rate Engine
+    └── 15. Increased Limit Factors (ILF) & Deductible Analyzer
+
+ 5. 🔬 PREDICTIVE ANALYTICS & CREDIBILITY
+    ├── 16. Credibility Theory Calculator (Bühlmann / Bühlmann-Straub)
+    ├── 17. Insurance GLM & Rating Curve Visualizer
+    └── 18. Time Series & Loss Forecasting Sandbox
+
+ 6. 💼 FINANCIAL ECONOMICS & ENTERPRISE RISK
+    ├── 19. Black-Scholes Option Pricing & Greeks Engine
+    └── 20. Binomial Option Pricing Tree Builder
+```
+
 ## Loan app
 
 ### Loan Amortization Parameters
@@ -56,8 +103,11 @@ Loan Amortization Table:
 * _Interest Paid at Time t_ column
 * _Principal Paid at Time t_ column
 * _Outstanding Balance at Time t_ column
+
 > _Export to CSV_
+
 > _Generate PDF Report_
+
 > _Export to Excel Spreadsheet_ <= Maybe will add later
 
 
