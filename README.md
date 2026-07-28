@@ -29,44 +29,6 @@ npm install jspdf jspdf-autotable
 |--|--|--|--|
 |Loan|Loan Amortization & Cash Flow Engine||Built|
 
-### Rough Ideas
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                       CONSOLIDATED ACTUARIAL PLATFORM                       │
-└─────────────────────────────────────────────────────────────────────────────┘
-
- 1. 🏦 FINANCIAL MATHEMATICS & CASH FLOWS
-    ├── 1. Loan Amortization & Cash Flow Engine (Built)
-    ├── 2. Fixed Income & Bond Valuation Tool
-    ├── 3. Asset-Liability Matching & Immunization Visualizer
-    └── 4. Deterministic Capital Budgeting (NPV / IRR)
-
- 2. 🛡️ LIFE CONTINGENCIES & MORTALITY MODELS
-    ├── 5. Select & Ultimate Mortality Table Visualizer
-    ├── 6. Life Insurance Actuarial Present Value (APV) Engine
-    ├── 7. Life Annuity & Premium Calculator
-    └── 8. Policy Reserving Tool (Net & Gross Premium)
-
- 3. 📊 PROBABILITY & RISK MODELING
-    ├── 9. Continuous Probability Distributions Visualizer
-    ├── 10. Discrete Distributions & Claim Frequency Model
-    ├── 11. Aggregate Loss & Panjer Recursion Engine
-    └── 12. Risk Measure & Extreme Value Calculator (VaR / TVaR)
-
- 4. 📉 SHORT-TERM RATEMAKING & RESERVING
-    ├── 13. Loss Development Triangles & Reserving Tool
-    ├── 14. Pure Premium & Indicated Rate Engine
-    └── 15. Increased Limit Factors (ILF) & Deductible Analyzer
-
- 5. 🔬 PREDICTIVE ANALYTICS & CREDIBILITY
-    ├── 16. Credibility Theory Calculator (Bühlmann / Bühlmann-Straub)
-    ├── 17. Insurance GLM & Rating Curve Visualizer
-    └── 18. Time Series & Loss Forecasting Sandbox
-
- 6. 💼 FINANCIAL ECONOMICS & ENTERPRISE RISK
-    ├── 19. Black-Scholes Option Pricing & Greeks Engine
-    └── 20. Binomial Option Pricing Tree Builder
-```
 
 ## Loan app
 
@@ -110,6 +72,56 @@ Loan Amortization Table:
 
 > _Export to Excel Spreadsheet_ <= Maybe will add later
 
+
+### Rough Ideas
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                       CONSOLIDATED ACTUARIAL PLATFORM                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+ 1. 🏦 FINANCIAL MATHEMATICS & CASH FLOWS
+    ├── 1. Loan Amortization & Cash Flow Engine (Built)
+    ├── 2. Fixed Income & Bond Valuation Tool
+    ├── 3. Asset-Liability Matching & Immunization Visualizer
+    └── 4. Deterministic Capital Budgeting (NPV / IRR)
+
+ 2. 🛡️ LIFE CONTINGENCIES & MORTALITY MODELS
+    ├── 5. Select & Ultimate Mortality Table Visualizer
+    ├── 6. Life Insurance Actuarial Present Value (APV) Engine
+    ├── 7. Life Annuity & Premium Calculator
+    └── 8. Policy Reserving Tool (Net & Gross Premium)
+
+ 3. 📊 PROBABILITY & RISK MODELING
+    ├── 9. Continuous Probability Distributions Visualizer
+    ├── 10. Discrete Distributions & Claim Frequency Model
+    ├── 11. Aggregate Loss & Panjer Recursion Engine
+    └── 12. Risk Measure & Extreme Value Calculator (VaR / TVaR)
+
+ 4. 📉 SHORT-TERM RATEMAKING & RESERVING
+    ├── 13. Loss Development Triangles & Reserving Tool
+    ├── 14. Pure Premium & Indicated Rate Engine
+    └── 15. Increased Limit Factors (ILF) & Deductible Analyzer
+
+ 5. 🔬 PREDICTIVE ANALYTICS & CREDIBILITY
+    ├── 16. Credibility Theory Calculator (Bühlmann / Bühlmann-Straub)
+    ├── 17. Insurance GLM & Rating Curve Visualizer
+    └── 18. Time Series & Loss Forecasting Sandbox
+
+ 6. 💼 FINANCIAL ECONOMICS & ENTERPRISE RISK
+    ├── 19. Black-Scholes Option Pricing & Greeks Engine
+    └── 20. Binomial Option Pricing Tree Builder
+```
+
+## POTENTIAL TO-DOS
+
+Create spec.ts files for the following files to eventually write custom unit tests.
+* Create spec.ts file for `loan-chart.service.ts`. <= Recommended
+* Create spec.ts file for `loan-report.service.ts`. <= Recommended
+* Create spec.ts file for `loan.resolver.ts`.
+* Create spec.ts file for `loan.service.ts`. <= Recommended
+* Create spec.ts file for `loan.store.ts`. <= Recommended
+* Create spec.ts file for `currency-format.ts`.
+* Create spec.ts file for `interest-rate-format.ts`.
 
 ## Development server
 
