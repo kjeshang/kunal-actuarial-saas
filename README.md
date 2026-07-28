@@ -25,12 +25,12 @@ npm install jspdf jspdf-autotable
 > **Note** - Subject to changes
 
 ### Financial Mathematics & Cash Flows
-|App Name|Full Name|Description|Status|
-|--|--|--|--|
-|Loan|Loan Amortization & Cash Flow Engine||Built|
+|App Name|Description|Status|
+|--|--|--|
+|Loan Amortization|A client-side actuarial engine for modeling precise fixed-rate loan amortization schedules under both Annuity Immediate and Annuity Due payment structures, complete with real-time visual analytics and instant PDF/CSV report exports.|Built|
 
 
-## Loan app
+## Loan Amortization app
 
 ### Loan Amortization Parameters
 * Loan Amount ($)
