@@ -25,7 +25,7 @@ export class Header {
         path = "Dashboard";
         break;
       case "/loan":
-        path = "Loan"
+        path = "Loan Amortization";
         break;
       default:
         path = "";
