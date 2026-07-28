@@ -12,5 +12,9 @@ export const routes: Routes = [
     {
         path: "loan",
         loadComponent: () => import('./apps/loan/loan-amortization-page/loan-amortization-page').then((m) => m.LoanAmortizationPage)
+    },
+    {
+        path: "discrete-probability",
+        loadComponent: () => import('./apps/discrete-probability/discrete-probability-page/discrete-probability-page').then((m) => m.DiscreteProbabilityPage)
     }
 ];

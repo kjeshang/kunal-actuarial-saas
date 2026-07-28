@@ -8,5 +8,13 @@ export const saasApps: SaaSApp[] = [
       description: "A client-side actuarial engine for modeling precise fixed-rate loan amortization schedules under both Annuity Immediate and Annuity Due payment structures, complete with real-time visual analytics and instant PDF/CSV report exports.",
       route: "/loan",
       category: AppCategory.FinancialMath
+    },
+    {
+      id: `${AppCategory.RiskAndLoss}-1`,
+      title: "Discrete Probability",
+      icon: "casino",
+      description: "",
+      route: "/discrete-probability",
+      category: AppCategory.RiskAndLoss
     }
   ];
