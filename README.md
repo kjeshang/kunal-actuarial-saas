@@ -29,6 +29,11 @@ npm install jspdf jspdf-autotable
 |--|--|--|
 |Loan Amortization|A client-side actuarial engine for modeling precise fixed-rate loan amortization schedules under both Annuity Immediate and Annuity Due payment structures, complete with real-time visual analytics and instant PDF/CSV report exports.|Built|
 
+### Probability & Risk Modeling
+
+|App Name|Description|Status|
+|--|--|--|
+|Discrete Probability||Pending|
 
 ## Loan Amortization app
 
