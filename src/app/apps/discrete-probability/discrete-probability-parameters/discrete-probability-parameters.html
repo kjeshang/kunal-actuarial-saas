@@ -10,14 +10,17 @@
                         <mat-label>Probability Distribution</mat-label>
                         <mat-select formControlName="probabilityDistribution" (selectionChange)="onSelectProbabilityDistribution()">
                             <mat-option value="binomial">Binomial</mat-option>
-                            <mat-option value="uniform">Discrete Uniform</mat-option>
+                            <!-- <mat-option value="uniform">Discrete Uniform</mat-option> -->
                             <mat-option value="geometric">Geometric</mat-option>
                             <mat-option value="poisson">Poisson</mat-option>
-                            <mat-option value="negative-binomial">Negative Binomial</mat-option>
+                            <!-- <mat-option value="negative-binomial">Negative Binomial</mat-option> -->
                         </mat-select>
                         <mat-error>Please select a probability distribution</mat-error>
                     </mat-form-field>
                 </div>
+                <ng-container formGroupName="params">
+                    {{ paramsFormGroup.value | json }}
+                </ng-container>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
