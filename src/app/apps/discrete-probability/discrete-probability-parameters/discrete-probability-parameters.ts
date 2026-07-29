@@ -22,11 +22,21 @@ export class DiscreteProbabilityParameters {
     params: this.createBinomialFormGroup()
   });
 
+  numColumns: number = 3;
+
   /**
    * Getter used to access the params form group easily from its parent form group (i.e., probabilityParametersForm).
    */
   get paramsFormGroup(): FormGroup {
     return this.probabilityParametersForm.get("params") as FormGroup;
+  }
+
+  /**
+   * Adjust number of grid columns based on the total number of parameters related to the selected probability distribution (including the distribution dropdown selector).
+   */
+  get gridColumnsCSS(): string {
+    let style: string = `grid grid-cols-1 sm:grid-cols-${this.numColumns} gap-4`;
+    return style;
   }
 
   /**
@@ -61,9 +71,10 @@ export class DiscreteProbabilityParameters {
    * Create parameters form group for the binomial probability distribution.
    */
   private createBinomialFormGroup(): FormGroup {
+    this.numColumns = 3
     const parameters: FormGroup = this.fb.group({
-      n: [null, Validators.required, Validators.min(1)],
-      p: [null, Validators.required, Validators.min(0), Validators.max(1)]
+      n: ["", Validators.required, Validators.min(1)],
+      p: ["", Validators.required, Validators.min(0), Validators.max(1)]
     });
     return parameters;
   }
@@ -72,8 +83,10 @@ export class DiscreteProbabilityParameters {
    * Create parameters form group for the geometric probability distribution.
    */
   private createGeometricFormGroup(): FormGroup {
+    this.numColumns = 3
     const parameters: FormGroup = this.fb.group({
-      p: [null, Validators.required, Validators.min(0.1), Validators.max(1)]
+      n: ["", Validators.required, Validators.min(1)],
+      p: ["", Validators.required, Validators.min(0.1), Validators.max(1)]
     });
     return parameters;
   }
@@ -82,8 +95,10 @@ export class DiscreteProbabilityParameters {
    * Create parameters form group for the poisson probability distribution.
    */
   private createPoissonFormGroup(): FormGroup {
+    this.numColumns = 3
     const parameters: FormGroup = this.fb.group({
-      lambda: [null, Validators.required, Validators.min(0.1)]
+      n: ["", Validators.required, Validators.min(1)],
+      lambda: ["", Validators.required, Validators.min(0.1)]
     });
     return parameters;
   }

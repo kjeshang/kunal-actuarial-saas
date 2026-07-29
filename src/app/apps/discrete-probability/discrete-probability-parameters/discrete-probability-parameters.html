@@ -4,7 +4,7 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>Probability Distribution Parameters</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="pb-1 grid grid-cols-1 sm:grid-cols-5 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                     <mat-form-field class="w-full">
                         <mat-label>Probability Distribution</mat-label>
@@ -19,9 +19,23 @@
                     </mat-form-field>
                 </div>
                 <ng-container formGroupName="params">
-                    {{ paramsFormGroup.value | json }}
+                    @if(probabilityParametersForm.get("probabilityDistribution")?.value === "binomial") {
+                        <div>
+                            <mat-form-field class="w-full">
+                                <mat-label>n</mat-label>
+                                <input matInput type="number" formControlName="n" />
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field class="w-full">
+                                <mat-label>p</mat-label>
+                                <input matInput type="number" formControlName="p" />
+                            </mat-form-field>
+                        </div>
+                    }
                 </ng-container>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
 </form>
+{{ probabilityParametersForm.value | json }}
