@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,6 +23,13 @@ export class DiscreteProbabilityParameters {
   });
 
   numColumns: number = 3;
+
+  /**
+   * Getter used to easily access probabilityDistribution form control value from form group (i.e., probabilityParametersForm).
+   */
+  get probabilityDistribution(): string {
+    return this.probabilityParametersForm.get("probabilityDistribution")?.value as string;
+  }
 
   /**
    * Getter used to access the params form group easily from its parent form group (i.e., probabilityParametersForm).
@@ -49,8 +56,8 @@ export class DiscreteProbabilityParameters {
         case "binomial":
           this.probabilityParametersForm.setControl("params", this.createBinomialFormGroup());
           break;
-        case "uniform":
-          // Will add later
+        case "discrete-uniform":
+          this.probabilityParametersForm.setControl("params", this.createDiscreteUniformFormGroup());
           break;
         case "geometric":
           this.probabilityParametersForm.setControl("params", this.createGeometricFormGroup());
@@ -59,7 +66,8 @@ export class DiscreteProbabilityParameters {
           this.probabilityParametersForm.setControl("params", this.createPoissonFormGroup());
           break;
         case "negative-binomial":
-          // Will add later
+          this.probabilityParametersForm.setControl("params", this.createNegativeBinomialFormGroup());
+          console.log(this.numColumns)
           break;
         default:
           break;
@@ -73,8 +81,20 @@ export class DiscreteProbabilityParameters {
   private createBinomialFormGroup(): FormGroup {
     this.numColumns = 3
     const parameters: FormGroup = this.fb.group({
-      n: ["", Validators.required, Validators.min(1)],
-      p: ["", Validators.required, Validators.min(0), Validators.max(1)]
+      n: ["", [Validators.required, Validators.min(1)]],
+      p: ["", [Validators.required, Validators.min(0), Validators.max(1)]]
+    });
+    return parameters;
+  }
+
+  /**
+   * Create parameters form group for the discrete uniform probability distribution.
+   */
+  private createDiscreteUniformFormGroup(): FormGroup {
+    this.numColumns = 3
+    const parameters: FormGroup = this.fb.group({
+      a: ["", [Validators.required]],
+      b: ["", [Validators.required]]
     });
     return parameters;
   }
@@ -85,8 +105,8 @@ export class DiscreteProbabilityParameters {
   private createGeometricFormGroup(): FormGroup {
     this.numColumns = 3
     const parameters: FormGroup = this.fb.group({
-      n: ["", Validators.required, Validators.min(1)],
-      p: ["", Validators.required, Validators.min(0.1), Validators.max(1)]
+      n: ["", [Validators.required, Validators.min(1)]],
+      p: ["", [Validators.required, Validators.min(0), Validators.max(1)]]
     });
     return parameters;
   }
@@ -97,8 +117,19 @@ export class DiscreteProbabilityParameters {
   private createPoissonFormGroup(): FormGroup {
     this.numColumns = 3
     const parameters: FormGroup = this.fb.group({
-      n: ["", Validators.required, Validators.min(1)],
-      lambda: ["", Validators.required, Validators.min(0.1)]
+      n: ["", [Validators.required, Validators.min(1)]],
+      lambda: ["", [Validators.required, Validators.min(1)]]
+    });
+    return parameters;
+  }
+
+  private createNegativeBinomialFormGroup(): FormGroup {
+    this.numColumns = 5;
+    const parameters: FormGroup = this.fb.group({
+      type: ["", Validators.required],
+      n: ["", [Validators.required, Validators.min(1)]],
+      r: ["", [Validators.required, Validators.min(1)]],
+      p: ["", [Validators.required, Validators.min(0), Validators.max(1)]]
     });
     return parameters;
   }

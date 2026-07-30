@@ -4,32 +4,117 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>Probability Distribution Parameters</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div [class]="gridColumnsCSS">
                 <div>
                     <mat-form-field class="w-full">
                         <mat-label>Probability Distribution</mat-label>
-                        <mat-select formControlName="probabilityDistribution" (selectionChange)="onSelectProbabilityDistribution()">
+                        <mat-select formControlName="probabilityDistribution"
+                            (selectionChange)="onSelectProbabilityDistribution()">
                             <mat-option value="binomial">Binomial</mat-option>
-                            <!-- <mat-option value="uniform">Discrete Uniform</mat-option> -->
+                            <mat-option value="discrete-uniform">Discrete Uniform</mat-option>
                             <mat-option value="geometric">Geometric</mat-option>
                             <mat-option value="poisson">Poisson</mat-option>
-                            <!-- <mat-option value="negative-binomial">Negative Binomial</mat-option> -->
+                            <mat-option value="negative-binomial">Negative Binomial</mat-option>
                         </mat-select>
+                        <mat-icon matSuffix>grain</mat-icon>
                         <mat-error>Please select a probability distribution</mat-error>
                     </mat-form-field>
                 </div>
                 <ng-container formGroupName="params">
-                    @if(probabilityParametersForm.get("probabilityDistribution")?.value === "binomial") {
+                    @if(probabilityDistribution === "binomial") {
                         <div>
                             <mat-form-field class="w-full">
-                                <mat-label>n</mat-label>
-                                <input matInput type="number" formControlName="n" />
+                                <mat-label>Number of Trials (n)</mat-label>
+                                <input matInput formControlName="n" type="number" />
+                                <mat-icon matSuffix>directions_run</mat-icon>
                             </mat-form-field>
                         </div>
                         <div>
                             <mat-form-field class="w-full">
-                                <mat-label>p</mat-label>
-                                <input matInput type="number" formControlName="p" />
+                                <mat-label>Probability of Success (p)</mat-label>
+                                <input matInput formControlName="p" type="number" />
+                                <mat-icon matSuffix>check_circle</mat-icon>
+                            </mat-form-field>
+                        </div>
+                    }
+                    @else if (probabilityDistribution === "discrete-uniform") {
+                        <div>
+                            <mat-form-field class="w-full">
+                                <mat-label>Minimum Value (a)</mat-label>
+                                <input matInput formControlName="a" type="number" />
+                                <mat-icon matSuffix>first_page</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field class="w-full">
+                                <mat-label>Maximum Value (b)</mat-label>
+                                <input matInput formControlName="b" type="number" />
+                                <mat-icon matSuffix>last_page</mat-icon>
+                            </mat-form-field>
+                        </div>
+                    }
+                    @else if (probabilityDistribution === "geometric") {
+                        <div>
+                            <mat-form-field class="w-full">
+                                <mat-label>Maximum Display Horizon (n)</mat-label>
+                                <input matInput formControlName="n" type="number" />
+                                <mat-icon matSuffix>speed</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field class="w-full">
+                                <mat-label>Probability of Success (p)</mat-label>
+                                <input matInput formControlName="p" type="number" />
+                                <mat-icon matSuffix>check_circle</mat-icon>
+                            </mat-form-field>
+                        </div>
+                    }
+                    @else if (probabilityDistribution=== "poisson") {
+                        <div>
+                            <mat-form-field class="w-full">
+                                <mat-label>Maximum Display Horizon (n)</mat-label>
+                                <input matInput formControlName="n" type="number" />
+                                <mat-icon matSuffix>speed</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field class="w-full">
+                                <mat-label>Mean Rate (λ)</mat-label>
+                                <input matInput formControlName="lambda" type="number" />
+                                <mat-icon matSuffix>av_timer</mat-icon>
+                            </mat-form-field>
+                        </div>
+                    }
+                    @else if (probabilityDistribution === "negative-binomial") {
+                        <div>
+                            <mat-form-field class="w-full">
+                                <mat-label>Distribution Type</mat-label>
+                                <mat-select formControlName="type">
+                                    <mat-option value="standard">Standard</mat-option>
+                                    <mat-option value="alternate">Alternate</mat-option>
+                                </mat-select>
+                                <mat-icon matSuffix>merge_type</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field class="w-full">
+                                <mat-label>Maximum Display Horizon (n)</mat-label>
+                                <input matInput formControlName="n" type="number" />
+                                <mat-icon matSuffix>speed</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field class="w-full">
+                                <mat-label>Target Successes (r)</mat-label>
+                                <input matInput formControlName="r" type="number" />
+                                <mat-icon matSuffix>adjust</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field class="w-full">
+                                <mat-label>Probability of Success (p)</mat-label>
+                                <input matInput formControlName="p" type="number" />
+                                <mat-icon matSuffix>check_circle</mat-icon>
                             </mat-form-field>
                         </div>
                     }
@@ -37,5 +122,5 @@
             </div>
         </mat-expansion-panel>
     </mat-accordion>
+    {{ probabilityParametersForm.value | json }}
 </form>
-{{ probabilityParametersForm.value | json }}
