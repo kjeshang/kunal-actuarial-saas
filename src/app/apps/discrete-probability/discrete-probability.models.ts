@@ -19,7 +19,7 @@ export interface PoissonParameters {
 }
 
 export interface NegativeBinomialParameters {
-    type: 'standard' | 'alternate';
+    type: string;
     n: number;
     r: number;
     p: number;

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { isNil } from 'lodash';
 import { DiscreteProbabilityStore } from '../discrete-probability.store';
+import { BinomialParameters, DiscreteUniformParameters, GeometricParameters, NegativeBinomialParameters, PoissonParameters } from '../discrete-probability.models';
 
 @Component({
   selector: 'app-discrete-probability-parameters',
@@ -21,7 +22,7 @@ export class DiscreteProbabilityParameters implements OnInit {
 
   probabilityParametersForm: FormGroup = this.fb.group({
     probabilityDistribution: [this.discreteProbabilityStore.probabilityDistribution(), Validators.required],
-    params: undefined
+    parameters: undefined
   });
 
   /**
@@ -34,8 +35,8 @@ export class DiscreteProbabilityParameters implements OnInit {
   /**
    * Getter used to access the params form group easily from its parent form group (i.e., probabilityParametersForm).
    */
-  get paramsFormGroup(): FormGroup {
-    return this.probabilityParametersForm.get("params") as FormGroup;
+  get params(): FormGroup {
+    return this.probabilityParametersForm.get("parameters") as FormGroup;
   }
 
   /**
@@ -43,7 +44,7 @@ export class DiscreteProbabilityParameters implements OnInit {
    */
   get gridColumnsCSS(): string {
     let style: string = "";
-    if(this.probabilityDistribution === 'negative-binomial') {
+    if (this.probabilityDistribution === 'negative-binomial') {
       style = "grid grid-cols-1 sm:grid-cols-4 gap-4";
     }
     else {
@@ -60,24 +61,59 @@ export class DiscreteProbabilityParameters implements OnInit {
     if (!isNil(probabilityDistribution)) {
       switch (probabilityDistribution) {
         case "binomial":
-          this.probabilityParametersForm.setControl("params", this.createBinomialFormGroup());
+          this.probabilityParametersForm.setControl("parameters", this.createBinomialFormGroup());
           break;
         case "discrete-uniform":
-          this.probabilityParametersForm.setControl("params", this.createDiscreteUniformFormGroup());
+          this.probabilityParametersForm.setControl("parameters", this.createDiscreteUniformFormGroup());
           break;
         case "geometric":
-          this.probabilityParametersForm.setControl("params", this.createGeometricFormGroup());
+          this.probabilityParametersForm.setControl("parameters", this.createGeometricFormGroup());
           break;
         case "poisson":
-          this.probabilityParametersForm.setControl("params", this.createPoissonFormGroup());
+          this.probabilityParametersForm.setControl("parameters", this.createPoissonFormGroup());
           break;
         case "negative-binomial":
-          this.probabilityParametersForm.setControl("params", this.createNegativeBinomialFormGroup());
+          this.probabilityParametersForm.setControl("parameters", this.createNegativeBinomialFormGroup());
           break;
         default:
           break;
       }
+      this.discreteProbabilityStore.setProbabilityDistribution(probabilityDistribution);
+      // this.discreteProbabilityStore.setParameters(this.params.value);
     }
+  }
+
+  /**
+   * Detect the unique parameter inputs for the respective probability distribution and save the values to the signal store.
+   * @param probabilityDistribution 
+   */
+  saveParameters(probabilityDistribution: string): void {
+    let parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined = undefined;
+    switch (probabilityDistribution) {
+      case "binomial":
+        // parameters = { 
+        //   n: this.params.get("n")?.valid ? this.params.get("n")?.value : 0, 
+        //   p: this.params.get("p")?.valid ? this.params.get("p")?.value : 0
+        // };
+        parameters = { n: this.params.get("n")?.value, p: this.params.get("p")?.value };
+        break;
+      case "discrete-uniform":
+        parameters = { a: this.params.get("a")?.value, b: this.params.get("b")?.value };
+        break;
+      case "geometric":
+        parameters = { n: this.params.get("n")?.value, p: this.params.get("p")?.value };
+        break
+      case "poisson":
+        parameters = { n: this.params.get("n")?.value, lambda: this.params.get("lambda")?.value };
+        break;
+      case "negative-binomial":
+        parameters = { type: this.params.get("type")?.value, n: this.params.get("n")?.value, r: this.params.get("r")?.value, p: this.params.get("p")?.value };
+        break;
+      default:
+        parameters = undefined;
+        break;
+    }
+    this.discreteProbabilityStore.setParameters(parameters);
   }
 
   /**

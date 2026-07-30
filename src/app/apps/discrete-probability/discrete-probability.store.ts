@@ -27,30 +27,33 @@ export const DiscreteProbabilityStore = signalStore(
          * @param probabilityDistribution Name of probability distribution
          */
         async setProbabilityDistribution(probabilityDistribution: string): Promise<void> {
-            patchState(store, (state: DiscreteProbabilityState) => ({
-                probabilityDistribution: probabilityDistribution
-            }));
             let parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined = undefined;
-            switch(store.probabilityDistribution()) {
+            switch (probabilityDistribution) {
                 case "binomial":
-                    parameters = {n: 0, p: 0} as BinomialParameters;
+                    parameters = { n: 0, p: 0 };
                     break;
                 case "discrete-uniform":
-                    parameters = {a: 0, b: 0} as DiscreteUniformParameters;
+                    parameters = { a: 0, b: 0 };
                     break;
                 case "geometric":
-                    parameters = {n: 0, p: 0} as GeometricParameters;
+                    parameters = { n: 0, p: 0 };
                     break;
                 case "poisson":
-                    parameters = {n: 0, lambda: 0} as PoissonParameters;
+                    parameters = { n: 0, lambda: 0 };
                     break;
                 case "negative-binomial":
-                    parameters = {type: 'standard', n: 0, r: 0, p: 0} as NegativeBinomialParameters;
+                    parameters = { type: '', n: 0, r: 0, p: 0 };
                     break;
                 default:
                     parameters = undefined;
                     break;
             }
+            patchState(store, (state: DiscreteProbabilityState) => ({
+                probabilityDistribution: probabilityDistribution,
+                parameters: parameters
+            }));
+        },
+        async setParameters(parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): Promise<void> {
             patchState(store, (state: DiscreteProbabilityState) => ({
                 parameters: parameters
             }));

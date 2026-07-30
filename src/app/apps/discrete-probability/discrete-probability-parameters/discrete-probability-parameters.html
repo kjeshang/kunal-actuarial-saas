@@ -21,21 +21,23 @@
                     </mat-form-field>
                 </div>
                 <div class="col-span-4">
-                    @if(paramsFormGroup) {
-                    <ng-container formGroupName="params">
+                    @if(params) {
+                    <ng-container formGroupName="parameters">
                         <div [class]="gridColumnsCSS">
                             @if(probabilityDistribution === "binomial") {
                             <div>
                                 <mat-form-field class="w-full">
                                     <mat-label>Number of Trials (n)</mat-label>
-                                    <input matInput formControlName="n" type="number" step="1" />
+                                    <input matInput formControlName="n" type="number" step="1"
+                                        (input)="saveParameters('binomial')" />
                                     <mat-icon matSuffix>directions_run</mat-icon>
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field class="w-full">
                                     <mat-label>Probability of Success (p)</mat-label>
-                                    <input matInput formControlName="p" type="number" step="any" />
+                                    <input matInput formControlName="p" type="number" step="any"
+                                        (input)="saveParameters('binomial')" />
                                     <mat-icon matSuffix>check_circle</mat-icon>
                                 </mat-form-field>
                             </div>
@@ -45,7 +47,7 @@
                                 <mat-form-field class="w-full">
                                     <mat-label>Minimum Value (a)</mat-label>
                                     <input matInput formControlName="a" type="number" step="1"
-                                        [max]="paramsFormGroup.get('b')?.value" />
+                                        [max]="params.get('b')?.value" (input)="saveParameters('discrete-uniform')" />
                                     <mat-icon matSuffix>first_page</mat-icon>
                                 </mat-form-field>
                             </div>
@@ -53,7 +55,7 @@
                                 <mat-form-field class="w-full">
                                     <mat-label>Maximum Value (b)</mat-label>
                                     <input matInput formControlName="b" type="number" step="1"
-                                        [min]="paramsFormGroup.get('a')?.value" />
+                                        [min]="params.get('a')?.value" (input)="saveParameters('discrete-uniform')" />
                                     <mat-icon matSuffix>last_page</mat-icon>
                                 </mat-form-field>
                             </div>
@@ -62,14 +64,16 @@
                             <div>
                                 <mat-form-field class="w-full">
                                     <mat-label>Maximum Display Horizon (n)</mat-label>
-                                    <input matInput formControlName="n" type="number" step="1" />
+                                    <input matInput formControlName="n" type="number" step="1"
+                                        (input)="saveParameters('geometric')" />
                                     <mat-icon matSuffix>speed</mat-icon>
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field class="w-full">
                                     <mat-label>Probability of Success (p)</mat-label>
-                                    <input matInput formControlName="p" type="number" step="any" />
+                                    <input matInput formControlName="p" type="number" step="any"
+                                        (input)="saveParameters('geometric')" />
                                     <mat-icon matSuffix>check_circle</mat-icon>
                                 </mat-form-field>
                             </div>
@@ -78,14 +82,16 @@
                             <div>
                                 <mat-form-field class="w-full">
                                     <mat-label>Maximum Display Horizon (n)</mat-label>
-                                    <input matInput formControlName="n" type="number" step="1" />
+                                    <input matInput formControlName="n" type="number" step="1"
+                                        (input)="saveParameters('poisson')" />
                                     <mat-icon matSuffix>speed</mat-icon>
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field class="w-full">
                                     <mat-label>Mean Rate (λ)</mat-label>
-                                    <input matInput formControlName="lambda" type="number" step="any" />
+                                    <input matInput formControlName="lambda" type="number" step="any"
+                                        (input)="saveParameters('poisson')" />
                                     <mat-icon matSuffix>av_timer</mat-icon>
                                 </mat-form-field>
                             </div>
@@ -94,7 +100,8 @@
                             <div>
                                 <mat-form-field class="w-full">
                                     <mat-label>Distribution Type</mat-label>
-                                    <mat-select formControlName="type">
+                                    <mat-select formControlName="type"
+                                        (selectionChange)="saveParameters('negative-binomial')">
                                         <mat-option value="standard">Standard</mat-option>
                                         <mat-option value="alternate">Alternate</mat-option>
                                     </mat-select>
@@ -104,21 +111,24 @@
                             <div>
                                 <mat-form-field class="w-full">
                                     <mat-label>Maximum Display Horizon (n)</mat-label>
-                                    <input matInput formControlName="n" type="number" step="1" />
+                                    <input matInput formControlName="n" type="number" step="1"
+                                        (input)="saveParameters('negative-binomial')" />
                                     <mat-icon matSuffix>speed</mat-icon>
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field class="w-full">
                                     <mat-label>Target Successes (r)</mat-label>
-                                    <input matInput formControlName="r" type="number" step="1" />
+                                    <input matInput formControlName="r" type="number" step="1"
+                                        (input)="saveParameters('negative-binomial')" />
                                     <mat-icon matSuffix>adjust</mat-icon>
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field class="w-full">
                                     <mat-label>Probability of Success (p)</mat-label>
-                                    <input matInput formControlName="p" type="number" step="any" />
+                                    <input matInput formControlName="p" type="number" step="any"
+                                        (input)="saveParameters('negative-binomial')" />
                                     <mat-icon matSuffix>check_circle</mat-icon>
                                 </mat-form-field>
                             </div>
@@ -130,5 +140,7 @@
             </div>
         </mat-expansion-panel>
     </mat-accordion>
-    {{ probabilityParametersForm.value | json }}
+    <p>Form Values: {{ probabilityParametersForm.value | json }}</p>
+    <p>Signal Store (Probability Distribution): {{ discreteProbabilityStore.probabilityDistribution() }}</p>
+    <p>Signal Store (Parameters): {{ discreteProbabilityStore.parameters() | json }}</p>
 </form>
