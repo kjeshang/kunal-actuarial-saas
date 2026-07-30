@@ -4,8 +4,8 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>Probability Distribution Parameters</mat-panel-title>
             </mat-expansion-panel-header>
-            <div [class]="gridColumnsCSS">
-                <div>
+            <div class="grid grid-cols-1 sm:grid-cols-5 gap-y-4 sm:gap-4">
+                <div class="col-span-1">
                     <mat-form-field class="w-full">
                         <mat-label>Probability Distribution</mat-label>
                         <mat-select formControlName="probabilityDistribution"
@@ -20,72 +20,75 @@
                         <mat-error>Please select a probability distribution</mat-error>
                     </mat-form-field>
                 </div>
-                <ng-container formGroupName="params">
-                    @if(probabilityDistribution === "binomial") {
+                <div class="col-span-4" formGroupName="params">
+                    <div [class]="gridColumnsCSS">
+                        @if(probabilityDistribution === "binomial") {
                         <div>
                             <mat-form-field class="w-full">
                                 <mat-label>Number of Trials (n)</mat-label>
-                                <input matInput formControlName="n" type="number" />
+                                <input matInput formControlName="n" type="number" step="1" />
                                 <mat-icon matSuffix>directions_run</mat-icon>
                             </mat-form-field>
                         </div>
                         <div>
                             <mat-form-field class="w-full">
                                 <mat-label>Probability of Success (p)</mat-label>
-                                <input matInput formControlName="p" type="number" />
+                                <input matInput formControlName="p" type="number" step="any" />
                                 <mat-icon matSuffix>check_circle</mat-icon>
                             </mat-form-field>
                         </div>
-                    }
-                    @else if (probabilityDistribution === "discrete-uniform") {
+                        }
+                        @else if (probabilityDistribution === "discrete-uniform") {
                         <div>
                             <mat-form-field class="w-full">
                                 <mat-label>Minimum Value (a)</mat-label>
-                                <input matInput formControlName="a" type="number" [max]="paramsFormGroup.get('b')?.value" />
+                                <input matInput formControlName="a" type="number" step="1"
+                                    [max]="paramsFormGroup.get('b')?.value" />
                                 <mat-icon matSuffix>first_page</mat-icon>
                             </mat-form-field>
                         </div>
                         <div>
                             <mat-form-field class="w-full">
                                 <mat-label>Maximum Value (b)</mat-label>
-                                <input matInput formControlName="b" type="number" [min]="paramsFormGroup.get('a')?.value" />
+                                <input matInput formControlName="b" type="number" step="1"
+                                    [min]="paramsFormGroup.get('a')?.value" />
                                 <mat-icon matSuffix>last_page</mat-icon>
                             </mat-form-field>
                         </div>
-                    }
-                    @else if (probabilityDistribution === "geometric") {
+                        }
+                        @else if (probabilityDistribution === "geometric") {
                         <div>
                             <mat-form-field class="w-full">
                                 <mat-label>Maximum Display Horizon (n)</mat-label>
-                                <input matInput formControlName="n" type="number" />
+                                <input matInput formControlName="n" type="number" step="1" />
                                 <mat-icon matSuffix>speed</mat-icon>
                             </mat-form-field>
                         </div>
                         <div>
                             <mat-form-field class="w-full">
                                 <mat-label>Probability of Success (p)</mat-label>
-                                <input matInput formControlName="p" type="number" />
+                                <input matInput formControlName="p" type="number" step="any" />
                                 <mat-icon matSuffix>check_circle</mat-icon>
                             </mat-form-field>
                         </div>
-                    }
-                    @else if (probabilityDistribution=== "poisson") {
+                        }
+                        @else if (probabilityDistribution=== "poisson") {
                         <div>
                             <mat-form-field class="w-full">
                                 <mat-label>Maximum Display Horizon (n)</mat-label>
-                                <input matInput formControlName="n" type="number" />
+                                <input matInput formControlName="n" type="number" step="1" />
                                 <mat-icon matSuffix>speed</mat-icon>
                             </mat-form-field>
                         </div>
                         <div>
                             <mat-form-field class="w-full">
                                 <mat-label>Mean Rate (λ)</mat-label>
-                                <input matInput formControlName="lambda" type="number" />
+                                <input matInput formControlName="lambda" type="number" step="any" />
                                 <mat-icon matSuffix>av_timer</mat-icon>
                             </mat-form-field>
                         </div>
-                    }
-                    @else if (probabilityDistribution === "negative-binomial") {
+                        }
+                        @else if (probabilityDistribution === "negative-binomial") {
                         <div>
                             <mat-form-field class="w-full">
                                 <mat-label>Distribution Type</mat-label>
@@ -99,26 +102,27 @@
                         <div>
                             <mat-form-field class="w-full">
                                 <mat-label>Maximum Display Horizon (n)</mat-label>
-                                <input matInput formControlName="n" type="number" />
+                                <input matInput formControlName="n" type="number" step="1" />
                                 <mat-icon matSuffix>speed</mat-icon>
                             </mat-form-field>
                         </div>
                         <div>
                             <mat-form-field class="w-full">
                                 <mat-label>Target Successes (r)</mat-label>
-                                <input matInput formControlName="r" type="number" />
+                                <input matInput formControlName="r" type="number" step="1" />
                                 <mat-icon matSuffix>adjust</mat-icon>
                             </mat-form-field>
                         </div>
                         <div>
                             <mat-form-field class="w-full">
                                 <mat-label>Probability of Success (p)</mat-label>
-                                <input matInput formControlName="p" type="number" />
+                                <input matInput formControlName="p" type="number" step="any" />
                                 <mat-icon matSuffix>check_circle</mat-icon>
                             </mat-form-field>
                         </div>
-                    }
-                </ng-container>
+                        }
+                    </div>
+                </div>
             </div>
         </mat-expansion-panel>
     </mat-accordion>

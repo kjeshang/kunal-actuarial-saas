@@ -42,10 +42,10 @@ export class DiscreteProbabilityParameters {
   get gridColumnsCSS(): string {
     let style: string = "";
     if(this.probabilityDistribution === 'negative-binomial') {
-      style = "grid grid-cols-1 sm:grid-cols-5 gap-4";
+      style = "grid grid-cols-1 sm:grid-cols-4 gap-4";
     }
     else {
-      style = "grid grid-cols-1 sm:grid-cols-3 gap-4";
+      style = "grid grid-cols-1 sm:grid-cols-2 gap-4";
     }
     return style;
   }
