@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { isNil } from 'lodash';
+import { DiscreteProbabilityStore } from '../discrete-probability.store';
 
 @Component({
   selector: 'app-discrete-probability-parameters',
@@ -14,12 +15,13 @@ import { isNil } from 'lodash';
   templateUrl: './discrete-probability-parameters.html',
   styleUrl: './discrete-probability-parameters.css',
 })
-export class DiscreteProbabilityParameters {
+export class DiscreteProbabilityParameters implements OnInit {
   private fb: FormBuilder = inject(FormBuilder);
+  discreteProbabilityStore = inject(DiscreteProbabilityStore);
 
   probabilityParametersForm: FormGroup = this.fb.group({
-    probabilityDistribution: ["binomial", Validators.required],
-    params: this.createBinomialFormGroup()
+    probabilityDistribution: [this.discreteProbabilityStore.probabilityDistribution(), Validators.required],
+    params: undefined
   });
 
   /**
@@ -76,6 +78,10 @@ export class DiscreteProbabilityParameters {
           break;
       }
     }
+  }
+
+  ngOnInit(): void {
+    this.onSelectProbabilityDistribution();
   }
 
   /**
