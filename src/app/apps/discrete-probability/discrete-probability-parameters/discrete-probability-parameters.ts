@@ -80,6 +80,9 @@ export class DiscreteProbabilityParameters implements OnInit {
     }
   }
 
+  /**
+   * On component load, determine parameters form group based on default probability distribution selected.
+   */
   ngOnInit(): void {
     this.onSelectProbabilityDistribution();
   }
