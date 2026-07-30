@@ -30,11 +30,30 @@ export const DiscreteProbabilityStore = signalStore(
             patchState(store, (state: DiscreteProbabilityState) => ({
                 probabilityDistribution: probabilityDistribution
             }));
-            // let parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined = undefined;
-            // switch(store.probabilityDistribution()) {
-            //     case "binomial":
-            //         parameters = {n: 0, p: 0} as BinomialParameters;
-            // }
+            let parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined = undefined;
+            switch(store.probabilityDistribution()) {
+                case "binomial":
+                    parameters = {n: 0, p: 0} as BinomialParameters;
+                    break;
+                case "discrete-uniform":
+                    parameters = {a: 0, b: 0} as DiscreteUniformParameters;
+                    break;
+                case "geometric":
+                    parameters = {n: 0, p: 0} as GeometricParameters;
+                    break;
+                case "poisson":
+                    parameters = {n: 0, lambda: 0} as PoissonParameters;
+                    break;
+                case "negative-binomial":
+                    parameters = {type: 'standard', n: 0, r: 0, p: 0} as NegativeBinomialParameters;
+                    break;
+                default:
+                    parameters = undefined;
+                    break;
+            }
+            patchState(store, (state: DiscreteProbabilityState) => ({
+                parameters: parameters
+            }));
         }
     }))
 )
