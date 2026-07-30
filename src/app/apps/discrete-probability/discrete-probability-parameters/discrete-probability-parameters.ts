@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,8 +22,6 @@ export class DiscreteProbabilityParameters {
     params: this.createBinomialFormGroup()
   });
 
-  numColumns: number = 3;
-
   /**
    * Getter used to easily access probabilityDistribution form control value from form group (i.e., probabilityParametersForm).
    */
@@ -42,7 +40,13 @@ export class DiscreteProbabilityParameters {
    * Adjust number of grid columns based on the total number of parameters related to the selected probability distribution (including the distribution dropdown selector).
    */
   get gridColumnsCSS(): string {
-    let style: string = `grid grid-cols-1 sm:grid-cols-${this.numColumns} gap-4`;
+    let style: string = "";
+    if(this.probabilityDistribution === 'negative-binomial') {
+      style = "grid grid-cols-1 sm:grid-cols-5 gap-4";
+    }
+    else {
+      style = "grid grid-cols-1 sm:grid-cols-3 gap-4";
+    }
     return style;
   }
 
@@ -67,7 +71,6 @@ export class DiscreteProbabilityParameters {
           break;
         case "negative-binomial":
           this.probabilityParametersForm.setControl("params", this.createNegativeBinomialFormGroup());
-          console.log(this.numColumns)
           break;
         default:
           break;
@@ -79,7 +82,6 @@ export class DiscreteProbabilityParameters {
    * Create parameters form group for the binomial probability distribution.
    */
   private createBinomialFormGroup(): FormGroup {
-    this.numColumns = 3
     const parameters: FormGroup = this.fb.group({
       n: ["", [Validators.required, Validators.min(1)]],
       p: ["", [Validators.required, Validators.min(0), Validators.max(1)]]
@@ -91,7 +93,6 @@ export class DiscreteProbabilityParameters {
    * Create parameters form group for the discrete uniform probability distribution.
    */
   private createDiscreteUniformFormGroup(): FormGroup {
-    this.numColumns = 3
     const parameters: FormGroup = this.fb.group({
       a: ["", [Validators.required]],
       b: ["", [Validators.required]]
@@ -103,7 +104,6 @@ export class DiscreteProbabilityParameters {
    * Create parameters form group for the geometric probability distribution.
    */
   private createGeometricFormGroup(): FormGroup {
-    this.numColumns = 3
     const parameters: FormGroup = this.fb.group({
       n: ["", [Validators.required, Validators.min(1)]],
       p: ["", [Validators.required, Validators.min(0), Validators.max(1)]]
@@ -115,7 +115,6 @@ export class DiscreteProbabilityParameters {
    * Create parameters form group for the poisson probability distribution.
    */
   private createPoissonFormGroup(): FormGroup {
-    this.numColumns = 3
     const parameters: FormGroup = this.fb.group({
       n: ["", [Validators.required, Validators.min(1)]],
       lambda: ["", [Validators.required, Validators.min(1)]]
@@ -124,7 +123,6 @@ export class DiscreteProbabilityParameters {
   }
 
   private createNegativeBinomialFormGroup(): FormGroup {
-    this.numColumns = 5;
     const parameters: FormGroup = this.fb.group({
       type: ["", Validators.required],
       n: ["", [Validators.required, Validators.min(1)]],
