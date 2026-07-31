@@ -31,6 +31,7 @@
                                     <input matInput formControlName="n" type="number" step="1"
                                         (input)="saveParameters('binomial')" />
                                     <mat-icon matSuffix>directions_run</mat-icon>
+                                    <mat-error>n: Required, integer ≥ 1</mat-error>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -39,6 +40,7 @@
                                     <input matInput formControlName="p" type="number" step="any"
                                         (input)="saveParameters('binomial')" />
                                     <mat-icon matSuffix>check_circle</mat-icon>
+                                    <mat-error>p: Required, between 0 and 1</mat-error>
                                 </mat-form-field>
                             </div>
                             }
@@ -49,6 +51,7 @@
                                     <input matInput formControlName="a" type="number" step="1"
                                         [max]="params.get('b')?.value" (input)="saveParameters('discrete-uniform')" />
                                     <mat-icon matSuffix>first_page</mat-icon>
+                                    <mat-error>a: Required</mat-error>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -57,6 +60,7 @@
                                     <input matInput formControlName="b" type="number" step="1"
                                         [min]="params.get('a')?.value" (input)="saveParameters('discrete-uniform')" />
                                     <mat-icon matSuffix>last_page</mat-icon>
+                                    <mat-error>b: Required, a ≤ b</mat-error>
                                 </mat-form-field>
                             </div>
                             }
@@ -67,6 +71,7 @@
                                     <input matInput formControlName="n" type="number" step="1"
                                         (input)="saveParameters('geometric')" />
                                     <mat-icon matSuffix>speed</mat-icon>
+                                    <mat-error>n: Required, integer ≥ 1</mat-error>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -75,6 +80,7 @@
                                     <input matInput formControlName="p" type="number" step="any"
                                         (input)="saveParameters('geometric')" />
                                     <mat-icon matSuffix>check_circle</mat-icon>
+                                    <mat-error>p: Required, between 0 and 1 (strictly > 0)</mat-error>
                                 </mat-form-field>
                             </div>
                             }
@@ -85,6 +91,7 @@
                                     <input matInput formControlName="n" type="number" step="1"
                                         (input)="saveParameters('poisson')" />
                                     <mat-icon matSuffix>speed</mat-icon>
+                                    <mat-error>n: Required, integer ≥ 1</mat-error>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -93,6 +100,7 @@
                                     <input matInput formControlName="lambda" type="number" step="any"
                                         (input)="saveParameters('poisson')" />
                                     <mat-icon matSuffix>av_timer</mat-icon>
+                                    <mat-error>λ: Required, rate > 0</mat-error>
                                 </mat-form-field>
                             </div>
                             }
@@ -106,6 +114,7 @@
                                         <mat-option value="alternate">Alternate</mat-option>
                                     </mat-select>
                                     <mat-icon matSuffix>merge_type</mat-icon>
+                                    <mat-error>type: Required</mat-error>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -114,6 +123,7 @@
                                     <input matInput formControlName="n" type="number" step="1"
                                         (input)="saveParameters('negative-binomial')" />
                                     <mat-icon matSuffix>speed</mat-icon>
+                                    <mat-error>n: Required, integer ≥ 1</mat-error>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -122,6 +132,7 @@
                                     <input matInput formControlName="r" type="number" step="1"
                                         (input)="saveParameters('negative-binomial')" />
                                     <mat-icon matSuffix>adjust</mat-icon>
+                                    <mat-error>r: Required, target successes ≥ 1</mat-error>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -130,6 +141,7 @@
                                     <input matInput formControlName="p" type="number" step="any"
                                         (input)="saveParameters('negative-binomial')" />
                                     <mat-icon matSuffix>check_circle</mat-icon>
+                                    <mat-error>p: Required, between 0 and 1 (strictly > 0)</mat-error>
                                 </mat-form-field>
                             </div>
                             }
