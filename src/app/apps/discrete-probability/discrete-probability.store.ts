@@ -53,6 +53,10 @@ export const DiscreteProbabilityStore = signalStore(
                 parameters: parameters
             }));
         },
+        /**
+         * Method used to set the parameters of the respective probability distribution.
+         * @param parameters Unique parameters of the respective probability distribution
+         */
         async setParameters(parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): Promise<void> {
             patchState(store, (state: DiscreteProbabilityState) => ({
                 parameters: parameters
