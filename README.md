@@ -127,6 +127,8 @@ Create spec.ts files for the following files to eventually write custom unit tes
 * Create spec.ts file for `loan.store.ts`. <= Recommended
 * Create spec.ts file for `currency-format.ts`.
 * Create spec.ts file for `interest-rate-format.ts`.
+* Create a child component to display unique probability distribution's parameter form controls.
+* Create a form service to create unique probability distribution's form controls.
 
 ## Development server
 
