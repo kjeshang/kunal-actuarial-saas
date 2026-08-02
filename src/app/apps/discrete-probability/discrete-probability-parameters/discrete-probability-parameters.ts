@@ -79,7 +79,6 @@ export class DiscreteProbabilityParameters implements OnInit {
           break;
       }
       this.discreteProbabilityStore.setProbabilityDistribution(probabilityDistribution);
-      // this.discreteProbabilityStore.setParameters(this.params.value);
     }
   }
 

@@ -24,3 +24,10 @@ export interface NegativeBinomialParameters {
     r: number;
     p: number;
 }
+
+export interface DiscreteProbabilityMetric {
+    metricType: 'probability' | 'value';
+    label: string;
+    value: number | undefined;
+    displayValue: string;
+}
