@@ -99,4 +99,21 @@ export class DiscreteProbabilityBinomialService {
     }
     return metric;
   }
+
+  calculateBinomialStandardDeviation(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined) {
+    let metric: DiscreteProbabilityMetric | undefined = undefined;
+    if (probabilityDistribution === "binomial" && !isNil(parameters) && "n" in parameters && "p" in parameters) {
+      const variance = this.calculateBinomialVariance(probabilityDistribution, parameters);
+      if (!isNil(variance) && !isNil(variance.value)) {
+        const value = Math.sqrt(variance.value);
+        metric = {
+          metricType: "value",
+          label: "σ(X) : Standard Deviation",
+          value: value,
+          displayValue: value.toFixed(4)
+        };
+      }
+    }
+    return metric;
+  }
 }

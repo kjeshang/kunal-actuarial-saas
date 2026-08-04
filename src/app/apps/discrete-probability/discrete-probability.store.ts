@@ -118,6 +118,18 @@ export const DiscreteProbabilityStore = signalStore(
                     break;
             }
             return variance;
+        }),
+        discreteProbabilityStandardDeviation: computed(() => {
+            let standardDeviation: DiscreteProbabilityMetric | undefined = undefined;
+            switch (probabilityDistribution()) {
+                case "binomial":
+                    standardDeviation = binomialService.calculateBinomialStandardDeviation(probabilityDistribution(), parameters());
+                    break;
+                default:
+                    standardDeviation = undefined;
+                    break;
+            }
+            return standardDeviation;
         })
     }))
 )
