@@ -4,7 +4,10 @@
             <app-discrete-probability-parameters />
         </section>
         <section class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <app-discrete-probability-summary-card [metric]="discreteProbabilityStore.discreteProbabilityExpectedValue()" />
+            <app-discrete-probability-summary-card
+                [metric]="discreteProbabilityStore.discreteProbabilityExpectedValue()" />
+            <app-discrete-probability-summary-card
+                [metric]="discreteProbabilityStore.discreteProbabilitySecondMoment()" />
             <app-discrete-probability-summary-card [metric]="discreteProbabilityStore.discreteProbabilityVariance()" />
         </section>
     </div>

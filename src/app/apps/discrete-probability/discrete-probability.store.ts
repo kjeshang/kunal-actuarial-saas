@@ -95,6 +95,18 @@ export const DiscreteProbabilityStore = signalStore(
             }
             return expectedValue;
         }),
+        discreteProbabilitySecondMoment: computed(() => {
+            let secondMoment: DiscreteProbabilityMetric | undefined = undefined;
+            switch (probabilityDistribution()) {
+                case "binomial":
+                    secondMoment = binomialService.calculateBinomialSecondMoment(probabilityDistribution(), parameters());
+                    break;
+                default:
+                    secondMoment = undefined;
+                    break;
+            }
+            return secondMoment;
+        }),
         discreteProbabilityVariance: computed(() => {
             let variance: DiscreteProbabilityMetric | undefined = undefined;
             switch (probabilityDistribution()) {

@@ -61,7 +61,27 @@ export class DiscreteProbabilityBinomialService {
   }
 
   /**
-   * Method used to calcualte variance of binomial distribution.
+   * Method used to calculate second moment of binomial distribution.
+   * @param probabilityDistribution 
+   * @param parameters 
+   * @returns Object of DiscreteProbabilityMetric
+   */
+  calculateBinomialSecondMoment(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric | undefined {
+    let metric: DiscreteProbabilityMetric | undefined = undefined;
+    if (probabilityDistribution === "binomial" && !isNil(parameters) && "n" in parameters && "p" in parameters) {
+      const value: number = (parameters.n * parameters.p) * (1 - parameters.p + (parameters.n * parameters.p));
+      metric = {
+        metricType: "value",
+        label: "E[X²] : Second Moment",
+        value: value,
+        displayValue: value.toFixed(4)
+      };
+    }
+    return metric;
+  }
+
+  /**
+   * Method used to calculate variance of binomial distribution.
    * @param probabilityDistribution 
    * @param parameters 
    * @returns Object of DiscreteProbabilityMetric
