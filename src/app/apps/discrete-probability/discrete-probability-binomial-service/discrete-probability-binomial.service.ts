@@ -52,9 +52,9 @@ export class DiscreteProbabilityBinomialService {
       const value: number = parameters.n * parameters.p;
       metric = {
         metricType: "value",
-        label: "E[X&#178;] : Expected Value",
+        label: "E[<em>X&#178;</em>] : Expected Value",
         value: value,
-        displayValue: value.toString()
+        displayValue: value.toFixed(4)
       };
     }
     return metric;
