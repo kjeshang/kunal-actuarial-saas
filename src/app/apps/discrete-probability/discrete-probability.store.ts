@@ -8,7 +8,6 @@ import {
 } from '@ngrx/signals';
 import { BinomialParameters, DiscreteUniformParameters, GeometricParameters, PoissonParameters, NegativeBinomialParameters, DiscreteProbabilityMetric } from "./discrete-probability.models";
 import { DiscreteProbabilityBinomialService } from "./discrete-probability-binomial-service/discrete-probability-binomial.service";
-import { isNil } from "lodash";
 
 type DiscreteProbabilityState = {
     probabilityDistribution: string;
@@ -83,6 +82,18 @@ export const DiscreteProbabilityStore = signalStore(
                     break;
             }
             return formattedParameters;
+        }),
+        discreteProbabilityExpectedValue: computed(() => {
+            let expectedValue: DiscreteProbabilityMetric | undefined = undefined;
+            switch(probabilityDistribution()) {
+                case "binomial":
+                    expectedValue = binomialService.calculateBinomialExpectedValue(probabilityDistribution(), parameters());
+                    break;
+                default:
+                    expectedValue = undefined;
+                    break;
+            }
+            return expectedValue;
         })
     }))
 )

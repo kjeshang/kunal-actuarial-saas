@@ -39,4 +39,24 @@ export class DiscreteProbabilityBinomialService {
     }
     return binomialParameters;
   }
+
+  /**
+   * Method used to calcualte expected valueo of binomial distribution.
+   * @param probabilityDistribution 
+   * @param parameters 
+   * @returns Object of DiscreteProbabilityMetric
+   */
+  calculateBinomialExpectedValue(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric | undefined  {
+    let metric: DiscreteProbabilityMetric | undefined = undefined;
+    if (probabilityDistribution === "binomial" && !isNil(parameters) && "n" in parameters && "p" in parameters) {
+      const value: number = parameters.n * parameters.p;
+      metric = {
+        metricType: "value",
+        label: "E[X&#178;] : Expected Value",
+        value: value,
+        displayValue: value.toString()
+      };
+    }
+    return metric;
+  }
 }
