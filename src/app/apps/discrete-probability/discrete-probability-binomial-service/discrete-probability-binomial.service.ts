@@ -15,7 +15,7 @@ export class DiscreteProbabilityBinomialService {
    */
   formatBinomialParameters(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric[] | undefined {
     let binomialParameters: DiscreteProbabilityMetric[] | undefined = undefined;
-    if (probabilityDistribution === "binomial" && !isNil(parameters) && "n" in parameters && "p" in parameters) {
+    if (probabilityDistribution === "binomial" && !isNil(parameters) && "n" in parameters && "p" in parameters && typeof parameters.n === 'number' && typeof parameters.p === 'number') {
       binomialParameters = [
         {
           metricType: "value",
@@ -46,13 +46,13 @@ export class DiscreteProbabilityBinomialService {
    * @param parameters 
    * @returns Object of DiscreteProbabilityMetric
    */
-  calculateBinomialExpectedValue(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric | undefined  {
+  calculateBinomialExpectedValue(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric | undefined {
     let metric: DiscreteProbabilityMetric | undefined = undefined;
     if (probabilityDistribution === "binomial" && !isNil(parameters) && "n" in parameters && "p" in parameters) {
       const value: number = parameters.n * parameters.p;
       metric = {
         metricType: "value",
-        label: "E[<em>X&#178;</em>] : Expected Value",
+        label: "E[X] : Expected Value",
         value: value,
         displayValue: value.toFixed(4)
       };
