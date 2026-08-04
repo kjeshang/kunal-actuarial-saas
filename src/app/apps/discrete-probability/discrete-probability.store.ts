@@ -85,7 +85,7 @@ export const DiscreteProbabilityStore = signalStore(
         }),
         discreteProbabilityExpectedValue: computed(() => {
             let expectedValue: DiscreteProbabilityMetric | undefined = undefined;
-            switch(probabilityDistribution()) {
+            switch (probabilityDistribution()) {
                 case "binomial":
                     expectedValue = binomialService.calculateBinomialExpectedValue(probabilityDistribution(), parameters());
                     break;
@@ -94,6 +94,18 @@ export const DiscreteProbabilityStore = signalStore(
                     break;
             }
             return expectedValue;
+        }),
+        discreteProbabilityVariance: computed(() => {
+            let variance: DiscreteProbabilityMetric | undefined = undefined;
+            switch (probabilityDistribution()) {
+                case "binomial":
+                    variance = binomialService.calculateBinomialVariance(probabilityDistribution(), parameters());
+                    break;
+                default:
+                    variance = undefined;
+                    break;
+            }
+            return variance;
         })
     }))
 )

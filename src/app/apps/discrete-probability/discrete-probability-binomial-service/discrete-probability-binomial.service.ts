@@ -41,7 +41,7 @@ export class DiscreteProbabilityBinomialService {
   }
 
   /**
-   * Method used to calcualte expected valueo of binomial distribution.
+   * Method used to calcualte expected value of binomial distribution.
    * @param probabilityDistribution 
    * @param parameters 
    * @returns Object of DiscreteProbabilityMetric
@@ -53,6 +53,26 @@ export class DiscreteProbabilityBinomialService {
       metric = {
         metricType: "value",
         label: "E[X] : Expected Value",
+        value: value,
+        displayValue: value.toFixed(4)
+      };
+    }
+    return metric;
+  }
+
+  /**
+   * Method used to calcualte variance of binomial distribution.
+   * @param probabilityDistribution 
+   * @param parameters 
+   * @returns Object of DiscreteProbabilityMetric
+   */
+  calculateBinomialVariance(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric | undefined {
+    let metric: DiscreteProbabilityMetric | undefined = undefined;
+    if (probabilityDistribution === "binomial" && !isNil(parameters) && "n" in parameters && "p" in parameters) {
+      const value = parameters.n * parameters.p * (1 - parameters.p);
+      metric = {
+        metricType: "value",
+        label: "Var[X] : Variance",
         value: value,
         displayValue: value.toFixed(4)
       };
