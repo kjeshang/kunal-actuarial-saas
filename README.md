@@ -77,6 +77,20 @@ Loan Amortization Table:
 
 > _Export to Excel Spreadsheet_ <= Maybe will add later
 
+## Discrete Probability app
+
+### Discrete Probability Distribution Parameters
+* Binomial Distribution: Number of Trials (n), Probability of Success (p)
+
+### Outpu
+
+Summary Metrics:
+* Expected Value
+* Second Moment
+* Variance
+* Standard Deviation
+* Skewness <- Might add later
+* Mode <- Might add later
 
 ### Rough Ideas
 ```
