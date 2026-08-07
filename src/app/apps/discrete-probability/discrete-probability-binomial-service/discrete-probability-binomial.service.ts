@@ -172,7 +172,7 @@ export class DiscreteProbabilityBinomialService {
       pmfValue = x === n ? 1 : 0;
     }
     else {
-      const logPmf: number = Math.log(calcs.logCombination(n, x)) + x * Math.log(p) + (n - x) * Math.log(1 - p);
+      const logPmf: number = calcs.logCombination(n, x) + x * Math.log(p) + (n - x) * Math.log(1 - p);
       pmfValue = Math.exp(logPmf);
     }
     return pmfValue;

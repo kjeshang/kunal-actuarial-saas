@@ -48,8 +48,7 @@ export class DiscreteProbabilityCalculationService {
       result = 1;
     }
     else {
-      const logResult = this.logGamma(n) - this.logGamma(x) - this.logGamma(n - x);
-      return Math.exp(logResult);
+      result = this.logGamma(n) - this.logGamma(x) - this.logGamma(n - x);
     }
     return result;
   }
@@ -60,7 +59,7 @@ export class DiscreteProbabilityCalculationService {
    * @param n 
    * @returns number
    */
-  logGamma(n: number): number {
+  private logGamma(n: number): number {
     let result: number = 0;
     if (n <= 1) {
       result = 0;
