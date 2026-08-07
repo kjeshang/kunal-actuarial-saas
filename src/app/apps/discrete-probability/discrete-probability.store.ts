@@ -6,7 +6,7 @@ import {
     withMethods,
     withState,
 } from '@ngrx/signals';
-import { BinomialParameters, DiscreteUniformParameters, GeometricParameters, PoissonParameters, NegativeBinomialParameters, DiscreteProbabilityMetric } from "./discrete-probability.models";
+import { BinomialParameters, DiscreteUniformParameters, GeometricParameters, PoissonParameters, NegativeBinomialParameters, DiscreteProbabilityMetric, DiscreteProbabilityDistributionTable } from "./discrete-probability.models";
 import { DiscreteProbabilityBinomialService } from "./discrete-probability-binomial-service/discrete-probability-binomial.service";
 
 type DiscreteProbabilityState = {
@@ -130,6 +130,18 @@ export const DiscreteProbabilityStore = signalStore(
                     break;
             }
             return standardDeviation;
+        }),
+        discreteProbabilityDistributionTable: computed(() => {
+            let probabilityDistributionTable: DiscreteProbabilityDistributionTable[] = [];
+            switch (probabilityDistribution()) {
+                case "binomial":
+                    probabilityDistributionTable = binomialService.createBinomialDistributionTable(probabilityDistribution(), parameters());
+                    break;
+                default:
+                    probabilityDistributionTable = [];
+                    break;
+            }
+            return probabilityDistributionTable;
         })
     }))
 )

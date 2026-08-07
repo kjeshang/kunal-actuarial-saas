@@ -41,7 +41,8 @@ export class DiscreteProbabilityCalculationService {
   logCombination(n: number, x: number): number {
     let result: number = 0;
     if (x < 0 || x > n) {
-      result = 0;
+      // result = 0;
+      result = -Infinity;
     }
     else if (x === 0 || x === n) {
       result = 1;

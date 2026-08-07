@@ -152,10 +152,13 @@
             </div>
         </mat-expansion-panel>
     </mat-accordion>
-    <p>Form Values: {{ probabilityParametersForm.value | json }}</p>
+    <!-- <p>Form Values: {{ probabilityParametersForm.value | json }}</p>
     <p>Signal Store (Probability Distribution): {{ discreteProbabilityStore.probabilityDistribution() }}</p>
     <p>Signal Store (Parameters): {{ discreteProbabilityStore.parameters() | json }}</p>
     @for(item of discreteProbabilityStore.discreteDistributionParameters(); track $index) {
         <p>{{ item | json }}</p>
     }
+    @for(item of discreteProbabilityStore.discreteProbabilityDistributionTable(); track $index) {
+        <p>{{ item | json }}</p>
+    } -->
 </form>

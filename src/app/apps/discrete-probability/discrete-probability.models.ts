@@ -31,3 +31,16 @@ export interface DiscreteProbabilityMetric {
     value: number | undefined;
     displayValue: string;
 }
+
+export interface DiscreteProbabilityTableValue {
+    value: number;
+    displayValue: string;
+}
+
+export interface DiscreteProbabilityDistributionTable {
+    index: number;
+    x: number;
+    pmf: DiscreteProbabilityTableValue;
+    cdf: DiscreteProbabilityTableValue;
+    sf: DiscreteProbabilityTableValue;
+}
