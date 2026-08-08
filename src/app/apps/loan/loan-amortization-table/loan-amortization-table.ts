@@ -23,7 +23,7 @@ export class LoanAmortizationTable {
   @Input() loanAmortizationSchedule!: LoanAmortizationSchedule[];
 
   // loanStore = inject(LoanStore);
-  private loanReportService = inject(LoanReportService);
+  private loanReportService: LoanReportService = inject(LoanReportService);
   private _snackBar: MatSnackBar = inject(MatSnackBar);
 
   showProgressBar: boolean = false;

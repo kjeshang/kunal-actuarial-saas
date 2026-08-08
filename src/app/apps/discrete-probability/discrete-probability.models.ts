@@ -44,3 +44,9 @@ export interface DiscreteProbabilityDistributionTable {
     cdf: DiscreteProbabilityTableValue;
     sf: DiscreteProbabilityTableValue;
 }
+
+export interface DiscreteProbabilityTableConfiguration {
+    name: string;
+    heading: string;
+    textPosition: string;
+}
