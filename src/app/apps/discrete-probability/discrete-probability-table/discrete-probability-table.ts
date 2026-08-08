@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
-import { DiscreteProbabilityTableConfiguration } from '../discrete-probability.models';
+import { DiscreteProbabilityDistributionTable, DiscreteProbabilityTableConfiguration } from '../discrete-probability.models';
 
 @Component({
   selector: 'app-discrete-probability-table',
@@ -14,6 +14,18 @@ import { DiscreteProbabilityTableConfiguration } from '../discrete-probability.m
 })
 export class DiscreteProbabilityTable {
   @Input() discreteProbabilityConfiguration!: DiscreteProbabilityTableConfiguration[];
-  
+  @Input() discreteProbabilityDistributionTable!: DiscreteProbabilityDistributionTable[];
+
   showProgressBar: boolean = false;
+
+   /**
+   * Get name of column to be populated in table.
+   */
+  get displayedColumns(): string[] {
+    const list: string[] = [];
+    for (const item of this.discreteProbabilityConfiguration) {
+      list.push(item.name);
+    }
+    return list;
+  }
 }

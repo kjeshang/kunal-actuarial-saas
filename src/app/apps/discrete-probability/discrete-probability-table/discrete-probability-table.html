@@ -20,7 +20,26 @@
             <mat-progress-bar mode="indeterminate" />
         </div>
         <div class="overflow-x-auto">
-            <!-- <table mat-table class="mat-shadow-2 min-w-[600px] w-full text-sm"></table> -->
+            <table mat-table class="mat-shadow-2 min-w-[600px] w-full text-sm"
+                [dataSource]="discreteProbabilityDistributionTable">
+                @for(item of discreteProbabilityConfiguration; track $index) {
+                <ng-container [matColumnDef]="item.name">
+                    <th mat-header-cell [class]="item.textPosition" *matHeaderCellDef>
+                        {{ item.heading }}
+                    </th>
+                    <td mat-cell [class]="item.textPosition" *matCellDef="let element">
+                        @if(item.name === "x") {
+                            {{ element[item.name] }}
+                        }
+                        @else {
+                            {{ element[item.name].displayValue }}
+                        }
+                    </td>
+                </ng-container>
+                }
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
         </div>
     </div>
 </div>

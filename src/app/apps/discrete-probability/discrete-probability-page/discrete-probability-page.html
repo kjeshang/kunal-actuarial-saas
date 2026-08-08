@@ -13,7 +13,18 @@
                 [metric]="discreteProbabilityStore.discreteProbabilityStandardDeviation()" />
         </section>
         <section>
-            <app-discrete-probability-table />
+            <mat-tab-group>
+                <mat-tab label="Visualizations">
+                    <ng-template matTabContent></ng-template>
+                </mat-tab>
+                <mat-tab label="Table">
+                    <ng-template matTabContent>
+                        <app-discrete-probability-table
+                            [discreteProbabilityConfiguration]="discreteProbabilityConfiguration"
+                            [discreteProbabilityDistributionTable]="discreteProbabilityStore.discreteProbabilityDistributionTable()" />
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
         </section>
     </div>
 </app-feature-container>

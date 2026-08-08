@@ -14,27 +14,26 @@
         <section>
             <mat-tab-group>
                 <mat-tab label="Visualizations">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <app-line-chart class="mt-2" [chartData]="loanStore.amortizationCurveChart()" />
-                        <app-stacked-area-chart class="mt-2" [chartData]="loanStore.interestVsPrincipalChart()" />
-                        <app-pie-chart class="mt-2" [chartData]="loanStore.costOfBorrowingChart()" />
-                        <app-multi-line-chart class="mt-2" [chartData]="loanStore.raceToEquityChart()" />
-                    </div>
+                    <ng-template matTabContent>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <app-line-chart class="mt-2" [chartData]="loanStore.amortizationCurveChart()" />
+                            <app-stacked-area-chart class="mt-2" [chartData]="loanStore.interestVsPrincipalChart()" />
+                            <app-pie-chart class="mt-2" [chartData]="loanStore.costOfBorrowingChart()" />
+                            <app-multi-line-chart class="mt-2" [chartData]="loanStore.raceToEquityChart()" />
+                        </div>
+                    </ng-template>
                 </mat-tab>
                 <mat-tab label="Table">
                     <ng-template matTabContent>
-                        <app-loan-amortization-table 
-                            [loanTableConfiguration]="loanTableConfiguration"
-                            [loanParameters]="loanStore.loanParameters()" 
-                            [loanSummaryMetrics]="[
+                        <app-loan-amortization-table [loanTableConfiguration]="loanTableConfiguration"
+                            [loanParameters]="loanStore.loanParameters()" [loanSummaryMetrics]="[
                                     loanStore.periodicPaymentAmount(),
                                     loanStore.totalInterestPaid(),
                                     loanStore.totalNumberOfPeriods(),
                                     loanStore.periodicEffectiveInterestRate(),
                                     loanStore.periodicNominalInterestRate(),
                                     loanStore.periodicRateOfDiscount(),
-                                ]" 
-                            [loanAmortizationSchedule]="loanStore.loanAmortizationSchedule()" />
+                                ]" [loanAmortizationSchedule]="loanStore.loanAmortizationSchedule()" />
                     </ng-template>
                 </mat-tab>
             </mat-tab-group>
