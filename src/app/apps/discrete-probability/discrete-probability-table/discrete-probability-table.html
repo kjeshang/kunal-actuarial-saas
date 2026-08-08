@@ -1,1 +1,26 @@
-<p>discrete-probability-table works!</p>
+<div class="mt-2 w-full overflow-x-auto rounded-xl border border-gray-300 shadow-sm bg-white">
+    <div class="p-2 m-2">
+        <div class="mb-2 flex flex-row items-center justify-between">
+            <p class="text-xl">Discrete Probability Distribution Table</p>
+            <button mat-icon-button [matMenuTriggerFor]="aboveMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #aboveMenu="matMenu" yPosition="above">
+                <button mat-menu-item>
+                    <mat-icon>table_view</mat-icon>
+                    <span>Export to CSV</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>article</mat-icon>
+                    <span>Generate PDF</span>
+                </button>
+            </mat-menu>
+        </div>
+        <div [class]="showProgressBar ? 'block' : 'hidden'">
+            <mat-progress-bar mode="indeterminate" />
+        </div>
+        <div class="overflow-x-auto">
+            <!-- <table mat-table class="mat-shadow-2 min-w-[600px] w-full text-sm"></table> -->
+        </div>
+    </div>
+</div>

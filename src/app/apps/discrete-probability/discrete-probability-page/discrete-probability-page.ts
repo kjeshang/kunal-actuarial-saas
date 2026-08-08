@@ -3,11 +3,11 @@ import { DiscreteProbabilityParameters } from '../discrete-probability-parameter
 import { FeatureContainer } from '../../../shared/feature-container/feature-container';
 import { DiscreteProbabilitySummaryCard } from '../discrete-probability-summary-card/discrete-probability-summary-card';
 import { DiscreteProbabilityStore } from '../discrete-probability.store';
-import { isNil } from 'lodash';
+import { DiscreteProbabilityTable } from '../discrete-probability-table/discrete-probability-table';
 
 @Component({
   selector: 'app-discrete-probability-page',
-  imports: [FeatureContainer, DiscreteProbabilityParameters, DiscreteProbabilitySummaryCard],
+  imports: [FeatureContainer, DiscreteProbabilityParameters, DiscreteProbabilitySummaryCard, DiscreteProbabilityTable],
   templateUrl: './discrete-probability-page.html',
   styleUrl: './discrete-probability-page.css',
 })
