@@ -12,14 +12,20 @@ import { isNil } from 'lodash';
 export class DiscreteProbabilitySummaryCard {
   @Input() metric?: DiscreteProbabilityMetric;
 
-  get label() {
+  /**
+   * Getter to retrieve the label value from metric object.
+   */
+  get label(): string | undefined {
     if(!isNil(this.metric?.label)) {
       return this.metric.label;
     }
     return undefined;
   }
 
-  get displayValue() {
+  /**
+   * Getter to retrieve the displayValue from metric object.
+   */
+  get displayValue(): string | undefined {
     if(!isNil(this.metric?.displayValue)) {
       return this.metric.displayValue;
     }
