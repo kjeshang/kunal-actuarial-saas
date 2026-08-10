@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { BinomialParameters, DiscreteProbabilityDistributionTable, DiscreteProbabilityMetric, DiscreteProbabilityTableValue, DiscreteUniformParameters, GeometricParameters, NegativeBinomialParameters, PoissonParameters } from '../discrete-probability.models';
 import { isNil, sumBy } from 'lodash';
-import { DiscreteProbabilityCalculationService } from '../discrete-probability-calulation-service/discrete-probability-calculation.service';
+import { DiscreteProbabilityCalculationService } from '../discrete-probability-calculation-service/discrete-probability-calculation.service';
 
 @Injectable({
   providedIn: 'root',

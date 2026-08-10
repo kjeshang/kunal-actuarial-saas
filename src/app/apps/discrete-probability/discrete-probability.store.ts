@@ -8,6 +8,8 @@ import {
 } from '@ngrx/signals';
 import { BinomialParameters, DiscreteUniformParameters, GeometricParameters, PoissonParameters, NegativeBinomialParameters, DiscreteProbabilityMetric, DiscreteProbabilityDistributionTable } from "./discrete-probability.models";
 import { DiscreteProbabilityBinomialService } from "./discrete-probability-binomial-service/discrete-probability-binomial.service";
+import { LineChartData } from "../../shared/models";
+import { DiscreteProbabilityChartService } from "./discrete-probability-chart-service/discrete-probability-chart-service";
 
 type DiscreteProbabilityState = {
     probabilityDistribution: string;
@@ -69,7 +71,8 @@ export const DiscreteProbabilityStore = signalStore(
             probabilityDistribution,
             parameters
         },
-        binomialService: DiscreteProbabilityBinomialService = inject(DiscreteProbabilityBinomialService)
+        binomialService: DiscreteProbabilityBinomialService = inject(DiscreteProbabilityBinomialService),
+        chartService: DiscreteProbabilityChartService = inject(DiscreteProbabilityChartService)
     ) => ({
         discreteDistributionParameters: computed(() => {
             let formattedParameters: DiscreteProbabilityMetric[] | undefined = undefined;
@@ -142,6 +145,20 @@ export const DiscreteProbabilityStore = signalStore(
                     break;
             }
             return probabilityDistributionTable;
-        })
+        }),
+        pmfChart: computed(() => {
+            let probabilityDistributionTable: DiscreteProbabilityDistributionTable[] = [];
+            let chartData: LineChartData | undefined = undefined;
+            switch (probabilityDistribution()) {
+                case "binomial":
+                    probabilityDistributionTable = binomialService.createBinomialDistributionTable(probabilityDistribution(), parameters());
+                    chartData = chartService.getPmfChartData(probabilityDistributionTable);
+                    break;
+                default:
+                    chartData = undefined;
+                    break;
+            }
+            return chartData;
+        }),
     }))
 )

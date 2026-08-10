@@ -15,7 +15,11 @@
         <section>
             <mat-tab-group>
                 <mat-tab label="Visualizations">
-                    <ng-template matTabContent></ng-template>
+                    <ng-template matTabContent>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <app-line-chart class="mt-2" [chartData]="discreteProbabilityStore.pmfChart()!" />
+                        </div>
+                    </ng-template>
                 </mat-tab>
                 <mat-tab label="Table">
                     <ng-template matTabContent>
