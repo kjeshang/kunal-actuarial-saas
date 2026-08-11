@@ -15,7 +15,7 @@ export class LoanReportService {
     async exportToCSV(loanParameters: LoanSummaryMetric[], loanSummaryMetrics: LoanSummaryMetric[], loanTableConfiguration: LoanTableConfiguration[], loanAmortizationSchedule: LoanAmortizationSchedule[]): Promise<void> {
         for (const item of loanParameters) {
             if (isNil(item.value) || item.value === 0) {
-                throw new Error("Loan Parameters must be provided to create the loan amortization schedule and export CSV!")
+                throw new Error("Loan Parameters must be provided to create the loan amortization schedule and export to CSV!")
             }
         }
 
@@ -85,7 +85,7 @@ export class LoanReportService {
     async generatePDF(loanParameters: LoanSummaryMetric[], loanSummaryMetrics: LoanSummaryMetric[], loanTableConfiguration: LoanTableConfiguration[], loanAmortizationSchedule: LoanAmortizationSchedule[]): Promise<void> {
         for (const item of loanParameters) {
             if (isNil(item.value) || item.value === 0) {
-                throw new Error("Loan Parameters must be provided to create the loan amortization schedule and generate PDF!")
+                throw new Error("Loan Parameters must be provided to create the loan amortization schedule and generate the PDF!")
             }
         }
         // Instantiate JS Report and necessary parameters ---------------------------------------
