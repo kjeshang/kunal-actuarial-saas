@@ -23,7 +23,7 @@ export class DiscreteProbabilityBinomialService {
         {
           metricType: "value",
           label: "Probability Distribution",
-          value: undefined,
+          value: 1,
           displayValue: "Binomial Distribution"
         },
         {

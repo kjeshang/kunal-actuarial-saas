@@ -44,7 +44,12 @@ export class DiscreteProbabilityTable {
       // Show Progress Bar
       this.showProgressBar = true;
       // Call Report Service Function to Export Discrete Probability Distribution Data to CSV
-
+      await this.discreteProbabilityReportService.exportToCSV(
+        this.discreteProbabilityDistributionParameters,
+        this.discreteProbabilityDistributionMetrics,
+        this.discreteProbabilityConfiguration,
+        this.discreteProbabilityDistributionTable
+      );
       // Show notification that CSV has been exported
       this._snackBar.open("Discrete Probability Distribution Table Exported to CSV!", "Dismiss", {
         duration: 3000,
@@ -74,7 +79,12 @@ export class DiscreteProbabilityTable {
       // Show Progress Bar
       this.showProgressBar = true;
       // Call Report Service Function to Generate Discrete Probability Distribution Data to PDF
-
+      await this.discreteProbabilityReportService.generatePDF(
+        this.discreteProbabilityDistributionParameters,
+        this.discreteProbabilityDistributionMetrics,
+        this.discreteProbabilityConfiguration,
+        this.discreteProbabilityDistributionTable
+      );
       // Hide Progress Bar
       this.showProgressBar = false;
     }
