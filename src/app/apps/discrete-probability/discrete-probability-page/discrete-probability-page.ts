@@ -9,10 +9,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { LineChart } from '../../../shared/line-chart/line-chart';
 import { LineChartData } from '../../../shared/models';
 import { isNil } from 'lodash';
+import { MultiLineChart } from "../../../shared/multi-line-chart/multi-line-chart";
 
 @Component({
   selector: 'app-discrete-probability-page',
-  imports: [FeatureContainer, DiscreteProbabilityParameters, DiscreteProbabilitySummaryCard, DiscreteProbabilityTable, MatTabsModule, LineChart],
+  imports: [FeatureContainer, DiscreteProbabilityParameters, DiscreteProbabilitySummaryCard, DiscreteProbabilityTable, MatTabsModule, LineChart, MultiLineChart],
   templateUrl: './discrete-probability-page.html',
   styleUrl: './discrete-probability-page.css',
 })

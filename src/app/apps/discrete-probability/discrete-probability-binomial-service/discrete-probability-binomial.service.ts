@@ -137,7 +137,7 @@ export class DiscreteProbabilityBinomialService {
         const x: number = i;
         const pmf: number = this.calculateBinomialPMF(parameters.n, x, parameters.p);
         cdf = Math.min(1, pmf + cdf);
-        const sf: number = Math.min(0, 1 - cdf);
+        const sf: number = Math.max(0, 1 - cdf);
         const result: DiscreteProbabilityDistributionTable = {
           index: i,
           x: x,

@@ -8,7 +8,7 @@ import {
 } from '@ngrx/signals';
 import { BinomialParameters, DiscreteUniformParameters, GeometricParameters, PoissonParameters, NegativeBinomialParameters, DiscreteProbabilityMetric, DiscreteProbabilityDistributionTable } from "./discrete-probability.models";
 import { DiscreteProbabilityBinomialService } from "./discrete-probability-binomial-service/discrete-probability-binomial.service";
-import { LineChartData } from "../../shared/models";
+import { LineChartData, MultiLineChartData } from "../../shared/models";
 import { DiscreteProbabilityChartService } from "./discrete-probability-chart-service/discrete-probability-chart-service";
 
 type DiscreteProbabilityState = {
@@ -160,5 +160,19 @@ export const DiscreteProbabilityStore = signalStore(
             }
             return chartData;
         }),
+        cdfVsSfChart: computed(() => {
+            let probabilityDistributionTable: DiscreteProbabilityDistributionTable[] = [];
+            let chartData: MultiLineChartData | undefined = undefined;
+            switch (probabilityDistribution()) {
+                case "binomial":
+                    probabilityDistributionTable = binomialService.createBinomialDistributionTable(probabilityDistribution(), parameters());
+                    chartData = chartService.getCdfVsSfChartData(probabilityDistributionTable);
+                    break;
+                default:
+                    chartData = undefined;
+                    break;
+            }
+            return chartData;
+        })
     }))
 )
