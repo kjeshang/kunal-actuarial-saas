@@ -14,7 +14,7 @@ export class DiscreteProbabilityReportService {
   async exportToCSV(discreteProbabilityDistributionParameters: DiscreteProbabilityMetric[], discreteProbabilityDistributionMetrics: DiscreteProbabilityMetric[], discreteProbabilityConfiguration: DiscreteProbabilityTableConfiguration[], discreteProbabilityDistributionTable: DiscreteProbabilityDistributionTable[]): Promise<void> {
     for (const item of discreteProbabilityDistributionParameters) {
       if (isNil(item.value) || item.value === 0) {
-        throw new Error("Distribution Parameters must be provided to create the discrete probability distribution table and export CSV!")
+        throw new Error("Probability Distribution Parameters must be provided to create the discrete probability distribution table and export CSV!")
       }
     }
 
