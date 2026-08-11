@@ -74,7 +74,7 @@ export const DiscreteProbabilityStore = signalStore(
         binomialService: DiscreteProbabilityBinomialService = inject(DiscreteProbabilityBinomialService),
         chartService: DiscreteProbabilityChartService = inject(DiscreteProbabilityChartService)
     ) => ({
-        discreteDistributionParameters: computed(() => {
+        discreteProbabilityDistributionParameters: computed(() => {
             let formattedParameters: DiscreteProbabilityMetric[] | undefined = undefined;
             switch (probabilityDistribution()) {
                 case "binomial":

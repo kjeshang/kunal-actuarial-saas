@@ -26,6 +26,13 @@
                     <ng-template matTabContent>
                         <app-discrete-probability-table
                             [discreteProbabilityConfiguration]="discreteProbabilityConfiguration"
+                            [discreteProbabilityDistributionParameters]="discreteProbabilityStore.discreteProbabilityDistributionParameters()!"
+                            [discreteProbabilityDistributionMetrics]="[
+                                discreteProbabilityStore.discreteProbabilityExpectedValue()!,
+                                discreteProbabilityStore.discreteProbabilitySecondMoment()!,
+                                discreteProbabilityStore.discreteProbabilityVariance()!,
+                                discreteProbabilityStore.discreteProbabilityStandardDeviation()!
+                            ]"
                             [discreteProbabilityDistributionTable]="discreteProbabilityStore.discreteProbabilityDistributionTable()" />
                     </ng-template>
                 </mat-tab>
