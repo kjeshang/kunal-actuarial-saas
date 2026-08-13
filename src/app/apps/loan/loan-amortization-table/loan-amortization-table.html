@@ -20,26 +20,26 @@
             <mat-progress-bar mode="indeterminate" />
         </div>
         <div class="overflow-x-auto">
-            <table mat-table class="mat-shadow-2 min-w-[600px] w-full text-sm"
-                [dataSource]="loanAmortizationSchedule">
+            <table mat-table class="mat-shadow-2 min-w-[600px] w-full text-sm" [dataSource]="loanAmortizationSchedule">
 
                 @for(item of loanTableConfiguration; track $index) {
-                    <ng-container [matColumnDef]="item.name">
-                        <th mat-header-cell [class]="item.textPosition" *matHeaderCellDef> 
-                            {{ item.heading }}
-                        </th>
-                        <td mat-cell [class]="item.textPosition" *matCellDef="let element">
-                            @if(item.name === "time" || item.name === "period") {
-                                {{ element[item.name] }}
-                            }
-                            @else {
-                                {{ showDisplayValue(element[item.name].displayValue) }}
-                            }
-                        </td>
-                    </ng-container>
+                <ng-container [matColumnDef]="item.name">
+                    <th mat-header-cell [class]="item.textPosition" *matHeaderCellDef>
+                        {{ item.heading }}
+                    </th>
+                    <td mat-cell [class]="item.textPosition" *matCellDef="let element">
+                        @if(item.name === "time" || item.name === "period") {
+                        {{ element[item.name] }}
+                        }
+                        @else {
+                        {{ showDisplayValue(element[item.name].displayValue) }}
+                        }
+                    </td>
+                </ng-container>
                 }
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-row class="transition-colors duration-150 ease-in-out hover:bg-slate-200!"
+                    *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
     </div>

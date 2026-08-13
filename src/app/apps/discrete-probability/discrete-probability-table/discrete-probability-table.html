@@ -29,16 +29,17 @@
                     </th>
                     <td mat-cell [class]="item.textPosition" *matCellDef="let element">
                         @if(item.name === "x") {
-                            {{ element[item.name] }}
+                        {{ element[item.name] }}
                         }
                         @else {
-                            {{ element[item.name].displayValue }}
+                        {{ element[item.name].displayValue }}
                         }
                     </td>
                 </ng-container>
                 }
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row class="transition-colors duration-150 ease-in-out hover:bg-slate-200!"
+                    *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
     </div>
