@@ -90,7 +90,9 @@ Summary Metrics:
 * Variance
 * Standard Deviation
 * Skewness <- Might add later
-* Mode <- Might add later
+* Kurtosis <- Might add later
+* VaR <- Might add later
+* TVaR <- Might add later
 
 ### Rough Ideas
 ```
