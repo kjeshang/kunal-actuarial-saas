@@ -19,7 +19,7 @@
         <div [class]="showProgressBar ? 'block' : 'hidden'">
             <mat-progress-bar mode="indeterminate" />
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto max-h-[500px] overflow-y-auto table-scrollbar">
             <table mat-table class="mat-shadow-2 min-w-[600px] w-full text-sm"
                 [dataSource]="discreteProbabilityDistributionTable">
                 @for(item of discreteProbabilityConfiguration; track $index) {

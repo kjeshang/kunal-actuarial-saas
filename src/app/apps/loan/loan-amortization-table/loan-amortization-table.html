@@ -19,7 +19,7 @@
         <div [class]="showProgressBar ? 'block' : 'hidden'">
             <mat-progress-bar mode="indeterminate" />
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto max-h-[500px] overflow-y-auto table-scrollbar">
             <table mat-table class="mat-shadow-2 min-w-[600px] w-full text-sm" [dataSource]="loanAmortizationSchedule">
 
                 @for(item of loanTableConfiguration; track $index) {
@@ -37,7 +37,7 @@
                     </td>
                 </ng-container>
                 }
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row class="transition-colors duration-150 ease-in-out hover:bg-slate-200!"
                     *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
