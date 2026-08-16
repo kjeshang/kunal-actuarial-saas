@@ -43,7 +43,7 @@ npm install jspdf jspdf-autotable
 * Term of Loan (in years)
 * Payment Frequency (per year): "Annual", "Semiannual", "Quarterly", "Monthly"
 * Toggle between payment made at end of period and beginning of period (i.e., Annuity Immediate vs Annuity Due)
-* Start Date of Loan <= Will add later
+* Start Date of Loan <= Might add later
 
 ### Output
 
@@ -81,6 +81,7 @@ Loan Amortization Table:
 
 ### Discrete Probability Distribution Parameters
 * Binomial Distribution: Number of Trials (n), Probability of Success (p)
+* Discrete Uniform Distribution: Minimum Value (a), Maximum Value (b)
 
 ### Outpu
 
