@@ -92,7 +92,7 @@ export class DiscreteProbabilityBinomialService {
   calculateBinomialVariance(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric | undefined {
     let metric: DiscreteProbabilityMetric | undefined = undefined;
     if (probabilityDistribution === "binomial" && !isNil(parameters) && "n" in parameters && "p" in parameters) {
-      const value = parameters.n * parameters.p * (1 - parameters.p);
+      const value: number = parameters.n * parameters.p * (1 - parameters.p);
       metric = {
         metricType: "value",
         label: "Var[X] : Variance",
@@ -106,9 +106,9 @@ export class DiscreteProbabilityBinomialService {
   calculateBinomialStandardDeviation(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined) {
     let metric: DiscreteProbabilityMetric | undefined = undefined;
     if (probabilityDistribution === "binomial" && !isNil(parameters) && "n" in parameters && "p" in parameters) {
-      const variance = this.calculateBinomialVariance(probabilityDistribution, parameters);
+      const variance: DiscreteProbabilityMetric | undefined = this.calculateBinomialVariance(probabilityDistribution, parameters);
       if (!isNil(variance) && !isNil(variance.value)) {
-        const value = Math.sqrt(variance.value);
+        const value: number = Math.sqrt(variance.value);
         metric = {
           metricType: "value",
           label: "σ(X) : Standard Deviation",
