@@ -103,7 +103,7 @@ export class DiscreteProbabilityBinomialService {
     return metric;
   }
 
-  calculateBinomialStandardDeviation(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined) {
+  calculateBinomialStandardDeviation(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric | undefined {
     let metric: DiscreteProbabilityMetric | undefined = undefined;
     if (probabilityDistribution === "binomial" && !isNil(parameters) && "n" in parameters && "p" in parameters) {
       const variance: DiscreteProbabilityMetric | undefined = this.calculateBinomialVariance(probabilityDistribution, parameters);
@@ -111,7 +111,7 @@ export class DiscreteProbabilityBinomialService {
         const value: number = Math.sqrt(variance.value);
         metric = {
           metricType: "value",
-          label: "σ(X) : Standard Deviation",
+          label: "SD(X) : Standard Deviation",
           value: value,
           displayValue: value.toFixed(5)
         };

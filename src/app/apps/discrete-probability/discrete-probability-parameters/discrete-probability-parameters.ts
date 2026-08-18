@@ -90,14 +90,18 @@ export class DiscreteProbabilityParameters implements OnInit {
     let parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined = undefined;
     switch (probabilityDistribution) {
       case "binomial":
-        // parameters = { 
-        //   n: this.params.get("n")?.valid ? this.params.get("n")?.value : 0, 
-        //   p: this.params.get("p")?.valid ? this.params.get("p")?.value : 0
-        // };
-        parameters = { n: this.params.get("n")?.value, p: this.params.get("p")?.value };
+        parameters = { 
+          n: this.params.get("n")?.valid ? this.params.get("n")?.value : 0, 
+          p: this.params.get("p")?.valid ? this.params.get("p")?.value : 0
+        };
+        // parameters = { n: this.params.get("n")?.value, p: this.params.get("p")?.value };
         break;
       case "discrete-uniform":
-        parameters = { a: this.params.get("a")?.value, b: this.params.get("b")?.value };
+        parameters = { 
+          a: this.params.get("a")?.valid ? this.params.get("a")?.value : 0, 
+          b: this.params.get("b")?.valid ? this.params.get("b")?.value : 0
+        };
+        // parameters = { a: this.params.get("a")?.value, b: this.params.get("b")?.value };
         break;
       case "geometric":
         parameters = { n: this.params.get("n")?.value, p: this.params.get("p")?.value };
@@ -113,6 +117,7 @@ export class DiscreteProbabilityParameters implements OnInit {
         break;
     }
     this.discreteProbabilityStore.setParameters(parameters);
+    console.log(this.discreteProbabilityStore.parameters());
   }
 
   /**

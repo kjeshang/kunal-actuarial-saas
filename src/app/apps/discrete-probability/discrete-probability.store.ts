@@ -10,6 +10,7 @@ import { BinomialParameters, DiscreteUniformParameters, GeometricParameters, Poi
 import { DiscreteProbabilityBinomialService } from "./discrete-probability-binomial-service/discrete-probability-binomial.service";
 import { LineChartData, MultiLineChartData } from "../../shared/models";
 import { DiscreteProbabilityChartService } from "./discrete-probability-chart-service/discrete-probability-chart-service";
+import { DiscreteProbabilityUniformService } from "./discrete-probability-uniform-service/discrete-probability-uniform.service";
 
 type DiscreteProbabilityState = {
     probabilityDistribution: string;
@@ -72,6 +73,7 @@ export const DiscreteProbabilityStore = signalStore(
             parameters
         },
         binomialService: DiscreteProbabilityBinomialService = inject(DiscreteProbabilityBinomialService),
+        uniformService: DiscreteProbabilityUniformService = inject(DiscreteProbabilityUniformService),
         chartService: DiscreteProbabilityChartService = inject(DiscreteProbabilityChartService)
     ) => ({
         discreteProbabilityDistributionParameters: computed(() => {
@@ -79,6 +81,9 @@ export const DiscreteProbabilityStore = signalStore(
             switch (probabilityDistribution()) {
                 case "binomial":
                     formattedParameters = binomialService.formatBinomialParameters(probabilityDistribution(), parameters());
+                    break;
+                case "discrete-uniform":
+                    formattedParameters = uniformService.formatDiscreteUniformParameters(probabilityDistribution(), parameters());
                     break;
                 default:
                     formattedParameters = undefined;
@@ -92,6 +97,9 @@ export const DiscreteProbabilityStore = signalStore(
                 case "binomial":
                     expectedValue = binomialService.calculateBinomialExpectedValue(probabilityDistribution(), parameters());
                     break;
+                case "discrete-uniform":
+                    expectedValue = uniformService.calculateUniformExpectedValue(probabilityDistribution(), parameters());
+                    break;
                 default:
                     expectedValue = undefined;
                     break;
@@ -103,6 +111,9 @@ export const DiscreteProbabilityStore = signalStore(
             switch (probabilityDistribution()) {
                 case "binomial":
                     secondMoment = binomialService.calculateBinomialSecondMoment(probabilityDistribution(), parameters());
+                    break;
+                case "discrete-uniform":
+                    secondMoment = uniformService.calculateUniformSecondMoment(probabilityDistribution(), parameters());
                     break;
                 default:
                     secondMoment = undefined;
@@ -116,6 +127,9 @@ export const DiscreteProbabilityStore = signalStore(
                 case "binomial":
                     variance = binomialService.calculateBinomialVariance(probabilityDistribution(), parameters());
                     break;
+                case "discrete-uniform":
+                    variance = uniformService.calculateDiscreteUniformVariance(probabilityDistribution(), parameters());
+                    break;
                 default:
                     variance = undefined;
                     break;
@@ -127,6 +141,9 @@ export const DiscreteProbabilityStore = signalStore(
             switch (probabilityDistribution()) {
                 case "binomial":
                     standardDeviation = binomialService.calculateBinomialStandardDeviation(probabilityDistribution(), parameters());
+                    break;
+                case "discrete-uniform":
+                    standardDeviation = uniformService.calculateUniformStandardDeviation(probabilityDistribution(), parameters());
                     break;
                 default:
                     standardDeviation = undefined;
