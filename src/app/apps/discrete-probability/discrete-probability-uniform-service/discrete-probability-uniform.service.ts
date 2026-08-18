@@ -83,7 +83,7 @@ export class DiscreteProbabilityUniformService {
   }
 
   /**
-   * Method used to calculate expected value of discrete uniform distribution.
+   * Method used to calculate variance of discrete uniform distribution.
    * @param probabilityDistribution 
    * @param parameters 
    * @returns Object of DiscreteProbabilityMetric
@@ -103,6 +103,12 @@ export class DiscreteProbabilityUniformService {
     return metric;
   }
 
+  /**
+   * Method used to calculate standard deviation of discrete uniform distribution.
+   * @param probabilityDistribution 
+   * @param parameters 
+   * @returns Object of DiscreteProbabilityMetric
+   */
   calculateUniformStandardDeviation(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric | undefined {
     let metric: DiscreteProbabilityMetric | undefined = undefined;
     const variance: number | undefined = this.calculateDiscreteUniformVariance(probabilityDistribution, parameters)?.value;
