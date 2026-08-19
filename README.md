@@ -83,7 +83,7 @@ Loan Amortization Table:
 * Binomial Distribution: Number of Trials (n), Probability of Success (p)
 * Discrete Uniform Distribution: Minimum Value (a), Maximum Value (b)
 
-### Outpu
+### Output
 
 Summary Metrics:
 * Expected Value
@@ -146,6 +146,8 @@ Create spec.ts files for the following files to eventually write custom unit tes
 * Create spec.ts file for `interest-rate-format.ts`.
 * Create a child component to display unique probability distribution's parameter form controls.
 * Create a form service to create unique probability distribution's form controls.
+* Create and implement typeguard in `discrete-probability-binomial-service`.
+* Update typeguard in `discrete-probability-uniform-service`.
 
 ## Development server
 
