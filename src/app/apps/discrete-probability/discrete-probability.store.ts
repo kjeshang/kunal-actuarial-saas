@@ -174,6 +174,10 @@ export const DiscreteProbabilityStore = signalStore(
                     probabilityDistributionTable = binomialService.createBinomialDistributionTable(probabilityDistribution(), parameters());
                     chartData = chartService.getPmfChartData(probabilityDistributionTable);
                     break;
+                case "discrete-uniform":
+                    probabilityDistributionTable = uniformService.createUniformDistributionTable(probabilityDistribution(), parameters());
+                    chartData = chartService.getPmfChartData(probabilityDistributionTable);
+                    break;
                 default:
                     chartData = undefined;
                     break;
@@ -186,6 +190,10 @@ export const DiscreteProbabilityStore = signalStore(
             switch (probabilityDistribution()) {
                 case "binomial":
                     probabilityDistributionTable = binomialService.createBinomialDistributionTable(probabilityDistribution(), parameters());
+                    chartData = chartService.getCdfVsSfChartData(probabilityDistributionTable);
+                    break;
+                case "discrete-uniform":
+                    probabilityDistributionTable = uniformService.createUniformDistributionTable(probabilityDistribution(), parameters());
                     chartData = chartService.getCdfVsSfChartData(probabilityDistributionTable);
                     break;
                 default:
