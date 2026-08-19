@@ -41,7 +41,7 @@ export const DiscreteProbabilityStore = signalStore(
                     parameters = { a: 0, b: 0 };
                     break;
                 case "geometric":
-                    parameters = { n: 0, p: 0 };
+                    parameters = { version: '', n: 0, p: 0 };
                     break;
                 case "poisson":
                     parameters = { n: 0, lambda: 0 };

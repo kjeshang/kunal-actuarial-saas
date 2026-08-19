@@ -67,6 +67,18 @@
                             @else if (probabilityDistribution === "geometric") {
                             <div>
                                 <mat-form-field class="w-full">
+                                    <mat-label>Distribution Version</mat-label>
+                                    <mat-select formControlName="version"
+                                        (selectionChange)="saveParameters('geometric')">
+                                        <mat-option value="trials">Total Trials</mat-option>
+                                        <mat-option value="failures">Number of Failures</mat-option>
+                                    </mat-select>
+                                    <mat-icon matSuffix>alt_route</mat-icon>
+                                    <mat-error><em>version</em> : Required</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="w-full">
                                     <mat-label>Maximum Display Horizon (<em>n</em>)</mat-label>
                                     <input matInput formControlName="n" type="number" step="1"
                                         (input)="saveParameters('geometric')" />

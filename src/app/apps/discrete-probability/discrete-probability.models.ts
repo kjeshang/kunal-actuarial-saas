@@ -9,6 +9,7 @@ export interface DiscreteUniformParameters {
 }
 
 export interface GeometricParameters {
+    version: string;
     n: number;
     p: number;
 }

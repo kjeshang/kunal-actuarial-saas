@@ -47,6 +47,9 @@ export class DiscreteProbabilityParameters implements OnInit {
     if (this.probabilityDistribution === 'negative-binomial') {
       style = "pb-1 grid grid-cols-1 sm:grid-cols-4 gap-4";
     }
+    else if (this.probabilityDistribution === 'geometric') {
+      style = "pb-1 grid grid-cols-1 sm:grid-cols-3 gap-4";
+    }
     else {
       style = "pb-1 grid grid-cols-1 sm:grid-cols-2 gap-4";
     }
@@ -90,21 +93,21 @@ export class DiscreteProbabilityParameters implements OnInit {
     let parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined = undefined;
     switch (probabilityDistribution) {
       case "binomial":
-        parameters = { 
-          n: this.params.get("n")?.valid ? this.params.get("n")?.value : 0, 
+        parameters = {
+          n: this.params.get("n")?.valid ? this.params.get("n")?.value : 0,
           p: this.params.get("p")?.valid ? this.params.get("p")?.value : 0
         };
         // parameters = { n: this.params.get("n")?.value, p: this.params.get("p")?.value };
         break;
       case "discrete-uniform":
-        parameters = { 
-          a: this.params.get("a")?.valid ? this.params.get("a")?.value : 0, 
+        parameters = {
+          a: this.params.get("a")?.valid ? this.params.get("a")?.value : 0,
           b: this.params.get("b")?.valid ? this.params.get("b")?.value : 0
         };
         // parameters = { a: this.params.get("a")?.value, b: this.params.get("b")?.value };
         break;
       case "geometric":
-        parameters = { n: this.params.get("n")?.value, p: this.params.get("p")?.value };
+        parameters = { version: this.params.get("version")?.value, n: this.params.get("n")?.value, p: this.params.get("p")?.value };
         break
       case "poisson":
         parameters = { n: this.params.get("n")?.value, lambda: this.params.get("lambda")?.value };
@@ -154,6 +157,7 @@ export class DiscreteProbabilityParameters implements OnInit {
    */
   private createGeometricFormGroup(): FormGroup {
     const parameters: FormGroup = this.fb.group({
+      version: ["", Validators.required],
       n: ["", [Validators.required, Validators.min(1)]],
       p: ["", [Validators.required, Validators.min(0), Validators.max(1)]]
     });
