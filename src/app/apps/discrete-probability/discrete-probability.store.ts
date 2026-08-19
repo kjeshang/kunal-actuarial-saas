@@ -11,6 +11,7 @@ import { DiscreteProbabilityBinomialService } from "./discrete-probability-binom
 import { LineChartData, MultiLineChartData } from "../../shared/models";
 import { DiscreteProbabilityChartService } from "./discrete-probability-chart-service/discrete-probability-chart-service";
 import { DiscreteProbabilityUniformService } from "./discrete-probability-uniform-service/discrete-probability-uniform.service";
+import { DiscreteProbabilityGeometricService } from "./discrete-probability-geometric-service/discrete-probability-geometric-service";
 
 type DiscreteProbabilityState = {
     probabilityDistribution: string;
@@ -74,6 +75,7 @@ export const DiscreteProbabilityStore = signalStore(
         },
         binomialService: DiscreteProbabilityBinomialService = inject(DiscreteProbabilityBinomialService),
         uniformService: DiscreteProbabilityUniformService = inject(DiscreteProbabilityUniformService),
+        geometricService: DiscreteProbabilityGeometricService = inject(DiscreteProbabilityGeometricService),
         chartService: DiscreteProbabilityChartService = inject(DiscreteProbabilityChartService)
     ) => ({
         discreteProbabilityDistributionParameters: computed(() => {
@@ -84,6 +86,9 @@ export const DiscreteProbabilityStore = signalStore(
                     break;
                 case "discrete-uniform":
                     formattedParameters = uniformService.formatDiscreteUniformParameters(probabilityDistribution(), parameters());
+                    break;
+                case "geometric":
+                    formattedParameters = geometricService.formatGeometricParameters(probabilityDistribution(), parameters());
                     break;
                 default:
                     formattedParameters = undefined;
