@@ -105,6 +105,9 @@ export const DiscreteProbabilityStore = signalStore(
                 case "discrete-uniform":
                     expectedValue = uniformService.calculateUniformExpectedValue(probabilityDistribution(), parameters());
                     break;
+                case "geometric":
+                    expectedValue = geometricService.calculateGeometricExpectedValue(probabilityDistribution(), parameters());
+                    break;
                 default:
                     expectedValue = undefined;
                     break;
