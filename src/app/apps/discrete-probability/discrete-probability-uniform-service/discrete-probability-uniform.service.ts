@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BinomialParameters, DiscreteUniformParameters, GeometricParameters, PoissonParameters, NegativeBinomialParameters, DiscreteProbabilityMetric } from '../discrete-probability.models';
+import { BinomialParameters, DiscreteUniformParameters, GeometricParameters, PoissonParameters, NegativeBinomialParameters, DiscreteProbabilityMetric, DiscreteProbabilityDistributionTable } from '../discrete-probability.models';
 import { isNil } from 'lodash';
 
 @Injectable({
@@ -122,6 +122,38 @@ export class DiscreteProbabilityUniformService {
       };
     }
     return metric;
+  }
+
+  /**
+     * Method used to create uniform distribution table containing index, x, n, pmf, cdf, and sf.
+     * pmf = Probability Mass Function
+     * cdf = Cumulative Density Function
+     * sf = Survival Function
+     * @param probabilityDistribution 
+     * @param parameters 
+     * @returns Object Array of DiscreteProbabilityDistributionTable
+     */
+  createUniformDistributionTable(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityDistributionTable[] {
+    let discreteProbabilityDistributionTable: DiscreteProbabilityDistributionTable[] = [];
+    if (probabilityDistribution === "discrete-uniform" && this.isDiscreteUniform(parameters)) {
+      let cdf: number = 0;
+      const n: number = this.calculateTotalOutcomes(parameters.a, parameters.b);
+      const pmf: number = 1 / n;
+      for (let i = parameters.a; i <= parameters.b; i++) {
+        const x: number = i;
+        cdf = Math.min(1, pmf + cdf);
+        const sf: number = Math.max(0, 1 - cdf);
+        const result: DiscreteProbabilityDistributionTable = {
+          index: i,
+          x: x,
+          pmf: { value: pmf, displayValue: pmf.toFixed(5) },
+          cdf: { value: cdf, displayValue: cdf.toFixed(5) },
+          sf: { value: sf, displayValue: sf.toFixed(5) }
+        }
+        discreteProbabilityDistributionTable.push(result);
+      }
+    }
+    return discreteProbabilityDistributionTable;
   }
 
   /**

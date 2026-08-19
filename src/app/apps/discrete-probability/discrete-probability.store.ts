@@ -157,6 +157,9 @@ export const DiscreteProbabilityStore = signalStore(
                 case "binomial":
                     probabilityDistributionTable = binomialService.createBinomialDistributionTable(probabilityDistribution(), parameters());
                     break;
+                case "discrete-uniform":
+                    probabilityDistributionTable = uniformService.createUniformDistributionTable(probabilityDistribution(), parameters());
+                    break;
                 default:
                     probabilityDistributionTable = [];
                     break;
