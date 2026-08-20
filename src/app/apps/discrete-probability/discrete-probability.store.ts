@@ -198,6 +198,10 @@ export const DiscreteProbabilityStore = signalStore(
                     probabilityDistributionTable = uniformService.createUniformDistributionTable(probabilityDistribution(), parameters());
                     chartData = chartService.getPmfChartData(probabilityDistributionTable);
                     break;
+                case "geometric":
+                    probabilityDistributionTable = geometricService.createGeometricDistributionTable(probabilityDistribution(), parameters());
+                    chartData = chartService.getPmfChartData(probabilityDistributionTable);
+                    break;
                 default:
                     chartData = undefined;
                     break;
@@ -214,6 +218,10 @@ export const DiscreteProbabilityStore = signalStore(
                     break;
                 case "discrete-uniform":
                     probabilityDistributionTable = uniformService.createUniformDistributionTable(probabilityDistribution(), parameters());
+                    chartData = chartService.getCdfVsSfChartData(probabilityDistributionTable);
+                    break;
+                case "geometric":
+                    probabilityDistributionTable = geometricService.createGeometricDistributionTable(probabilityDistribution(), parameters());
                     chartData = chartService.getCdfVsSfChartData(probabilityDistributionTable);
                     break;
                 default:
