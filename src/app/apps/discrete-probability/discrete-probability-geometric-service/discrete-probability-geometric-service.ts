@@ -67,6 +67,26 @@ export class DiscreteProbabilityGeometricService {
   }
 
   /**
+   * Method used to calculate variance of geometric distribution.
+   * @param probabilityDistribution 
+   * @param parameters 
+   * @returns Object of DiscreteProbabilityMetric
+   */
+  calculateGeometricVariance(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric | undefined {
+    let metric: DiscreteProbabilityMetric | undefined = undefined;
+    if (this.isGeometric(probabilityDistribution, parameters)) {
+      const value: number = (1 - parameters.p) / Math.pow(parameters.p, 2);
+      metric = {
+        metricType: "value",
+        label: "Var[X] : Variance",
+        value: value,
+        displayValue: value.toFixed(5)
+      };
+    }
+    return metric;
+  }
+
+  /**
    * Method used to calculate the probability mass function (pmf) of a geometric distribution for a given value of x.
    * Note: Using the log-space method to calculate pmf.
    * @param p Probability of Successs
