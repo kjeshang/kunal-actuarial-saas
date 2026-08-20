@@ -67,6 +67,28 @@ export class DiscreteProbabilityGeometricService {
   }
 
   /**
+   * Method used to calculate second raw moment of geometric distribution.
+   * @param probabilityDistribution 
+   * @param parameters 
+   * @returns Object of DiscreteProbabilityMetric
+   */
+  calculateGeometricSecondMoment(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric | undefined {
+    let metric: DiscreteProbabilityMetric | undefined = undefined;
+    const variance: number | undefined = this.calculateGeometricVariance(probabilityDistribution, parameters)?.value;
+    const expectedValue: number | undefined = this.calculateGeometricExpectedValue(probabilityDistribution, parameters)?.value;
+    if (this.isGeometric(probabilityDistribution, parameters) && !isNil(variance) && !isNil(expectedValue)) {
+      const value: number = variance + Math.pow(expectedValue, 2);
+      metric = {
+        metricType: "value",
+        label: "E[X²] : Second Moment",
+        value: value,
+        displayValue: value.toFixed(5)
+      };
+    }
+    return metric;
+  }
+
+  /**
    * Method used to calculate variance of geometric distribution.
    * @param probabilityDistribution 
    * @param parameters 
@@ -79,6 +101,27 @@ export class DiscreteProbabilityGeometricService {
       metric = {
         metricType: "value",
         label: "Var[X] : Variance",
+        value: value,
+        displayValue: value.toFixed(5)
+      };
+    }
+    return metric;
+  }
+
+  /**
+   * Method used to calculate standard deviation of geometric distribution.
+   * @param probabilityDistribution 
+   * @param parameters 
+   * @returns Object of DiscreteProbabilityMetric
+   */
+  calculateGeometricStandardDeviation(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric | undefined {
+    let metric: DiscreteProbabilityMetric | undefined = undefined;
+    const variance: number | undefined = this.calculateGeometricVariance(probabilityDistribution, parameters)?.value;
+    if (this.isGeometric(probabilityDistribution, parameters) && !isNil(variance)) {
+      const value: number = Math.sqrt(variance);
+      metric = {
+        metricType: "value",
+        label: "SD(X) : Standard Deviation",
         value: value,
         displayValue: value.toFixed(5)
       };

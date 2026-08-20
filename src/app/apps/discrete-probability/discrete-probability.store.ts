@@ -124,7 +124,7 @@ export const DiscreteProbabilityStore = signalStore(
                     secondMoment = uniformService.calculateUniformSecondMoment(probabilityDistribution(), parameters());
                     break;
                 case "geometric":
-                    secondMoment = geometricService.calculateGeometricVariance(probabilityDistribution(), parameters());
+                    secondMoment = geometricService.calculateGeometricSecondMoment(probabilityDistribution(), parameters());
                     break;
                 default:
                     secondMoment = undefined;
@@ -141,6 +141,9 @@ export const DiscreteProbabilityStore = signalStore(
                 case "discrete-uniform":
                     variance = uniformService.calculateDiscreteUniformVariance(probabilityDistribution(), parameters());
                     break;
+                case "geometric":
+                    variance = geometricService.calculateGeometricVariance(probabilityDistribution(), parameters());
+                    break;
                 default:
                     variance = undefined;
                     break;
@@ -155,6 +158,9 @@ export const DiscreteProbabilityStore = signalStore(
                     break;
                 case "discrete-uniform":
                     standardDeviation = uniformService.calculateUniformStandardDeviation(probabilityDistribution(), parameters());
+                    break;
+                case "geometric":
+                    standardDeviation = geometricService.calculateGeometricStandardDeviation(probabilityDistribution(), parameters());
                     break;
                 default:
                     standardDeviation = undefined;
