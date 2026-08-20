@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BinomialParameters, DiscreteProbabilityMetric, DiscreteUniformParameters, GeometricParameters, NegativeBinomialParameters, PoissonParameters } from '../discrete-probability.models';
+import { BinomialParameters, DiscreteProbabilityDistributionTable, DiscreteProbabilityMetric, DiscreteUniformParameters, GeometricParameters, NegativeBinomialParameters, PoissonParameters } from '../discrete-probability.models';
 import { isNil } from 'lodash';
 
 @Injectable({
@@ -130,14 +130,46 @@ export class DiscreteProbabilityGeometricService {
   }
 
   /**
+     * Method used to create geometric distribution table containing index, x, n, pmf, cdf, and sf.
+     * pmf = Probability Mass Function
+     * cdf = Cumulative Density Function
+     * sf = Survival Function
+     * @param probabilityDistribution 
+     * @param parameters 
+     * @returns Object Array of DiscreteProbabilityDistributionTable
+     */
+  createGeometricDistributionTable(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityDistributionTable[] {
+    let discreteProbabilityDistributionTable: DiscreteProbabilityDistributionTable[] = [];
+    if (this.isGeometric(probabilityDistribution, parameters)) {
+      const startingIndex: number = parameters.version === "trials" ? 1 : 0;
+      let cdf: number = 0;
+      for (let i = startingIndex; i <= parameters.n; i++) {
+        const x: number = i;
+        const pmf: number = this.calculateGeometricPMF(parameters.version, parameters.p, x);
+        cdf = Math.min(1, pmf + cdf);
+        const sf: number = Math.max(0, 1 - cdf);
+        const result: DiscreteProbabilityDistributionTable = {
+          index: i,
+          x: x,
+          pmf: { value: pmf, displayValue: pmf.toFixed(5) },
+          cdf: { value: cdf, displayValue: cdf.toFixed(5) },
+          sf: { value: sf, displayValue: sf.toFixed(5) }
+        }
+        discreteProbabilityDistributionTable.push(result);
+      }
+    }
+    return discreteProbabilityDistributionTable;
+  }
+
+  /**
    * Method used to calculate the probability mass function (pmf) of a geometric distribution for a given value of x.
    * Note: Using the log-space method to calculate pmf.
    * @param p Probability of Successs
    * @param x 
    * @returns number
    */
-  private calculateGeometricPMF(p: number, x: number): number {
-    const result: number = Math.exp(Math.log(p) + x * Math.log(1 - p));
+  private calculateGeometricPMF(version: string, p: number, x: number): number {
+    const result: number = version === "trials" ? Math.exp(Math.log(p) + x * Math.log(1 - p)) : Math.exp(Math.log(p) + (x - 1) * Math.log(1 - p));
     return result;
   }
 

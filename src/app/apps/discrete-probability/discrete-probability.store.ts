@@ -177,6 +177,9 @@ export const DiscreteProbabilityStore = signalStore(
                 case "discrete-uniform":
                     probabilityDistributionTable = uniformService.createUniformDistributionTable(probabilityDistribution(), parameters());
                     break;
+                case "geometric":
+                    probabilityDistributionTable = geometricService.createGeometricDistributionTable(probabilityDistribution(), parameters());
+                    break;
                 default:
                     probabilityDistributionTable = [];
                     break;
