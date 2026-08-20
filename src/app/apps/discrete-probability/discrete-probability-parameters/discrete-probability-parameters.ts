@@ -107,7 +107,12 @@ export class DiscreteProbabilityParameters implements OnInit {
         // parameters = { a: this.params.get("a")?.value, b: this.params.get("b")?.value };
         break;
       case "geometric":
-        parameters = { version: this.params.get("version")?.value, n: this.params.get("n")?.value, p: this.params.get("p")?.value };
+        parameters = {
+          version: this.params.get("version")?.valid ? this.params.get("version")?.value : 0,
+          n: this.params.get("n")?.valid ? this.params.get("n")?.value : 0,
+          p: this.params.get("p")?.valid ? this.params.get("p")?.value : 0
+        };
+        // parameters = { version: this.params.get("version")?.value, n: this.params.get("n")?.value, p: this.params.get("p")?.value };
         break
       case "poisson":
         parameters = { n: this.params.get("n")?.value, lambda: this.params.get("lambda")?.value };

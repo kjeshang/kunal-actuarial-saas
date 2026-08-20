@@ -25,6 +25,12 @@ export class DiscreteProbabilityGeometricService {
         },
         {
           metricType: "value",
+          label: "Distribution Version",
+          value: 1,
+          displayValue: parameters.version === "trials" ? "Total Trials" : "Number of Failures"
+        },
+        {
+          metricType: "value",
           label: "Maximum Display Horizon (n)",
           value: parameters.n,
           displayValue: parameters.n.toString()
@@ -49,7 +55,7 @@ export class DiscreteProbabilityGeometricService {
   calculateGeometricExpectedValue(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): DiscreteProbabilityMetric | undefined {
     let metric: DiscreteProbabilityMetric | undefined = undefined;
     if (this.isGeometric(probabilityDistribution, parameters)) {
-      const value: number = 1 / parameters.p;
+      const value: number = parameters.version === "trials" ? 1 / parameters.p : (1 - parameters.p) / parameters.p;
       metric = {
         metricType: "value",
         label: "E[X] : Expected Value",
@@ -78,7 +84,7 @@ export class DiscreteProbabilityGeometricService {
    * @returns Boolean
    */
   private isGeometric(probabilityDistribution: string, parameters: BinomialParameters | DiscreteUniformParameters | GeometricParameters | PoissonParameters | NegativeBinomialParameters | undefined): parameters is GeometricParameters {
-    if (probabilityDistribution === "geometric" && !isNil(parameters) && "n" in parameters && typeof parameters.n === 'number' && "p" in parameters && typeof parameters.p === 'number') {
+    if (probabilityDistribution === "geometric" && !isNil(parameters) && "version" in parameters && typeof parameters.version === 'string' && "n" in parameters && typeof parameters.n === 'number' && "p" in parameters && typeof parameters.p === 'number') {
       return true;
     }
     return false;
