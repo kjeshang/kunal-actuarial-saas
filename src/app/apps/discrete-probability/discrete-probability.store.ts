@@ -12,6 +12,7 @@ import { LineChartData, MultiLineChartData } from "../../shared/models";
 import { DiscreteProbabilityChartService } from "./discrete-probability-chart-service/discrete-probability-chart-service";
 import { DiscreteProbabilityUniformService } from "./discrete-probability-uniform-service/discrete-probability-uniform.service";
 import { DiscreteProbabilityGeometricService } from "./discrete-probability-geometric-service/discrete-probability-geometric-service";
+import { DiscreteProbabilityPoissonService } from "./discrete-probability-poisson-service/discrete-probability-poisson.service";
 
 type DiscreteProbabilityState = {
     probabilityDistribution: string;
@@ -76,6 +77,7 @@ export const DiscreteProbabilityStore = signalStore(
         binomialService: DiscreteProbabilityBinomialService = inject(DiscreteProbabilityBinomialService),
         uniformService: DiscreteProbabilityUniformService = inject(DiscreteProbabilityUniformService),
         geometricService: DiscreteProbabilityGeometricService = inject(DiscreteProbabilityGeometricService),
+        poissonService: DiscreteProbabilityPoissonService = inject(DiscreteProbabilityPoissonService),
         chartService: DiscreteProbabilityChartService = inject(DiscreteProbabilityChartService)
     ) => ({
         discreteProbabilityDistributionParameters: computed(() => {
@@ -89,6 +91,9 @@ export const DiscreteProbabilityStore = signalStore(
                     break;
                 case "geometric":
                     formattedParameters = geometricService.formatGeometricParameters(probabilityDistribution(), parameters());
+                    break;
+                case "poisson":
+                    formattedParameters = poissonService.formatPoissonParameters(probabilityDistribution(), parameters());
                     break;
                 default:
                     formattedParameters = undefined;
@@ -108,6 +113,9 @@ export const DiscreteProbabilityStore = signalStore(
                 case "geometric":
                     expectedValue = geometricService.calculateGeometricExpectedValue(probabilityDistribution(), parameters());
                     break;
+                case "poisson":
+                    expectedValue = poissonService.calculatePoissonEquidispersionProperty(probabilityDistribution(), parameters(), "mean");
+                    break;
                 default:
                     expectedValue = undefined;
                     break;
@@ -125,6 +133,9 @@ export const DiscreteProbabilityStore = signalStore(
                     break;
                 case "geometric":
                     secondMoment = geometricService.calculateGeometricSecondMoment(probabilityDistribution(), parameters());
+                    break;
+                case "poisson":
+                    secondMoment = poissonService.calculatePoissonSecondMoment(probabilityDistribution(), parameters());
                     break;
                 default:
                     secondMoment = undefined;
@@ -144,6 +155,9 @@ export const DiscreteProbabilityStore = signalStore(
                 case "geometric":
                     variance = geometricService.calculateGeometricVariance(probabilityDistribution(), parameters());
                     break;
+                case "poisson":
+                    variance = poissonService.calculatePoissonEquidispersionProperty(probabilityDistribution(), parameters(), "variance");
+                    break;
                 default:
                     variance = undefined;
                     break;
@@ -161,6 +175,9 @@ export const DiscreteProbabilityStore = signalStore(
                     break;
                 case "geometric":
                     standardDeviation = geometricService.calculateGeometricStandardDeviation(probabilityDistribution(), parameters());
+                    break;
+                case "poisson":
+                    standardDeviation = poissonService.calculatePoissonStandardDeviation(probabilityDistribution(), parameters());
                     break;
                 default:
                     standardDeviation = undefined;

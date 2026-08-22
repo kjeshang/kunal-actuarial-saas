@@ -115,7 +115,11 @@ export class DiscreteProbabilityParameters implements OnInit {
         // parameters = { version: this.params.get("version")?.value, n: this.params.get("n")?.value, p: this.params.get("p")?.value };
         break
       case "poisson":
-        parameters = { n: this.params.get("n")?.value, lambda: this.params.get("lambda")?.value };
+        parameters = {
+          n: this.params.get("n")?.valid ? this.params.get("n")?.value : 0,
+          lambda: this.params.get("lambda")?.valid ? this.params.get("lambda")?.value : 0
+        };
+        // parameters = { n: this.params.get("n")?.value, lambda: this.params.get("lambda")?.value };
         break;
       case "negative-binomial":
         parameters = { type: this.params.get("type")?.value, n: this.params.get("n")?.value, r: this.params.get("r")?.value, p: this.params.get("p")?.value };
