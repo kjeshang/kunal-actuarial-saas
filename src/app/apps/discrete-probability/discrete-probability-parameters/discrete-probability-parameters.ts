@@ -129,7 +129,6 @@ export class DiscreteProbabilityParameters implements OnInit {
         break;
     }
     this.discreteProbabilityStore.setParameters(parameters);
-    console.log(this.discreteProbabilityStore.parameters());
   }
 
   /**
